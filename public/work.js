@@ -1,6 +1,6 @@
 function getpass(text){
-    let rfc = "passa";
     document.getElementById("msg").innerHTML="...";
+    let rfc = "thebestahmed3isahmed";
     setTimeout(() => {
         if(text == rfc){
             document.getElementById("msg").innerHTML="sa7it ya rojla <3 !!!";
@@ -20,8 +20,8 @@ function getpass(text){
 
 }
 function load(){
-    let rfc = "passa";
     var st = "";
+    let rfc = "thebestahmed3isahmed";
     for(var i =0; i<=rfc.length-1; i++){
         st += '*';
     }
