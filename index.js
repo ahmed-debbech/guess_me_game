@@ -2,6 +2,7 @@ const express = require('express')
 const fs = require('fs');
 const path = require('path')
 let ejs = require('ejs');
+const bodyParser = require('body-parser')
 var flash = require('connect-flash');
 var word = require('./word');
 const sessions = require('express-session');
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 5000
 
 const app = express()
 app.use(flash());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessions({
   secret: "thisismysecrctekey",
   saveUninitialized:true,
@@ -48,12 +50,12 @@ app.use(sessions({
   app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
   
 
-  app.get('/process/:word', function(req, res){
-    console.log("word: " + req.params.word);
+  app.post('/process', function(req, res){
+    console.log("word: " + req.body);
 
     let colors = new Array(10) // 3 green 2 orange 1 grey
 
-    const clientWord = req.params.word.toLowerCase();
+    const clientWord = req.body.pass.toLowerCase();
     if(clientWord.length != 10){
       res.send('not 10 caracters! go back <-')
     }
