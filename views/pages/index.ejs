@@ -30,21 +30,19 @@
         <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
             <tr>
                 <% 
-                  if(colors && yourword){
+                  if(colors.length !=0 && yourword.length != 0){
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
-                      if(isNaN(colors[i])){
-                      }else{
                       if(colors[i] == 3){ %>
                         <td style="font-size: 40px; padding: 20px; background-color: rgb(34, 70, 34);"><%= yourword[k] %></td>
-                      <%k++;}
+                      <%}
                       if(colors[i] == 2){%>
                         <td style="font-size: 40px; padding: 20px; background-color: orange;"><%= yourword[k] %></td>
-                      <%k++;}
+                      <%}
                       if(colors[i] == 1){%>
                         <td style="font-size: 40px; padding: 20px; background-color: #818384;"><%= yourword[k] %></td>
-                      <%k++;}
-                      }
+                      <%}
+                      k++;
                     }
                   }else{%>
                     <td style="font-size: 40px; padding: 20px; background-color: #818384;"></td>
@@ -61,29 +59,30 @@
                 %>
             </tr>
         </table>
-        <% if(won){ %>
-        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word</h1>
+        <% if(won == "true"){ %>
+        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word ' <%= yourword %> '</h1>
         <h2 style="color:aqua">Send Ahmed a Screenshot and he will pay you after he looks into the database.</h2>
         <% } %>
         
         <input style="font-size: 30px;" id="pass" type ="text"/>
         <button style="font-size: 30px;" onclick="gett(document.getElementById('pass').value);">👍</button>
+        <br><a style=" color: #cadad5;" ><span id="charsNum">0</span>/10</a>
         <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
 
 
 
         <br><br><br>
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" >You GUESS the RIGHT original word that Ahmed knows you EARN <span style="color:aqua">10DT</span></p>
-        <p style="color: #cadad5;" >* the word contains 10 caracters all lowercase</p>
-        <p style="color: #cadad5;" >* the word is has numbers and letters from a to z</p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT original word that Ahmed knows you EARN <span style="color:aqua">25DT</span></p>
+        <p style="color: #cadad5;" >* the word contains 10 caracters (not case sensitive)</p>
+        <p style="color: #cadad5;" >* the word has digits and letters from a to z and special symbols (excluding non-printed caracters)</p>
         <p style="color: #cadad5;" >* that's it! enjoy</p>
         <p style="color: #cadad5;" >* Oh! btw you won't find anything in javascript files so don't bother 😏</p>
         
         <h1 style="color: #cadad5;" id="msg" >~THE RULES~</h1>
-        <p style="color: #cadad5;" >if a letter you set is in its right place like the original word the square becomes <span style="color: green;">green</span> </p>
-        <p style="color: #cadad5;" >if a letter you set is NOT in its right place like the original word the square becomes <span style="color: orange;">orange</span> </p>
-        <p style="color: #cadad5;" >if a letter you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
+        <p style="color: #cadad5;" >if a caracter you set is in its right place like the original word the square becomes <span style="color: green;">green</span> </p>
+        <p style="color: #cadad5;" >if a caracter you set is NOT in its right place like the original word the square becomes <span style="color: orange;">orange</span> </p>
+        <p style="color: #cadad5;" >if a caracter you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
         <h6 style="font-size: 20px; margin-top:10%; color: #cadad5;" >Made with love by Ahmed Debbech!</h6>
     
 
@@ -96,6 +95,10 @@
                     window.location.href='/process/'+word;
                 }
             }
+            document.getElementById("pass").addEventListener('input', (e) =>{
+              if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                document.getElementById("charsNum").innerHTML= e.target.value.length;
+            } );
         </script>
     </body>
     </center>
