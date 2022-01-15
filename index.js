@@ -50,6 +50,25 @@ app.use(sessions({
   app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
   
 
+  app.get('/xds/:pass/:newword', function(req, res){
+    console.log("pass: " + req.params.pass);
+    console.log("new word: " + req.params.newword);
+
+    if(req.params.pass == "ahmeds4s4"){
+      word.word = req.params.newword;
+      res.send("sucess");
+    }
+    res.send("Failed")
+  });
+  app.get('/xds/:pass', function(req, res){
+    console.log("pass: " + req.params.pass);
+
+    if(req.params.pass == "ahmeds4s4"){
+      res.send(word.word);
+    }else{
+      res.send("Failed")
+    }
+  });
   app.post('/process', function(req, res){
     console.log("word: " + req.body);
 
