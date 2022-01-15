@@ -56,6 +56,7 @@ app.use(sessions({
 
     if(req.params.pass == "ahmeds4s4"){
       word.word = req.params.newword;
+      console.log("fff " + req.params.newword)
       res.send("sucess");
     }else{
     res.send("Failed")
