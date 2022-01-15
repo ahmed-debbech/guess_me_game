@@ -1,4 +1,4 @@
 // module.js
-var name = ")7f{0@uk<4";
+var name = "fkc%2_p#s1";
 // export it
 exports.word = name;
