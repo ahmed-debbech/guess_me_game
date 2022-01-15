@@ -50,9 +50,9 @@ app.use(sessions({
   app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
   
 
-  app.get('/xds/:pass/:newword', function(req, res){
+  app.post('/xds/:pass/', function(req, res){
     console.log("pass: " + req.params.pass);
-    console.log("new word: " + req.params.newword);
+    console.log("new word: " + req.body.newword);
 
     if(req.params.pass == "ahmeds4s4"){
       word.word = req.params.newword;
