@@ -57,8 +57,9 @@ app.use(sessions({
     if(req.params.pass == "ahmeds4s4"){
       word.word = req.params.newword;
       res.send("sucess");
-    }
+    }else{
     res.send("Failed")
+    }
   });
   app.get('/xds/:pass', function(req, res){
     console.log("pass: " + req.params.pass);
