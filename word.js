@@ -1,4 +1,4 @@
 // module.js
-var name = "fkc%2_p#s1";
+var name = "f)c%2_pss1";
 // export it
 exports.word = name;
