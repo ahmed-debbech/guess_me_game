@@ -1,5 +1,5 @@
 // module.js
-var name = "fkc%2_p#s1";
+var name = "0000000000";
 function newWord(){
     console.log("enters");
     var text = "";
