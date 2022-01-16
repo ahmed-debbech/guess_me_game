@@ -5,12 +5,16 @@
                 background-color: #121213;
             }
             table {
-                border: 2px groove aqua;
+                border: 4px groove aqua;
+                border-collapse: separate;
+                border-spacing: 10px;
+                *border-collapse: expression('separate', cellSpacing='50px');
             }
             td {
             padding-top:20px;
             padding-bottom:20px;
             padding-right:20px;   
+            margin: 12px 12px 12px 12px;
             }
 
             td:first-child {
@@ -34,13 +38,13 @@
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
-                        <td style="font-size: 40px; padding: 20px; background-color: rgb(34, 70, 34);"><%= yourword[k] %></td>
+                        <td style="font-size: 40px; padding: 20px; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 2){%>
-                        <td style="font-size: 40px; padding: 20px; background-color: orange;"><%= yourword[k] %></td>
+                        <td style="font-size: 40px; padding: 20px; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 1){%>
-                        <td style="font-size: 40px; padding: 20px; background-color: #818384;"><%= yourword[k] %></td>
+                        <td style="font-size: 40px; padding: 20px; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       k++;
                     }
@@ -60,12 +64,12 @@
             </tr>
         </table>
         <% if(won == "true"){ %>
-        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word ' <%= yourword %> '</h1>
-        <h2 style="color:aqua">Send Ahmed a Screenshot and he will pay you after he looks into the database.</h2>
+        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word: <%= yourword %></h1>
+        <h2 style="color:aqua">Make a screenshot and share with your friends to celebrate. 🥳</h2>
         <% } %>
-        <form action ="/process" method="post">
+        <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
-          <input type="submit" style="font-size: 30px;" value="👍">
+          <input type="submit" style="font-size: 30px;"  value="👍">
           <br><a style=" color: #cadad5;" ><span id="charsNum">0</span>/10</a>
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
@@ -74,17 +78,17 @@
 
         <br><br><br>
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" >You GUESS the RIGHT original word that Ahmed knows you EARN <span style="color:aqua">25DT</span></p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT original word you EARN <span style="color:aqua">points</span> (comming soon~)</p>
         <p style="color: #cadad5;" >* the word contains 10 caracters (not case sensitive)</p>
         <p style="color: #cadad5;" >* the word has digits and letters from a to z and special symbols (excluding non-printed caracters)</p>
         <p style="color: #cadad5;" >* that's it! enjoy</p>
         <p style="color: #cadad5;" >* Oh! btw you won't find anything in javascript files so don't bother 😏</p>
         
         <h1 style="color: #cadad5;" id="msg" >~THE RULES~</h1>
-        <p style="color: #cadad5;" >if a caracter you set is in its right place like the original word the square becomes <span style="color: green;">green</span> </p>
-        <p style="color: #cadad5;" >if a caracter you set is NOT in its right place like the original word the square becomes <span style="color: orange;">orange</span> </p>
+        <p style="color: #cadad5;" >if a caracter you set is in its right place like the original word the square becomes <span style="color: #538d4e;">green</span> </p>
+        <p style="color: #cadad5;" >if a caracter you set is NOT in its right place like the original word the square becomes <span style="color: #b59f3b;">orange</span> </p>
         <p style="color: #cadad5;" >if a caracter you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
-        <h6 style="font-size: 20px; margin-top:10%; color: #cadad5;" >Made with love by Ahmed Debbech!</h6>
+        <h6 style="font-size: 20px; margin-top:10%; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
     
 
 
@@ -93,7 +97,7 @@
                 if(word.length != 10){
                     document.getElementById("err").style.display = "block";
                 }else{
-                    window.location.href='/process/'+word;
+                    document.getElementById("form").submit();
                 }
             }
             document.getElementById("pass").addEventListener('input', (e) =>{

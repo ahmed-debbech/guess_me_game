@@ -18,6 +18,7 @@ app.use(sessions({
   resave: false
 }));
 
+
   app.get('/', (req, res) => {
     var colors = req.flash("colors");
     var yourword = req.flash("yourword");
@@ -55,8 +56,7 @@ app.use(sessions({
     console.log("new word: " + req.body.newword);
 
     if(req.params.pass == "ahmeds4s4"){
-      word.word = req.body.newword;
-      console.log("fff " + req.body.newword)
+      word.word.name = req.body.newword;
       res.send("sucess");
     }else{
     res.send("Failed")
@@ -66,7 +66,7 @@ app.use(sessions({
     console.log("pass: " + req.params.pass);
 
     if(req.params.pass == "ahmeds4s4"){
-      res.send(word.word);
+      res.send(word.word.name);
     }else{
       res.send("Failed")
     }
@@ -80,24 +80,25 @@ app.use(sessions({
     if(clientWord.length != 10){
       res.send('not 10 caracters! go back <-')
     }
-    if(word.word == clientWord){
+    if(word.word.name == clientWord){
       //great job
       console.log("good job");
       fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
+      word.word.name = word.word.newWord();
       req.flash("yourword", clientWord);
       req.flash("won", "true")
       res.redirect('/');
     }else{
       fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
       for(var i =0; i<=clientWord.length-1; i++){
-        if(clientWord[i] == word.word[i]){
+        if(clientWord[i] == word.word.name[i]){
           colors[i] = 3;
         }
       }
-      for(var i=0; i<=word.word.length-1; i++){
+      for(var i=0; i<=word.word.name.length-1; i++){
         if(colors[i] != 3){
           for(var j=0; j<=clientWord.length-1; j++){
-            if(j != i && colors[j] != 3 && clientWord[j] == word.word[i]){
+            if(j != i && colors[j] != 3 && clientWord[j] == word.word.name[i]){
               colors[j] = 2;
             }
           }
