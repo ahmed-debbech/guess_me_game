@@ -10,7 +10,10 @@ production: {
     client: 'postgresql',
     connection: {
     database: process.env.DATABASE_URL,
-    host : "ec2-34-230-198-12.compute-1.amazonaws.com"
+    port: process.env.DATABASE_PORT,
+    host: process.env.DATABASE_HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_ACCESS_KEY,
     },
     pool: {
     min: 2,
