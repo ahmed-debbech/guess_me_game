@@ -6,10 +6,12 @@ const bodyParser = require('body-parser')
 var flash = require('connect-flash');
 var word = require('./word');
 const sessions = require('express-session');
+const users = require('./models/user');
 const PORT = process.env.PORT || 5000
 
 const app = express()
 app.use(flash());
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessions({
   secret: "thisismysecrctekey",
@@ -71,6 +73,27 @@ app.use(sessions({
       res.send("Failed")
     }
   });
+
+  app.post('/user', (req,res)=> {
+    console.log(req.body);
+    users.addUser(req.body)
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(error =>{
+      res.status(500).json({message : "could not add new user"})
+    })
+  })
+  app.get('/user', (req,res)=> {
+    users.findAllUsers()
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(error =>{
+      res.status(500).json({message : "no user could be retrieved"})
+    })
+  })
+
   app.post('/process', function(req, res){
     console.log("word: " + req.body);
 
@@ -114,4 +137,8 @@ app.use(sessions({
     req.flash("yourword", clientWord);
     req.flash("colors", colors)
     res.redirect('/');
+ 
+ 
+ 
+ 
   });
