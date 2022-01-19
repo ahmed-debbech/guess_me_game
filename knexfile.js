@@ -16,12 +16,13 @@ production: {
     password: process.env.DATABASE_ACCESS_KEY,
     },
     pool: {
-    min: 2,
-    max: 10
-    },
-    ssl: {
+        min: 2,
+        max: 10,
+        ssl: {
         rejectUnauthorized: false
       },
+    },
+
     migrations: {
     tableName: 'knex_migrations',
     directory: './migrations'
