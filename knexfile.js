@@ -1,8 +1,3 @@
-const parse = require("pg-connection-string").parse;
-// Parse the environment variable into an object
-const pgconfig = parse(process.env.DATABASE_URL);
-// Add SSL setting to default environment variable
-pgconfig.ssl = { rejectUnauthorized: false };
 module.exports = {
 development: {
     client: 'sqlite3',
@@ -24,6 +19,9 @@ production: {
     min: 2,
     max: 10
     },
+    ssl: {
+        rejectUnauthorized: false
+      },
     migrations: {
     tableName: 'knex_migrations',
     directory: './migrations'
