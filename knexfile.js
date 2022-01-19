@@ -9,7 +9,8 @@ development: {
 production: {
     client: 'postgresql',
     connection: {
-    database: process.env.DATABASE_URL
+    database: process.env.DATABASE_URL,
+    host : "ec2-34-230-198-12.compute-1.amazonaws.com"
     },
     pool: {
     min: 2,
