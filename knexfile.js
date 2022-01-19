@@ -18,11 +18,11 @@ production: {
     pool: {
         min: 2,
         max: 10,
-        ssl: {
-        rejectUnauthorized: false
-      },
     },
-
+    ssl: {
+        sslmode : 'require',
+        rejectUnauthorized: false
+    },
     migrations: {
     tableName: 'knex_migrations',
     directory: './migrations'
