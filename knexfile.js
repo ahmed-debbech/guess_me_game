@@ -9,19 +9,18 @@ development: {
 production: {
     client: 'postgresql',
     connection: {
-    database: process.env.DATABASE_URL,
-    port: process.env.DATABASE_PORT,
-    host: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_ACCESS_KEY,
+        database: process.env.DATABASE_URL,
+        port: process.env.DATABASE_PORT,
+        host: process.env.DATABASE_HOST,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_ACCESS_KEY,
+        ssl: {
+            rejectUnauthorized: false
+        },
     },
     pool: {
         min: 2,
         max: 10,
-    },
-    ssl: {
-        sslmode : 'require',
-        rejectUnauthorized: false
     },
     migrations: {
     tableName: 'knex_migrations',
