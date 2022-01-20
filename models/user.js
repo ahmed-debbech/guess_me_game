@@ -7,9 +7,9 @@ module.exports = {
 
 async function addUser(user) {
   console.log(user);
-  return await db("user").insert(user);
+  return await db("uuser").insert(user);
 }
 
 function findAllUsers() {
-  return db("user");
+  return db("uuser");
 }
