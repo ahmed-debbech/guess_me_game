@@ -9,12 +9,14 @@ development: {
 production: {
     client: 'postgresql',
     connection: {
-        database: process.env.DATABASE_URL,
+        database: process.env.DATABASE_NAME,
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         user: process.env.DATABASE_USER,
         password: process.env.DATABASE_ACCESS_KEY,
-        ssl : false,
+        ssl: {
+            rejectUnauthorized: false
+          }
     },
     pool: {
         min: 2,
