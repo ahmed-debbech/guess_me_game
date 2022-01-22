@@ -33,10 +33,10 @@ passport.use(
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
       callbackURL: process.env.FACEBOOK_DOMAIN,
-      profileFields: ["email", "name"]
+      profileFields: ["email", "name", "photos"]
     },
     function(accessToken, refreshToken, profile, done) {
-      const { email, first_name, last_name, profile_pic } = profile._json;
+      const { email, first_name, last_name, photos } = profile._json;
       const userData = {
         email,
         firstName: first_name,
@@ -45,6 +45,13 @@ passport.use(
       };
       //new userModel(userData).save();
       console.log(userData);
+      users.addUser(req.body)
+      .then(user => {
+        res.status(201).json(user);
+      })
+      .catch(error =>{
+        res.status(500).json({message : "could not add new user"})
+      })
       done(null, profile);
     }
   )
