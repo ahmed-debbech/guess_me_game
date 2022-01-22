@@ -33,7 +33,7 @@ passport.use(
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
       callbackURL: process.env.FACEBOOK_DOMAIN,
-      profileFields: ["email", "name"]
+      profileFields: ["email", "name" , "user_photos"]
     },
     function(accessToken, refreshToken, profile, done) {
       const { email, first_name, last_name } = profile._json;
@@ -183,8 +183,8 @@ app.get("/auth/fb", passport.authenticate("facebook"));
 })*/
 app.get("/auth/fb/callback",
   passport.authenticate("facebook", {
-    successRedirect: "/success",
-    failureRedirect: "/fail"
+    successRedirect: "/auth/success",
+    failureRedirect: "/auth/fail"
   })
 );
 
