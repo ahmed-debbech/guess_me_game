@@ -33,8 +33,13 @@
 
         <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
 
-
-
+        <% if (logUser != null) { %>
+        <div style="overflow-x: auto;">
+          <img style="display : inline-block;" src="<%= logUser.photoLink %>">
+          <h5 style="display: inline-block; color:white;"><%= logUser.name %> | </h5>
+          <a style="color: whitesmoke; display: inline-block;">Logout</a>
+        </div>
+        <% } %>
         <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
             <tr>
                 <% 

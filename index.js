@@ -76,12 +76,15 @@ app.get('/', (req, res) => {
   var won = req.flash("won");
   console.log("params: " + colors + " | " + yourword);
   let auth = false;
+  let loguser = null;
   if(req.isAuthenticated()){
     auth = true;
+    loguser = req.session.user;
   }
   if(colors.length == 0 && !yourword){
     res.render('index',
     {
+      logUser : loguser,
       auth,
       colors: null,
       yourword : null,
@@ -91,6 +94,7 @@ app.get('/', (req, res) => {
     var cc = yourword;
     res.render('index', 
     {
+      logUser : loguser,
       auth,
       colors: colors,
       yourword : cc[0],
