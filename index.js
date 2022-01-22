@@ -43,7 +43,7 @@ passport.use(
         lastName: last_name
       };
       //new userModel(userData).save();
-      console.log(userData);
+      console.log(profile._json);
       done(null, profile);
     }
   )
