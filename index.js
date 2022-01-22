@@ -42,11 +42,9 @@ passport.use(
         name: first_name + " " + last_name,
         photoLink : picture.data.url
       };
-      //new userModel(userData).save();
       console.log(userData);
       users.addUser(userData)
       .then(user => {
-        //res.status(201).json(user);
         console.log("201 added")
       })
       .catch(error =>{
@@ -77,21 +75,27 @@ app.get('/', (req, res) => {
   var yourword = req.flash("yourword");
   var won = req.flash("won");
   console.log("params: " + colors + " | " + yourword);
+  let auth = false;
+  if(req.isAuthenticated()){
+    auth = true;
+  }
   if(colors.length == 0 && !yourword){
     res.render('index',
     {
+      auth,
       colors: null,
       yourword : null,
       won: won
     })
   }else{
     var cc = yourword;
-  res.render('index', 
-  {
-    colors: colors,
-    yourword : cc[0],
-    won: won
-  })
+    res.render('index', 
+    {
+      auth,
+      colors: colors,
+      yourword : cc[0],
+      won: won
+    })
   }
 })
 app.post('/xds/:pass/', function(req, res){
@@ -184,11 +188,6 @@ app.post('/process', function(req, res){
 
 app.get("/auth/fb", passport.authenticate("facebook"));
 
-/*pp.get('/auth/fb', (req, res) => {
-  console.log("user logged in!!")
-  res.send("user logged in !!")
-  console.log("code: " + req.query.code);
-})*/
 app.get("/auth/fb/callback",
   passport.authenticate("facebook", {
     successRedirect: "/auth/success",
@@ -197,9 +196,9 @@ app.get("/auth/fb/callback",
 );
 
 app.get("/auth/fail", (req, res) => {
-  res.send("Failed attempt");
+  res.render("failed");
 });
 
 app.get("/auth/success", (req, res) => {
-  res.send("Success");
+  res.redirect("/");
 });
