@@ -79,7 +79,8 @@ app.get('/', (req, res) => {
   let loguser = null;
   if(req.isAuthenticated()){
     auth = true;
-    loguser = req.session.user;
+    loguser = req.user;
+    console.log(loguser);
   }
   if(colors.length == 0 && !yourword){
     res.render('index',
