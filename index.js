@@ -40,7 +40,7 @@ passport.use(
       const userData = {
         email,
         name: first_name + " " + last_name,
-        photoLink : picture
+        photoLink : picture.data.url
       };
       //new userModel(userData).save();
       console.log(userData);
