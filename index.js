@@ -7,12 +7,14 @@ var flash = require('connect-flash');
 var word = require('./word');
 const sessions = require('express-session');
 const users = require('./models/user');
-const dbPost = require('./postgresInit');
+const passport = require("passport");
+const strategy = require("passport-facebook");
+const fbStrategy = strategy.Strategy;
+
 const PORT = process.env.PORT || 5000
 
-
-
 const app = express()
+
 app.use(flash());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,10 +24,47 @@ app.use(sessions({
   cookie: { "name": "master" },
   resave: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+console.log(process.env.FACEBOOK_ID);
+passport.use(
+  new fbStrategy(
+    {
+      clientID: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+      callbackURL: process.env.FACEBOOK_DOMAIN,
+      profileFields: ["email", "name"]
+    },
+    function(accessToken, refreshToken, profile, done) {
+      const { email, first_name, last_name } = profile._json;
+      const userData = {
+        email,
+        firstName: first_name,
+        lastName: last_name
+      };
+      //new userModel(userData).save();
+      console.log(userData);
+      done(null, profile);
+    }
+  )
+);
 
-//dbPost.init();
+app.set('views', __dirname + '/views/pages');
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 app.get('/', (req, res) => {
+  
   var colors = req.flash("colors");
   var yourword = req.flash("yourword");
   var won = req.flash("won");
@@ -47,16 +86,6 @@ app.get('/', (req, res) => {
   })
   }
 })
-
-app.set('views', __dirname + '/views/pages');
-app.engine('ejs', require('ejs').renderFile);
-app.set('view engine', 'ejs');
-
-
-
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
-
-
 app.post('/xds/:pass/', function(req, res){
   console.log("pass: " + req.params.pass);
   console.log("new word: " + req.body.newword);
@@ -77,7 +106,6 @@ app.get('/xds/:pass', function(req, res){
     res.send("Failed")
   }
 });
-
 app.post('/user', (req,res)=> {
   console.log(req.body);
   users.addUser(req.body)
@@ -97,7 +125,6 @@ app.get('/user', (req,res)=> {
     res.status(500).json({message : "no user could be retrieved"})
   })
 })
-
 app.post('/process', function(req, res){
   console.log("word: " + req.body);
 
@@ -145,4 +172,26 @@ app.post('/process', function(req, res){
 
 
 
+});
+
+app.get("/auth/fb", passport.authenticate("facebook"));
+
+/*pp.get('/auth/fb', (req, res) => {
+  console.log("user logged in!!")
+  res.send("user logged in !!")
+  console.log("code: " + req.query.code);
+})*/
+app.get("/auth/fb/callback",
+  passport.authenticate("facebook", {
+    successRedirect: "/success",
+    failureRedirect: "/fail"
+  })
+);
+
+app.get("/auth/fail", (req, res) => {
+  res.send("Failed attempt");
+});
+
+app.get("/auth/success", (req, res) => {
+  res.send("Success");
 });

@@ -1,6 +1,9 @@
 <html>
     <head>
         <style>
+            button{
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
             body{
                 background-color: #121213;
             }
@@ -22,6 +25,7 @@
             padding-right:0;
             }
         </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <center>
     <body onload="load();">
@@ -67,6 +71,7 @@
         <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word: <%= yourword %></h1>
         <h2 style="color:aqua">Make a screenshot and share with your friends to celebrate. 🥳</h2>
         <% } %>
+        <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: rgb(42, 42, 216); font-size: 20px; border-radius: 10%; border-color: rgb(42, 42, 216);"><i class="fa fa-facebook"></i> Facebook</button>
         <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <input type="submit" style="font-size: 30px;"  value="👍">
