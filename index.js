@@ -36,11 +36,11 @@ passport.use(
       profileFields: ["email", "name", "photos"]
     },
     function(accessToken, refreshToken, profile, done) {
-      const { email, first_name, last_name, photos } = profile._json;
+      const { email, first_name, last_name, picture } = profile._json;
       const userData = {
         email,
         name: first_name + " " + last_name,
-        photoLink : photos
+        photoLink : picture
       };
       //new userModel(userData).save();
       console.log(userData);
