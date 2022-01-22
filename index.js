@@ -39,18 +39,18 @@ passport.use(
       const { email, first_name, last_name, photos } = profile._json;
       const userData = {
         email,
-        firstName: first_name,
-        lastName: last_name,
-        photo : profile_pic
+        name: first_name + " " + last_name,
+        photoLink : photos
       };
       //new userModel(userData).save();
       console.log(userData);
-      users.addUser(req.body)
+      users.addUser(userData)
       .then(user => {
-        res.status(201).json(user);
+        //res.status(201).json(user);
+        console.log("201 added")
       })
       .catch(error =>{
-        res.status(500).json({message : "could not add new user"})
+        console.log("could not add new user")
       })
       done(null, profile);
     }

@@ -1,9 +1,10 @@
 
 exports.up = function(knex) {
     return knex.schema
-    .createTable("uuser", (tbl) => {
+    .createTable("user", (tbl) => {
       tbl.increments(); // 'id' field
       tbl.text("name", 128).notNullable();
+      tbl.text("email", 128).notNullable();
       tbl.text("photoLink", 128);
       tbl.integer("solvedWords").defaultTo(0);
       tbl.integer("points").defaultTo(0);
@@ -26,5 +27,5 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-  
+  return knex.schema.dropTable('user').dropTable('word');
 };
