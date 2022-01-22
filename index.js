@@ -33,17 +33,18 @@ passport.use(
       clientID: process.env.FACEBOOK_ID,
       clientSecret: process.env.FACEBOOK_SECRET,
       callbackURL: process.env.FACEBOOK_DOMAIN,
-      profileFields: ["email", "name" , "user_photos"]
+      profileFields: ["email", "name"]
     },
     function(accessToken, refreshToken, profile, done) {
-      const { email, first_name, last_name } = profile._json;
+      const { email, first_name, last_name, profile_pic } = profile._json;
       const userData = {
         email,
         firstName: first_name,
-        lastName: last_name
+        lastName: last_name,
+        photo : profile_pic
       };
       //new userModel(userData).save();
-      console.log(profile._json);
+      console.log(userData);
       done(null, profile);
     }
   )
