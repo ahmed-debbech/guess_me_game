@@ -8,7 +8,7 @@ module.exports = {
 
 async function addUser(user) {
   console.log(user);
-  if(db("uuser").where({email: user.email})){
+  if(!db("uuser").where({email: user.email})){
     return;
   }
   return await db("uuser").insert(user);
