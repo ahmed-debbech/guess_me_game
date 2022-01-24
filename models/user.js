@@ -6,18 +6,11 @@ module.exports = {
   findAllSortByPoints
 };
 
- function addUser(user) {
+async function addUser(user) {
   console.log(user);
-  db("uuser").where({email: user.email})
-  .then(use => {
-    if(use.email == user.email){
-      console.log("201 user added")
-       db("uuser").insert(user);
-    }
-  })
-  .catch(error =>{
-    console.log("could not add new user")
-  })
+  if(!db("uuser").where({email: user.email})){
+    await db("uuser").insert(user);
+  }
 }
 
 function findAllUsers() {
