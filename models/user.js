@@ -6,12 +6,12 @@ module.exports = {
   findAllSortByPoints
 };
 
-async function addUser(user) {
+ function addUser(user) {
   console.log(user);
   let gg = db("uuser").where({email: user.email}).select();
   gg.then(user =>{
     if(!user){
-      await db("uuser").insert(user);
+       db("uuser").insert(user);
     }
   })
 }
