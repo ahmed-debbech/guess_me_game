@@ -207,3 +207,7 @@ app.get("/auth/fail", (req, res) => {
 app.get("/auth/success", (req, res) => {
   res.redirect("/");
 });
+app.post('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});

@@ -35,9 +35,9 @@
 
         <% if (logUser != null) { %>
         <div style="overflow-x: auto;">
-          <img style="display : inline-block;" src="<%= logUser.picture.data.url %>">
+          <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
           <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
-          <a style="color: whitesmoke; display: inline-block;">Logout</a>
+          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
         </div>
         <% } %>
         <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
