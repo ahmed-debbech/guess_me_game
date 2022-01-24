@@ -6,10 +6,13 @@ module.exports = {
   findAllSortByPoints
 };
 
+function exists(){
+  return db("uuser").where({email: user.email}).select();
+}
+
  function addUser(user) {
   console.log(user);
-  let gg = db("uuser").where({email: user.email}).select();
-  gg.then(user =>{
+  exists().then(user =>{
     if(!user){
        db("uuser").insert(user);
     }
