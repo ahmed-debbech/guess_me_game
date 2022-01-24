@@ -44,12 +44,6 @@ passport.use(
       };
       console.log(userData);
       users.addUser(userData)
-      .then(user => {
-        console.log("201 added")
-      })
-      .catch(error =>{
-        console.log("could not add new user")
-      })
       done(null, profile);
     }
   )
