@@ -8,10 +8,16 @@ module.exports = {
 
 async function addUser(user) {
   console.log(user);
-  if(db("uuser").where({email: user.email})){
-    return;
-  }
-  return await db("uuser").insert(user);
+  db("uuser").where({email: user.email})
+  .then(use => {
+    if(use.email == user.email){
+      console.log("201 user added")
+      await db("uuser").insert(user);
+    }
+  })
+  .catch(error =>{
+    console.log("could not add new user")
+  })
 }
 
 function findAllUsers() {
