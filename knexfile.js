@@ -3,7 +3,7 @@ development: {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-    filename: './data/sqlite.db3'
+    filename: './data/sqlite1.db3'
     }
 },
 production: {

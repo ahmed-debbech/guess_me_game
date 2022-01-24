@@ -3,6 +3,7 @@ const db = require("../knex/knex.js");
 module.exports = {
   addUser,
   findAllUsers,
+  findAllSortByPoints
 };
 
 async function addUser(user) {
@@ -15,4 +16,8 @@ async function addUser(user) {
 
 function findAllUsers() {
   return db("uuser");
+}
+
+function findAllSortByPoints(){
+  return db('uuser').select().orderBy('points', 'desc');
 }

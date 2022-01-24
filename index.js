@@ -207,7 +207,34 @@ app.get("/auth/fail", (req, res) => {
 app.get("/auth/success", (req, res) => {
   res.redirect("/");
 });
-app.post('/logout', function(req, res){
+app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
+app.get('/leaderboard', (req, res) => {
+  let auth = false;
+  let logUser = null;
+  if(req.isAuthenticated()){
+    auth = true;
+    logUser = req.user._json;
+  }
+
+  let people = null;
+  users.findAllSortByPoints()
+  .then(user => {
+    console.log("201 added")
+    people = user;
+    console.log(people);
+    res.render('leaderboard',{
+      people,
+      auth,
+      logUser
+    })
+  })
+  .catch(error =>{
+    console.log("couldnt retrieve users to leaderboard page")
+    people = null;
+  })
+
+  
+})

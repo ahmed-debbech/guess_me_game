@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <style>
+            button{
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            body{
+                background-color: #121213;
+            }
+            .glow {
+            font-size: 20px;
+            color: rgb(207, 207, 207);
+            text-align: center;
+            animation: glow 2s ease-in-out infinite alternate;
+            }
+
+            @-webkit-keyframes glow {
+            from {
+                text-shadow: 0 0 50px #fff, 0 0 20px #fff, 0 0 30px #dfdfdf, 0 0 40px #d8d8d8, 0 0 50px #dbdbdb, 0 0 60px #d8d8d8, 0 0 70px #e2e2e2;
+            }
+           
+            }
+            table {
+                border: 4px transparent;
+                border-collapse: separate;
+                border-spacing: 10px;
+                *border-collapse: expression('separate', cellSpacing='50px');
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <center>
+    <body onload="load();">
+    
+
+        <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
+        <h2 style="color: aqua;">- Leaderboard -</h2>
+        <% if (logUser != null) { %>
+        <div style="overflow-x: auto;">
+          <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
+          <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
+          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+        </div>
+        <% } %>
+
+        <br><br><br>
+        <p style="color: #cadad5;">These are all the players on the website ranked by <span style="color:aqua">points</span></p>
+
+        <br>
+        <!-- here -->
+        <table style="color: #cadad5;">
+            <th>
+                <td style="color: rgb(207, 120, 120)">Name</td>
+                <td style="color: rgb(207, 120, 120)">Points</td>
+                <td style="color: rgb(207, 120, 120)">Words solved</td>
+            </th>
+            <% if(people != null) { %>
+            <% for (var i=0; i<=people.length-1; i++) { %>
+                <tr>
+                <td><img src="<%= people[i].photoLink %>" /></td>
+                <td class="glow"><%= people[i].name %></td>
+                <td><%= people[i].points %></td>
+                <td><%= people[i].solvedWords %></td>
+            </tr>
+            <% } %>
+            <% } %>
+        </table>
+        <br>
+        
+        <a style="font-size: 20px; color: aqua;" href="/">Home</a>
+        <h6 style="margin-top: 10%; font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
+    
+
+    </body>
+    </center>
+</html>
+<!-- HAHAHA!! what a looser, you won't find anything here baby <3 -->
