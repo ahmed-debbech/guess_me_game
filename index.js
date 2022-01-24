@@ -79,7 +79,7 @@ app.get('/', (req, res) => {
   let loguser = null;
   if(req.isAuthenticated()){
     auth = true;
-    loguser = req.user;
+    loguser = req.user._json;
     console.log(loguser);
   }
   if(colors.length == 0 && !yourword){
