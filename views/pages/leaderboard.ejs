@@ -50,6 +50,7 @@
         <!-- here -->
         <table style="color: #cadad5;">
             <th>
+                <td></td>
                 <td style="color: rgb(207, 120, 120)">Name</td>
                 <td style="color: rgb(207, 120, 120)">Points</td>
                 <td style="color: rgb(207, 120, 120)">Words solved</td>
@@ -57,6 +58,7 @@
             <% if(people != null) { %>
             <% for (var i=0; i<=people.length-1; i++) { %>
                 <tr>
+                <td><%= i+1 %>)</td>
                 <td><img src="<%= people[i].photoLink %>" /></td>
                 <td class="glow"><%= people[i].name %></td>
                 <td><%= people[i].points %></td>
