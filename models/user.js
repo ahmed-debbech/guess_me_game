@@ -8,9 +8,12 @@ module.exports = {
 
 async function addUser(user) {
   console.log(user);
-  if(!db("uuser").where({email: user.email})){
-    await db("uuser").insert(user);
-  }
+  let gg = db("uuser").where({email: user.email}).select();
+  gg.then(user =>{
+    if(!user){
+      await db("uuser").insert(user);
+    }
+  })
 }
 
 function findAllUsers() {
@@ -18,5 +21,5 @@ function findAllUsers() {
 }
 
 function findAllSortByPoints(){
-  return db('uuser').select().orderBy('points', 'desc');
+  return db("uuser").select().orderBy('points', 'desc');
 }
