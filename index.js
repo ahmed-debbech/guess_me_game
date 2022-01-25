@@ -74,9 +74,9 @@ app.get('/', (req, res) => {
   if(req.isAuthenticated()){
     auth = true;
     users.findUserByEmail(req.user._json.email).then(user => {
-      if(Object.keys(user).length != 0){
+      if(Object.keys(user[0]).length != 0){
         loguser = req.user._json;
-        loguser.hidden = user.hidden;
+        loguser.hidden = user[0].hidden;
         
         console.log("User is logged in and email is found " );
         console.log(loguser);
