@@ -105,9 +105,21 @@
           <h4 style="color:white;">Your hidden status</h4>
           <label class="switch">
             <% if (logUser.hidden == 1) {%>
-              <input id="hides" type="checkbox" checked>
+              <input onchange='
+                if(document.getElementById("hides").checked){
+                  location.href="/hide/<%= logUser.email %>/1";
+                }else{
+                  location.href="/hide/<%= logUser.email %>/0";
+                }
+              ' id="hides" type="checkbox" checked>
             <%}else{%>
-              <input id="hides" type="checkbox" checked>
+              <input onchange='
+                if(document.getElementById("hides").checked){
+                  location.href="/hide/<%= logUser.email %>/1";
+                }else{
+                  location.href="/hide/<%= logUser.email %>/0";
+                }
+                ' id="hides" type="checkbox" checked>
             <% } %>
             <span class="slider round"></span>
           </label>
@@ -194,17 +206,6 @@
                 if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                   document.getElementById("charsNum").innerHTML= e.target.value.length;
               } );
-
-              document.getElementById("hides").
-              addEventListener('change' , () => {
-                 if(logUser) {
-                  if(document.getElementById("hides").checked){
-                    location.href="/hide/<%= logUser.email %>/1";
-                  }else{
-                    location.href="/hide/<%= logUser.email %>/0";
-                  }
-                }
-              });
             }
         </script>
     </body>
