@@ -220,14 +220,14 @@ app.post('/process', function(req, res){
   }else{
     fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
     for(var i =0; i<=clientWord.length-1; i++){
-      if(clientWord[i] ==wordy.name[i]){
+      if(clientWord[i] ==wordy[i]){
         colors[i] = 3;
       }
     }
     for(var i=0; i<=wordy.length-1; i++){
       if(colors[i] != 3){
         for(var j=0; j<=clientWord.length-1; j++){
-          if(j != i && colors[j] != 3 && clientWord[j] == wordy.name[i]){
+          if(j != i && colors[j] != 3 && clientWord[j] == wordy[i]){
             colors[j] = 2;
           }
         }
