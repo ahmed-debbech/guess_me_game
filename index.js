@@ -73,8 +73,11 @@ app.get('/', (req, res) => {
   let loguser = null;
   if(req.isAuthenticated()){
     auth = true;
-    loguser = req.user._json;
-    console.log(loguser);
+    users.findUserByEmail(req.user._json.email).then(user => {
+      loguser.hidden = user.hidden;
+      loguser = req.user._json;
+      console.log(loguser);
+    })
   }
   if(colors.length == 0 && !yourword){
     res.render('index',
@@ -241,5 +244,5 @@ app.get('/hide/:email/:status', (req, res) => {
   }).catch(err =>{
     console.log("an error occured while hidding user ")
   })
-  //res.redirect('/')
+  res.redirect('/')
 })

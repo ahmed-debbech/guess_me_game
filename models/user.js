@@ -4,7 +4,8 @@ module.exports = {
   addUser,
   findAllUsers,
   findAllSortByPoints,
-  makeHidden
+  makeHidden,
+  findUserByEmail
 };
 
 function exists(user){
@@ -18,7 +19,9 @@ function addUser(useer) {
     }
   })
 }
-
+function findUserByEmail(email){
+  return db("uuser").where({email : email}).select();
+}
 function findAllUsers() {
   return db("uuser");
 }
