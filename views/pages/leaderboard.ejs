@@ -59,10 +59,17 @@
             <% for (var i=0; i<=people.length-1; i++) { %>
                 <tr>
                 <td><%= i+1 %>)</td>
+                <% if(people[i].hidden == 0){ %>
                 <td><img src="<%= people[i].photoLink %>" /></td>
                 <td class="glow"><%= people[i].name %></td>
                 <td><%= people[i].points %></td>
                 <td><%= people[i].solvedWords %></td>
+                <% }else{ %>
+                    <td><img width="52px" height="52px" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255634-stock-illustration-avatar-icon-male-profile-gray.jpg" /></td>
+                    <td class="glow">Hidden</td>
+                    <td><%= people[i].points %></td>
+                    <td><%= people[i].solvedWords %></td>
+                <% } %>
             </tr>
             <% } %>
             <% } %>
