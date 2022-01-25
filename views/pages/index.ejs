@@ -93,7 +93,7 @@
         <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
       
         <br> <br>
-        <% if (logUser != null) { %>
+        <% if (Object.keys(logUser).length != 0) { %>
           <div>
             <h4 style="color:white;">Your hidden status</h4>
             <label class="switch">

@@ -70,11 +70,11 @@ app.get('/', (req, res) => {
   var won = req.flash("won");
   console.log("params: " + colors + " | " + yourword);
   let auth = false;
-  let loguser = null;
+  let loguser = {};
   if(req.isAuthenticated()){
     auth = true;
     users.findUserByEmail(req.user._json.email).then(user => {
-      if(user.length != 0){
+      if(Object.keys(user).length != 0){
         loguser = req.user._json;
         loguser.hidden = user.hidden;
         
