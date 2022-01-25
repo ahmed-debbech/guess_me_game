@@ -197,7 +197,7 @@
 
               document.getElementById("hides").
               addEventListener('change' , () => {
-                 if(logUser != null) {
+                 if(logUser) {
                   if(document.getElementById("hides").checked){
                     location.href="/hide/<%= logUser.email %>/1";
                   }else{
