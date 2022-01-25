@@ -159,7 +159,7 @@
         <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <input type="submit" style="font-size: 30px;"  value="👍">
-          <br><a style=" color: #cadad5;" ><span id="charsNum">0</span></a>
+          <br><a style=" color: #cadad5;" ><span id="charsNum"><%= length %></span></a>
         </form>
         <!--<span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>-->
         <% }else{ %>

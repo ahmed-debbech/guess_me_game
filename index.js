@@ -206,7 +206,7 @@ app.post('/process', function(req, res){
   if(clientWord.length != wordy.length){
     res.send('not ' +wordy.length+ ' caracters! go back <-')
   }
-  if(wordy.name == clientWord){
+  if(wordy == clientWord){
     //great job
     console.log("good job");
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
