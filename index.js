@@ -216,6 +216,8 @@ app.post('/process', function(req, res){
       req.flash("yourword", clientWord);
       req.flash("won", "true")
       res.redirect('/');
+    }).catch(err => {
+      console.log(err);
     })
   
   }else{
