@@ -24,20 +24,88 @@
             padding-left:20px;
             padding-right:0;
             }
+            .switch {
+              position: relative;
+              display: inline-block;
+              width: 50px;
+              height: 24px;
+            }
+
+            .switch input { 
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: #ccc;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+
+            .slider:before {
+              position: absolute;
+              content: "";
+              height: 17px;
+              width: 18px;
+              left: 4px;
+              bottom: 4px;
+              background-color: white;
+              -webkit-transition: .4s;
+              transition: .4s;
+            }
+
+            input:checked + .slider {
+              background-color: #538d4e;
+            }
+
+            input:focus + .slider {
+              box-shadow: 0 0 1px #538d4e;
+            }
+
+            input:checked + .slider:before {
+              -webkit-transform: translateX(26px);
+              -ms-transform: translateX(26px);
+              transform: translateX(26px);
+            }
+
+            /* Rounded sliders */
+            .slider.round {
+              border-radius: 34px;
+            }
+
+            .slider.round:before {
+              border-radius: 50%;
+            }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <center>
-    <body onload="load();">
+    <body>
     
 
         <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
-
+        <div style="margin-left: 50%;">
+          <h4 style="color:white;">Your hidden status</h4>
+          <label class="switch">
+            <input id="hides" type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <br> <br>
         <% if (logUser != null) { %>
+        
         <div style="overflow-x: auto;">
           <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
           <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
           <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+        
         </div>
         <% } %>
         <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
@@ -103,7 +171,7 @@
         <p style="color: #cadad5;" >if a caracter you set is NOT in its right place like the original word the square becomes <span style="color: #b59f3b;">orange</span> </p>
         <p style="color: #cadad5;" >if a caracter you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
         
-        <a style="font-size: 20px; color: aqua;" href="/leaderboard">Leaderboard</a>
+        <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
         <h6 style="margin-top: 10%; font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
     
 
@@ -116,10 +184,21 @@
                     document.getElementById("form").submit();
                 }
             }
-            document.getElementById("pass").addEventListener('input', (e) =>{
-              if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
-                document.getElementById("charsNum").innerHTML= e.target.value.length;
-            } );
+            if(document.getElementById("pass") != null && document.getElementById("hides") != null){
+              document.getElementById("pass").addEventListener('input', (e) =>{
+                if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                  document.getElementById("charsNum").innerHTML= e.target.value.length;
+              } );
+              
+              document.getElementById("hides").
+              addEventListener('change' , () => {
+                  if(document.getElementById("hides").checked){
+                    location.href="/hide/" + logUser.email + "/" + 1;
+                  }else{
+                    location.href="/hide/" + logUser.email + "/" + 0;
+                  }
+              });
+            }
         </script>
     </body>
     </center>

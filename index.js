@@ -229,6 +229,17 @@ app.get('/leaderboard', (req, res) => {
     console.log("couldnt retrieve users to leaderboard page")
     people = null;
   })
+})
 
-  
+app.get('/hide/:email/:status', (req, res) => {
+  let email = req.params['email'];
+  let status  = req.params['status'];
+  console.log("email  " + email + " status " + status);
+  let user = {email : email}
+  users.makeHidden(status, user).then(user => {
+    console.log("success hidden")
+  }).catch(err =>{
+    console.log("an error occured while hidding user ")
+  })
+  //res.redirect('/')
 })
