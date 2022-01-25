@@ -78,7 +78,8 @@ app.get('/', (req, res) => {
         loguser = req.user._json;
         loguser.hidden = user.hidden;
         
-        console.log("User is logged in and email is found " + loguser);
+        console.log("User is logged in and email is found " );
+        console.log(loguser);
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
