@@ -194,7 +194,7 @@ app.get('/user', (req,res)=> {
 })
 app.post('/process', function(req, res){
   console.log("word: " + req.body);
-
+  if(req.isAuthenticated()){
   word.word.getCurrent().then(word => {
     if(word.length == 0) return;
 
@@ -210,6 +210,9 @@ app.post('/process', function(req, res){
     //great job
     console.log("good job");
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
+    users.updateScore(req.user._json.email, wordy.length).then(user =>{
+      console.log("updated successfully")
+    })
     word.word.name = word.word.newWord();
     req.flash("yourword", clientWord);
     req.flash("won", "true")
@@ -241,7 +244,7 @@ app.post('/process', function(req, res){
   req.flash("colors", colors)
   res.redirect('/');
   })
-
+  }
 
 });
 app.get("/auth/fb", passport.authenticate("facebook"));

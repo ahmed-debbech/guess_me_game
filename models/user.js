@@ -5,7 +5,8 @@ module.exports = {
   findAllUsers,
   findAllSortByPoints,
   makeHidden,
-  findUserByEmail
+  findUserByEmail,
+  updateScore
 };
 
 function exists(user){
@@ -19,6 +20,9 @@ function addUser(useer) {
       return await db("uuser").insert(useer);
     }
   })
+}
+async function updateScore(email, points){
+  return await db("uuser").where({email: email}).update({solvedWords : db.raw('solvedWords + 1'), points: db.raw('points + ' + points)})
 }
 function findUserByEmail(email){
   return db("uuser").where({email : email}).select();
