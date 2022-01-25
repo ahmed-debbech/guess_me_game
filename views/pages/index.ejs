@@ -94,36 +94,36 @@
       
         <br> <br>
         <% if (logUser != null) { %>
-        
+          <div>
+            <h4 style="color:white;">Your hidden status</h4>
+            <label class="switch">
+              <% if (logUser.hidden == 1) {%>
+                <input onchange='
+                  if(document.getElementById("hides").checked){
+                    location.href="/hide/<%= logUser.email %>/1";
+                  }else{
+                    location.href="/hide/<%= logUser.email %>/0";
+                  }
+                ' id="hides" type="checkbox" checked>
+              <%}else{%>
+                <input onchange='
+                  if(document.getElementById("hides").checked){
+                    location.href="/hide/<%= logUser.email %>/1";
+                  }else{
+                    location.href="/hide/<%= logUser.email %>/0";
+                  }
+                  ' id="hides" type="checkbox" checked>
+              <% } %>
+              <span class="slider round"></span>
+            </label>
+          </div>
         <div style="overflow-x: auto;">
           <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
           <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
           <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
         
         </div>
-        <div>
-          <h4 style="color:white;">Your hidden status</h4>
-          <label class="switch">
-            <% if (logUser.hidden == 1) {%>
-              <input onchange='
-                if(document.getElementById("hides").checked){
-                  location.href="/hide/<%= logUser.email %>/1";
-                }else{
-                  location.href="/hide/<%= logUser.email %>/0";
-                }
-              ' id="hides" type="checkbox" checked>
-            <%}else{%>
-              <input onchange='
-                if(document.getElementById("hides").checked){
-                  location.href="/hide/<%= logUser.email %>/1";
-                }else{
-                  location.href="/hide/<%= logUser.email %>/0";
-                }
-                ' id="hides" type="checkbox" checked>
-            <% } %>
-            <span class="slider round"></span>
-          </label>
-        </div>
+      
         <% } %>
         <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
             <tr>
@@ -201,12 +201,11 @@
                     document.getElementById("form").submit();
                 }
             }
-            if(document.getElementById("pass") != null && document.getElementById("hides") != null){
               document.getElementById("pass").addEventListener('input', (e) =>{
                 if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                   document.getElementById("charsNum").innerHTML= e.target.value.length;
               } );
-            }
+          
         </script>
     </body>
     </center>
