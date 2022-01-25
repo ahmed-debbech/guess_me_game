@@ -77,28 +77,50 @@ app.get('/', (req, res) => {
       loguser.hidden = user.hidden;
       loguser = req.user._json;
       console.log(loguser);
-    })
-  }
-  if(colors.length == 0 && !yourword){
-    res.render('index',
-    {
-      logUser : loguser,
-      auth,
-      colors: null,
-      yourword : null,
-      won: won
+      if(colors.length == 0 && !yourword){
+        res.render('index',
+        {
+          logUser : loguser,
+          auth,
+          colors: null,
+          yourword : null,
+          won: won
+        })
+      }else{
+        var cc = yourword;
+        res.render('index', 
+        {
+          logUser : loguser,
+          auth,
+          colors: colors,
+          yourword : cc[0],
+          won: won
+        })
+      }
     })
   }else{
-    var cc = yourword;
-    res.render('index', 
-    {
-      logUser : loguser,
-      auth,
-      colors: colors,
-      yourword : cc[0],
-      won: won
-    })
+    if(colors.length == 0 && !yourword){
+      res.render('index',
+      {
+        logUser : loguser,
+        auth,
+        colors: null,
+        yourword : null,
+        won: won
+      })
+    }else{
+      var cc = yourword;
+      res.render('index', 
+      {
+        logUser : loguser,
+        auth,
+        colors: colors,
+        yourword : cc[0],
+        won: won
+      })
+    }
   }
+  
 })
 app.post('/xds/:pass/', function(req, res){
   console.log("pass: " + req.params.pass);
