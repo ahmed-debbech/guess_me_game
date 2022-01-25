@@ -210,7 +210,7 @@ app.post('/process', function(req, res){
     //great job
     console.log("good job");
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
-    users.updateScore(req.user._json.email, wordy.length).then(user =>{
+    users.updateScore(req.user._json.email, 11).then(user =>{
       console.log("updated successfully")
       word.word.newWord();
       req.flash("yourword", clientWord);
