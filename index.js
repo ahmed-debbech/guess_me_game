@@ -212,11 +212,12 @@ app.post('/process', function(req, res){
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
     users.updateScore(req.user._json.email, wordy.length).then(user =>{
       console.log("updated successfully")
+      word.word.newWord();
+      req.flash("yourword", clientWord);
+      req.flash("won", "true")
+      res.redirect('/');
     })
-    word.word.name = word.word.newWord();
-    req.flash("yourword", clientWord);
-    req.flash("won", "true")
-    res.redirect('/');
+  
   }else{
     fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
     for(var i =0; i<=clientWord.length-1; i++){
