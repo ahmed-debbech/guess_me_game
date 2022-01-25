@@ -75,6 +75,9 @@ app.get('/', (req, res) => {
   console.log("params: " + colors + " | " + yourword);
   let auth = false;
   let loguser = {};
+  word.word.getCurrent().then(word => {
+    if(word.length == 0) return;
+    let wordy = word[0].name;
   if(req.isAuthenticated()){
     auth = true;
     users.findUserByEmail(req.user._json.email).then(user => {
@@ -87,6 +90,7 @@ app.get('/', (req, res) => {
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
+            length : wordy.length,
             logUser : loguser,
             auth,
             colors: null,
@@ -97,6 +101,7 @@ app.get('/', (req, res) => {
           var cc = yourword;
           res.render('index', 
           {
+            length : wordy.length,
             logUser : loguser,
             auth,
             colors: colors,
@@ -109,6 +114,7 @@ app.get('/', (req, res) => {
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
+            length : wordy.length,
             logUser : loguser,
             auth,
             colors: null,
@@ -119,6 +125,7 @@ app.get('/', (req, res) => {
           var cc = yourword;
           res.render('index', 
           {
+            length : wordy.length,
             logUser : loguser,
             auth,
             colors: colors,
@@ -133,6 +140,7 @@ app.get('/', (req, res) => {
     if(colors.length == 0 && !yourword){
       res.render('index',
       {
+        length : wordy.length,
         logUser : loguser,
         auth,
         colors: null,
@@ -143,6 +151,7 @@ app.get('/', (req, res) => {
       var cc = yourword;
       res.render('index', 
       {
+        length : wordy.length,
         logUser : loguser,
         auth,
         colors: colors,
@@ -151,7 +160,7 @@ app.get('/', (req, res) => {
       })
     }
   }
-  
+})
 })
 app.get('/xds/:pass', function(req, res){
   console.log("pass: " + req.params.pass);
