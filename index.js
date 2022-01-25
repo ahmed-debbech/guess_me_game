@@ -235,20 +235,16 @@ app.post('/process', function(req, res){
 
 
 });
-
 app.get("/auth/fb", passport.authenticate("facebook"));
-
 app.get("/auth/fb/callback",
   passport.authenticate("facebook", {
     successRedirect: "/auth/success",
     failureRedirect: "/auth/fail"
   })
 );
-
 app.get("/auth/fail", (req, res) => {
   res.render("failed");
 });
-
 app.get("/auth/success", (req, res) => {
   res.redirect("/");
 });
@@ -282,15 +278,19 @@ app.get('/leaderboard', (req, res) => {
   })
 })
 
-app.get('/hide/:email/:status', (req, res) => {
-  let email = req.params['email'];
-  let status  = req.params['status'];
-  console.log("email  " + email + " status " + status);
-  let user = {email : email}
-  users.makeHidden(status, user).then(user => {
-    console.log("success hidden")
-  }).catch(err =>{
-    console.log("an error occured while hidding user ")
-  })
-  res.redirect('/')
+app.get('/hide/:status', (req, res) => {
+  if(req.isAuthenticated()){
+    let email = req.user._json.email;
+    let status  = req.params['status'];
+    console.log("email  " + email + " status " + status);
+    let user = {email : email}
+    users.makeHidden(status, user).then(user => {
+      console.log("success hidden")
+    }).catch(err =>{
+      console.log("an error occured while hidding user ")
+    })
+    res.redirect('/')
+  }else{
+    console.log("user not authenticated to use this method (hidding)")
+  }
 })

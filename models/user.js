@@ -32,11 +32,9 @@ function findAllSortByPoints(){
 }
 
 async function makeHidden(val, user){
-  if(user.length != 0 ){ // exists
     if(val == 1){
       return await db("uuser").where({email: user.email}).update({hidden : "1"})
     }else{
       return await db("uuser").where({email: user.email}).update({hidden : "0"})
     }
-  }
 }

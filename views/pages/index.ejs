@@ -100,19 +100,19 @@
               <% if (logUser.hidden == 1) {%>
                 <input onchange='
                   if(document.getElementById("hides").checked){
-                    location.href="/hide/<%= logUser.email %>/1";
+                    location.href="/hide/1";
                   }else{
-                    location.href="/hide/<%= logUser.email %>/0";
+                    location.href="/hide/0";
                   }
                 ' id="hides" type="checkbox" checked>
               <%}else{%>
                 <input onchange='
                   if(document.getElementById("hides").checked){
-                    location.href="/hide/<%= logUser.email %>/1";
+                    location.href="/hide/1";
                   }else{
-                    location.href="/hide/<%= logUser.email %>/0";
+                    location.href="/hide/0";
                   }
-                  ' id="hides" type="checkbox" checked>
+                  ' id="hides" type="checkbox" >
               <% } %>
               <span class="slider round"></span>
             </label>
