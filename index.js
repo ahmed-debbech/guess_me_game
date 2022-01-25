@@ -4,7 +4,7 @@ const path = require('path')
 let ejs = require('ejs');
 const bodyParser = require('body-parser')
 var flash = require('connect-flash');
-var word = require('./word');
+var word = require('./models/word');
 const sessions = require('express-session');
 const users = require('./models/user');
 const passport = require("passport");
@@ -62,6 +62,10 @@ passport.deserializeUser(function(obj, done) {
 });
 
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
+
+app.get('/t', (req, res) => {
+  word.word.newWord();
+})
 
 app.get('/', (req, res) => {
   
@@ -149,22 +153,13 @@ app.get('/', (req, res) => {
   }
   
 })
-app.post('/xds/:pass/', function(req, res){
-  console.log("pass: " + req.params.pass);
-  console.log("new word: " + req.body.newword);
-
-  if(req.params.pass == "ahmeds4s4"){
-    word.word.name = req.body.newword;
-    res.send("sucess");
-  }else{
-  res.send("Failed")
-  }
-});
 app.get('/xds/:pass', function(req, res){
   console.log("pass: " + req.params.pass);
 
   if(req.params.pass == "ahmeds4s4"){
-    res.send(word.word.name);
+    word.word.getCurrent().then(word => {
+      res.send(word);
+    })
   }else{
     res.send("Failed")
   }
@@ -191,13 +186,18 @@ app.get('/user', (req,res)=> {
 app.post('/process', function(req, res){
   console.log("word: " + req.body);
 
-  let colors = new Array(10) // 3 green 2 orange 1 grey
+  word.word.getCurrent().then(word => {
+    if(word.length == 0) return;
+
+  console.log(word[0].name)
+  let wordy = word[0].name;
+  let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
 
   const clientWord = req.body.pass.toLowerCase();
-  if(clientWord.length != 10){
-    res.send('not 10 caracters! go back <-')
+  if(clientWord.length != wordy.length){
+    res.send('not ' +wordy.length+ ' caracters! go back <-')
   }
-  if(word.word.name == clientWord){
+  if(wordy.name == clientWord){
     //great job
     console.log("good job");
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
@@ -208,14 +208,14 @@ app.post('/process', function(req, res){
   }else{
     fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
     for(var i =0; i<=clientWord.length-1; i++){
-      if(clientWord[i] == word.word.name[i]){
+      if(clientWord[i] ==wordy.name[i]){
         colors[i] = 3;
       }
     }
-    for(var i=0; i<=word.word.name.length-1; i++){
+    for(var i=0; i<=wordy.length-1; i++){
       if(colors[i] != 3){
         for(var j=0; j<=clientWord.length-1; j++){
-          if(j != i && colors[j] != 3 && clientWord[j] == word.word.name[i]){
+          if(j != i && colors[j] != 3 && clientWord[j] == wordy.name[i]){
             colors[j] = 2;
           }
         }
@@ -231,8 +231,7 @@ app.post('/process', function(req, res){
   req.flash("yourword", clientWord);
   req.flash("colors", colors)
   res.redirect('/');
-
-
+  })
 
 
 });
@@ -278,7 +277,6 @@ app.get('/leaderboard', (req, res) => {
     people = null;
   })
 })
-
 app.get('/hide/:status', (req, res) => {
   if(req.isAuthenticated()){
     let email = req.user._json.email;

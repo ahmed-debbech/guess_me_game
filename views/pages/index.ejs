@@ -166,44 +166,47 @@
         <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <input type="submit" style="font-size: 30px;"  value="👍">
-          <br><a style=" color: #cadad5;" ><span id="charsNum">0</span>/10</a>
+          <br><a style=" color: #cadad5;" ><span id="charsNum">0</span></a>
         </form>
-        <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
+        <!--<span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>-->
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with you facebook account</p>
-          <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: rgb(62, 62, 255); font-size: 25px; border-radius: 5%; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
+          <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: #0078ff; font-size: 25px; border-radius: 5%; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
         <% } %>
 
 
 
         <br><br><br>
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" >You GUESS the RIGHT original word you EARN <span style="color:aqua">points</span> (comming soon~)</p>
-        <p style="color: #cadad5;" >* the word contains 10 caracters (not case sensitive)</p>
-        <p style="color: #cadad5;" >* the word has digits and letters from a to z and special symbols (excluding non-printed caracters)</p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT original word you EARN <span style="color:aqua">points</span> (points = number of characters)</p>
+        <p style="color: #cadad5;" >* the word is an english word (not case sensitive)</p>
+        <p style="color: #cadad5;" >* the first player to guess the word earns its points and a new word is generated ... and so on</p>
+        <p style="color: #cadad5;" >* <b>   PS </b>: If you don't want to appear in the Leaderboard page just <span style="color:aqua">hide</span> your name using the switch above</p>
         <p style="color: #cadad5;" >* that's it! enjoy</p>
         <p style="color: #cadad5;" >* Oh! btw you won't find anything in javascript files so don't bother 😏</p>
         
+        <br>
         <h1 style="color: #cadad5;" id="msg" >~THE RULES~</h1>
-        <p style="color: #cadad5;" >if a caracter you set is in its right place like the original word the square becomes <span style="color: #538d4e;">green</span> </p>
-        <p style="color: #cadad5;" >if a caracter you set is NOT in its right place like the original word the square becomes <span style="color: #b59f3b;">orange</span> </p>
-        <p style="color: #cadad5;" >if a caracter you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
+        <p style="color: #cadad5;" >if a character you set is in its right place like the original word the square becomes <span style="color: #538d4e;">green</span> </p>
+        <p style="color: #cadad5;" >if a character you set is NOT in its right place like the original word the square becomes <span style="color: #b59f3b;">orange</span> </p>
+        <p style="color: #cadad5;" >if a character you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
         
+        <br><br>
         <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
-        <h6 style="margin-top: 10%; font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
+        <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
     
 
 
         <script>
             function gett(word){
-                if(word.length != 10){
-                    document.getElementById("err").style.display = "block";
-                }else{
+                //if(word.length != 10){
+                    //document.getElementById("err").style.display = "block";
+                //}else{
                     document.getElementById("form").submit();
-                }
+                //}
             }
               document.getElementById("pass").addEventListener('input', (e) =>{
-                if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                //if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                   document.getElementById("charsNum").innerHTML= e.target.value.length;
               } );
           
