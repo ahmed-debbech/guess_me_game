@@ -197,13 +197,13 @@
 
               document.getElementById("hides").
               addEventListener('change' , () => {
-                <% if(logUser != null) { %>
+                 if(logUser != null) {
                   if(document.getElementById("hides").checked){
                     location.href="/hide/<%= logUser.email %>/1";
                   }else{
                     location.href="/hide/<%= logUser.email %>/0";
                   }
-                <% } %>
+                }
               });
             }
         </script>
