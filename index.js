@@ -74,31 +74,57 @@ app.get('/', (req, res) => {
   if(req.isAuthenticated()){
     auth = true;
     users.findUserByEmail(req.user._json.email).then(user => {
-      loguser.hidden = user.hidden;
-      loguser = req.user._json;
-      console.log(loguser);
-      if(colors.length == 0 && !yourword){
-        res.render('index',
-        {
-          logUser : loguser,
-          auth,
-          colors: null,
-          yourword : null,
-          won: won
-        })
+      if(user.length != 0){
+        loguser = req.user._json;
+        loguser.hidden = user.hidden;
+        
+        console.log("User is logged in and email is found " + loguser);
+        if(colors.length == 0 && !yourword){
+          res.render('index',
+          {
+            logUser : loguser,
+            auth,
+            colors: null,
+            yourword : null,
+            won: won
+          })
+        }else{
+          var cc = yourword;
+          res.render('index', 
+          {
+            logUser : loguser,
+            auth,
+            colors: colors,
+            yourword : cc[0],
+            won: won
+          })
+        }
       }else{
-        var cc = yourword;
-        res.render('index', 
-        {
-          logUser : loguser,
-          auth,
-          colors: colors,
-          yourword : cc[0],
-          won: won
-        })
+        console.log("User is logged in but email is not found")
+        if(colors.length == 0 && !yourword){
+          res.render('index',
+          {
+            logUser : loguser,
+            auth,
+            colors: null,
+            yourword : null,
+            won: won
+          })
+        }else{
+          var cc = yourword;
+          res.render('index', 
+          {
+            logUser : loguser,
+            auth,
+            colors: colors,
+            yourword : cc[0],
+            won: won
+          })
+        }
       }
     })
   }else{
+    console.log("user is not logged in")
     if(colors.length == 0 && !yourword){
       res.render('index',
       {

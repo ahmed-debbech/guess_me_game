@@ -15,6 +15,7 @@ function exists(user){
 function addUser(useer) {
   exists(useer).then(async (user) =>{
     if(user.length == 0){
+      useer.hidden = 0;
       return await db("uuser").insert(useer);
     }
   })
