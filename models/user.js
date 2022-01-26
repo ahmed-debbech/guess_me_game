@@ -22,7 +22,7 @@ function addUser(useer) {
   })
 }
 async function updateScore(emailString, points){
-  return await db("uuser").where({email: emailString}).update({solvedWords : db.raw('solvedWords + 1'), points: db.raw('points + ' + points)})
+  return await db("uuser").where({email: emailString}).increment({'points': points ,'solvedWords': 1});
 }
 function findUserByEmail(email){
   return db("uuser").where({email : email}).select();
