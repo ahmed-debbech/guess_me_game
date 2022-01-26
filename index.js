@@ -210,13 +210,15 @@ app.post('/process', function(req, res){
     //great job
     console.log("good job");
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
-    users.updateScore(req.user._json.email, 11).then(user =>{
+    console.log("wordy length " + wordy.length)
+    users.updateScore(req.user._json.email, wordy.length).then(user =>{
       console.log("updated successfully")
       word.word.newWord();
       req.flash("yourword", clientWord);
       req.flash("won", "true")
       res.redirect('/');
     }).catch(err => {
+      console.log("ERRRRROR")
       console.log(err);
     })
   
