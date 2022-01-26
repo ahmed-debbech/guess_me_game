@@ -21,7 +21,7 @@ function newWord(){
     console.log("enters");
     const options = {
     method: 'GET',
-    url: 'https://random-word-api.herokuapp.com/word?number=1&swear=0'
+    url: process.env.WORDS_GENERATOR
     };
     
     axios.request(options).then(function (response) {
