@@ -192,6 +192,20 @@ app.get('/user', (req,res)=> {
     res.status(500).json({message : "no user could be retrieved"})
   })
 })
+app.get('/winner', (req, res) => {
+  var length = req.flash("length");
+  var yourword = req.flash("yourword");
+  var won = req.flash("won")
+  var logUser = req.flash("logUser");
+  res.render('won',
+    {
+      length,
+      logUser,
+      yourword : null,
+      won: won
+    }
+  );
+})
 app.post('/process', function(req, res){
   console.log("word: " + req.body);
   if(req.isAuthenticated()){
@@ -215,7 +229,9 @@ app.post('/process', function(req, res){
       wordd.word.newWord();
       req.flash("yourword", clientWord);
       req.flash("won", "true")
-      res.redirect('/');
+      req.flash("length", clientWord.length)
+      req.flash("logUser", req.user._json);
+      res.redirect('/winner');
     }).catch(err => {
       console.log(err);
     })

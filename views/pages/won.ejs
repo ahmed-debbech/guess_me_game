@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <style>
+            button{
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+            body{
+                background-color: #121213;
+            }
+            
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <center>
+    <body>
+    
+
+        <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
+      
+        <br> <br>
+        <% if (Object.keys(logUser).length != 0) { %>
+        <div style="overflow-x: auto;">
+          <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
+          <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
+          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+        
+        </div>
+      
+        <% } %>
+        
+        <% if(won == "true"){ %>
+        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word: <%= yourword %></h1>
+        <h2 style="color:aqua">You earned <span id="numPoints"><%= length %></span> points!!! 🥳</h2>
+        <% } %>
+
+          <p style=" color: #cadad5;" >A new word has been generated try to solve it before anyone does 😉 </p>
+          <button class="btn" target="_blank" id="login" onclick="location.href='/'" style="background-color: aqua; font-size: 25px; border-radius: 5%; border-color: transparent;">Replay</button>
+
+
+
+        <br><br><br>
+     
+        <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
+    
+    </body>
+    </center>
+</html>
+<!-- HAHAHA!! what a looser, you won't find anything here baby <3 -->
