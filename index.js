@@ -64,7 +64,7 @@ passport.deserializeUser(function(obj, done) {
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 app.get('/t', (req, res) => {
-  word.word.newWord();
+  wordd.word.newWord();
 })
 
 app.get('/', (req, res) => {
@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
   console.log("params: " + colors + " | " + yourword);
   let auth = false;
   let loguser = {};
-  word.word.getCurrent().then(word => {
+  wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
     let wordy = word[0].name;
   if(req.isAuthenticated()){
@@ -166,7 +166,7 @@ app.get('/xds/:pass', function(req, res){
   console.log("pass: " + req.params.pass);
 
   if(req.params.pass == "ahmeds4s4"){
-    word.word.getCurrent().then(word => {
+    wordd.word.getCurrent().then(word => {
       res.send(word);
     })
   }else{
@@ -195,7 +195,7 @@ app.get('/user', (req,res)=> {
 app.post('/process', function(req, res){
   console.log("word: " + req.body);
   if(req.isAuthenticated()){
-  word.word.getCurrent().then(word => {
+  wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
 
   console.log(word[0].name)
