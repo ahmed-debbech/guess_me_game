@@ -38,10 +38,11 @@ passport.use(
     function(accessToken, refreshToken, profile, done) {
       const { email, first_name, last_name, picture } = profile._json;
       const userData = {
-        email,
+        email : email,
         name: first_name + " " + last_name,
         photoLink : picture.data.url
       };
+      console.log("inside strategy :")
       console.log(userData);
       users.addUser(userData)
       done(null, profile);
