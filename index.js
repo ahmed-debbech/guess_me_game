@@ -84,6 +84,7 @@ app.get('/', (req, res) => {
       if(Object.keys(user[0]).length != 0){
         loguser = req.user._json;
         loguser.hidden = user[0].hidden;
+        loguser.points = user[0].points;
         
         console.log("User is logged in and email is found " );
         console.log(loguser);
