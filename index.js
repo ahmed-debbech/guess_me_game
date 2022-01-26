@@ -4,7 +4,7 @@ const path = require('path')
 let ejs = require('ejs');
 const bodyParser = require('body-parser')
 var flash = require('connect-flash');
-var word = require('./models/word');
+var wordd = require('./models/word');
 const sessions = require('express-session');
 const users = require('./models/user');
 const passport = require("passport");
@@ -212,7 +212,7 @@ app.post('/process', function(req, res){
     fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
     users.updateScore(req.user._json.email, wordy.length).then(user =>{
       console.log("updated successfully")
-      word.word.newWord();
+      wordd.word.newWord();
       req.flash("yourword", clientWord);
       req.flash("won", "true")
       res.redirect('/');
