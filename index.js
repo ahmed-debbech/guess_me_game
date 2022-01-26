@@ -270,7 +270,7 @@ app.post('/process', function(req, res){
   }
 
 });
-app.get("/auth/fb", passport.authenticate("facebook"));
+app.get("/auth/fb", passport.authenticate("facebook", {scope: ["email", "name", "photos"]}));
 app.get("/auth/fb/callback",
   passport.authenticate("facebook", {
     successRedirect: "/auth/success",
