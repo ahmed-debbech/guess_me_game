@@ -201,8 +201,8 @@ app.get('/winner', (req, res) => {
     {
       length,
       logUser,
-      yourword : null,
-      won: won
+      yourword,
+      won
     }
   );
 })
