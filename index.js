@@ -66,7 +66,7 @@ passport.deserializeUser(function(obj, done) {
 
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
-app.get('/t', (req, res) => {
+app.get('/xds', (req, res) => {
   wordd.word.newWord();
 })
 
@@ -75,7 +75,7 @@ app.get('/', (req, res) => {
   var colors = req.flash("colors");
   var yourword = req.flash("yourword");
   var won = req.flash("won");
-  console.log("params: " + colors + " | " + yourword);
+  //console.log("params: " + colors + " | " + yourword);
   let auth = false;
   let loguser = {};
   wordd.word.getCurrent().then(word => {
@@ -90,8 +90,8 @@ app.get('/', (req, res) => {
         loguser.hidden = user[0].hidden;
         loguser.points = user[0].points;
         
-        console.log("User is logged in and email is found " );
-        console.log(loguser);
+        //console.log("User is logged in and email is found " );
+        //console.log(loguser);
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
@@ -117,7 +117,7 @@ app.get('/', (req, res) => {
           })
         }
       }else{
-        console.log("User is logged in but email is not found")
+        //console.log("User is logged in but email is not found")
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
@@ -145,7 +145,7 @@ app.get('/', (req, res) => {
       }
     })
   }else{
-    console.log("user is not logged in")
+    //console.log("user is not logged in")
     if(colors.length == 0 && !yourword){
       res.render('index',
       {
@@ -241,7 +241,7 @@ app.post('/process', function(req, res){
   wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
 
-  console.log(word[0].name)
+  //console.log(word[0].name)
   let wordy = word[0].name;
   let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
 
@@ -286,7 +286,7 @@ app.post('/process', function(req, res){
         colors[i] = 1;
       }
     }
-    console.log(colors);
+    //console.log(colors);
   }
   req.flash("yourword", clientWord);
   req.flash("colors", colors)
@@ -325,7 +325,7 @@ app.get('/leaderboard', (req, res) => {
   .then(user => {
     console.log("201 added")
     people = user;
-    console.log(people);
+    //console.log(people);
     res.render('leaderboard',{
       people,
       auth,
