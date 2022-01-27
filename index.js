@@ -233,8 +233,11 @@ app.get("/solved", (req, res) => {
   res.render('solved');
 })
 app.post('/process', function(req, res){
-  console.log("word: " + req.body);
+  console.log("word: ");
+  console.log(req.body);
+
   if(req.isAuthenticated()){
+    console.log("[USER] " + req.user._json.first_name + " " + req.user._json.last_name + " is trying ...")
   wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
 
