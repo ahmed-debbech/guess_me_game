@@ -80,6 +80,7 @@ app.get('/', (req, res) => {
   let loguser = {};
   wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
+    
     let wordy = word[0].name;
   if(req.isAuthenticated()){
     auth = true;
@@ -94,6 +95,7 @@ app.get('/', (req, res) => {
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
+            word_id :word[0].id,
             length : wordy.length,
             logUser : loguser,
             auth,
@@ -105,6 +107,7 @@ app.get('/', (req, res) => {
           var cc = yourword;
           res.render('index', 
           {
+            word_id :word[0].id,
             length : wordy.length,
             logUser : loguser,
             auth,
@@ -118,6 +121,7 @@ app.get('/', (req, res) => {
         if(colors.length == 0 && !yourword){
           res.render('index',
           {
+            word_id :word[0].id,
             length : wordy.length,
             logUser : loguser,
             auth,
@@ -129,6 +133,7 @@ app.get('/', (req, res) => {
           var cc = yourword;
           res.render('index', 
           {
+            word_id :word[0].id,
             length : wordy.length,
             logUser : loguser,
             auth,
@@ -144,6 +149,7 @@ app.get('/', (req, res) => {
     if(colors.length == 0 && !yourword){
       res.render('index',
       {
+        word_id :word[0].id,
         length : wordy.length,
         logUser : loguser,
         auth,
@@ -155,6 +161,7 @@ app.get('/', (req, res) => {
       var cc = yourword;
       res.render('index', 
       {
+        word_id :word[0].id,
         length : wordy.length,
         logUser : loguser,
         auth,
@@ -209,6 +216,21 @@ app.get('/winner', (req, res) => {
       won
     }
   );
+})
+app.get('/done/:id', (req, res) => {
+    console.log("checking if word is solved");
+    wordd.word.getById(req.params['id']).then(word => {
+      console.log( word[0]);
+      if(word[0].solvedOn != '-'){
+        console.log("the word with id is solved");
+        res.send("1");
+      }else{
+        console.log("the word IS NOT solved yet");
+      }
+    })
+})
+app.get("/solved", (req, res) => {
+  res.render('solved');
 })
 app.post('/process', function(req, res){
   console.log("word: " + req.body);

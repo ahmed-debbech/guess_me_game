@@ -15,7 +15,9 @@ async function add(word){
 function getCurrent(){
     return db("word").where({solvedOn: "-"}).select();
 }
-
+function getById(id){
+    return db("word").where({id: id}).select();
+}
 var name = "0000000000";
 function newWord(){
     console.log("enters");
@@ -34,4 +36,4 @@ function newWord(){
     });
 }  
 // export it
-exports.word = {name, newWord, getCurrent}
+exports.word = {name, newWord, getCurrent, getById}

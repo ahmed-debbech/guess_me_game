@@ -86,10 +86,11 @@
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Guess me!</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       </head>
     <center>
-    <body>
-    
+    <body onload="load();">
+        <input id="word_id" type="hidden" value="<%= word_id %>"/>
 
         <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
       
@@ -204,7 +205,25 @@
                 //if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                   document.getElementById("charsNum").innerHTML= e.target.value.length;
               } );
-          
+              
+
+        </script>
+        <script>
+          function load(){
+            function check(){
+                //location.href="/done/"+document.getElementById("word_id").value;
+                //window.history.pushState({ additionalInformation: 'Updated the URL with JS' }, "", "/done/"+document.getElementById("word_id").value);
+                $.ajax({
+                  url: "/done/"+document.getElementById("word_id").value,
+                  context: document.body
+                }).done(function(data) {
+                  if(data == "1"){
+                    location.href="/solved"
+                  }
+                });
+              }
+              window.setInterval(check, 2000);
+          }
         </script>
     </body>
     </center>
