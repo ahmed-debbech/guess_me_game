@@ -160,7 +160,7 @@
         <% if(auth == true ) { %>
         
         <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
-          <% if(yourword.length != 0){ %>
+          <% if(yourword){ %>
           <input value="<%= yourword %>" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
             <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
