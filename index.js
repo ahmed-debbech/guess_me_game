@@ -218,9 +218,9 @@ app.get('/winner', (req, res) => {
   );
 })
 app.get('/done/:id', (req, res) => {
-    console.log("checking if word is solved");
+    //console.log("checking if word is solved");
     wordd.word.getById(req.params['id']).then(word => {
-      console.log( word[0]);
+      //console.log( word[0]);
       if(word[0].solvedOn != '-'){
         console.log("the word with id is solved");
         res.send("1");
