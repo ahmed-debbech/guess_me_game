@@ -206,14 +206,14 @@
 
         <script>
             function gett(word){
-                if(word.length != document.getElementById("actualLen").value.length){
+                if(word.length != document.getElementById("actualLen").value){
                     document.getElementById("err").style.display = "block";
                 }else{
                     document.getElementById("form").submit();
                 }
             }
             document.getElementById("pass").addEventListener('input', (e) =>{
-                if(e.target.value.length > document.getElementById("actualLen").value.length) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                if(e.target.value.length > document.getElementById("actualLen").value) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                 document.getElementById("charsNum").innerHTML= e.target.value.length;
             } );
         </script>
