@@ -166,6 +166,7 @@
             <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% } %>
           <input type="submit" style="font-size: 30px;"  value="👍">
+          <input type="hidden" value = "<%= length %>" id="actualLen"/>
           <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
@@ -205,14 +206,14 @@
 
         <script>
             function gett(word){
-                if(word.length != length){
+                if(word.length != document.getElementById("actualLen").value.length){
                     document.getElementById("err").style.display = "block";
                 }else{
                     document.getElementById("form").submit();
                 }
             }
             document.getElementById("pass").addEventListener('input', (e) =>{
-                if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                if(e.target.value.length > document.getElementById("pass").value.length) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                 document.getElementById("charsNum").innerHTML= e.target.value.length;
             } );
         </script>
