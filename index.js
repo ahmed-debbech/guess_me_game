@@ -7,6 +7,7 @@ var flash = require('connect-flash');
 var wordd = require('./models/word');
 const sessions = require('express-session');
 const users = require('./models/user');
+const utils = require('./utils')
 const passport = require("passport");
 const strategy = require("passport-facebook");
 const fbStrategy = strategy.Strategy;
@@ -197,14 +198,26 @@ app.get('/winner', (req, res) => {
   var yourword = req.flash("yourword");
   var won = req.flash("won")
   var logUser = req.flash("logUser");
-  res.render('won',
-    {
-      length,
-      logUser,
-      yourword,
-      won
+  users.isLimited(logUser.email).then(user =>{
+    if(user.length == 0){
+      res.render('won',
+      {
+        length : 100,
+        logUser,
+        yourword,
+        won
+      });
+    }else{
+      res.render('won',
+      {
+        length,
+        logUser,
+        yourword,
+        won
+      });
     }
-  );
+    
+  })
 })
 app.get('/done/:id', (req, res) => {
     //console.log("checking if word is solved");
@@ -261,34 +274,13 @@ app.post('/process', function(req, res){
         
         }else{
           fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
-          for(var i =0; i<=clientWord.length-1; i++){
-            if(clientWord[i] ==wordy[i]){
-              colors[i] = 3;
-            }
-          }
-          for(var i=0; i<=wordy.length-1; i++){
-            if(colors[i] != 3){
-              for(var j=0; j<=clientWord.length-1; j++){
-                if(j != i && colors[j] != 3 && clientWord[j] == wordy[i]){
-                  colors[j] = 2;
-                }
-              }
-            }
-          }
-          for(var i=0; i<=colors.length-1; i++){
-            if(colors[i] != 3 && colors[i] != 2){
-              colors[i] = 1;
-            }
-          }
+          colors = utils.checkWord(clientWord, wordy);
           //console.log(colors);
         }
         req.flash("yourword", clientWord);
         req.flash("colors", colors)
         res.redirect('/');
         })
-      }else{
-        console.log("[WARNING] a limited user tried to access")
-        res.send("Sorry your account is limited :(")
       }
     })
   }
