@@ -11,7 +11,7 @@ module.exports = {
 };
 
 function isLimited(email){
-  return db("uuser").where({email: user.email, limited: 1});
+  return db("uuser").where({email: email, limited: 1});
 }
 function exists(user){
   return db("uuser").where({email: user.email});
