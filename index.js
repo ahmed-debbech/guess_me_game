@@ -322,7 +322,6 @@ app.get('/leaderboard', (req, res) => {
   let people = null;
   users.findAllSortByPoints()
   .then(user => {
-    console.log("201 added")
     people = user;
     //console.log(people);
     res.render('leaderboard',{
