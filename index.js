@@ -236,7 +236,7 @@ app.post('/process', function(req, res){
       if(word.length == 0) return;
 
       //console.log(word[0].name)
-      let wordy = word[0].name;
+      let wordy = word[0].name.toLowerCase();
       let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
 
       const clientWord = req.body.pass.toLowerCase();
