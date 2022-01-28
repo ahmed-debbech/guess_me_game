@@ -198,26 +198,14 @@ app.get('/winner', (req, res) => {
   var yourword = req.flash("yourword");
   var won = req.flash("won")
   var logUser = req.flash("logUser");
-  users.isLimited(logUser.email).then(user =>{
-    if(user.length == 0){
-      res.render('won',
-      {
-        length : 100,
-        logUser,
-        yourword,
-        won
-      });
-    }else{
-      res.render('won',
-      {
-        length,
-        logUser,
-        yourword,
-        won
-      });
-    }
-    
-  })
+
+  res.render('won',
+  {
+    length,
+    logUser,
+    yourword,
+    won
+  });
 })
 app.get('/done/:id', (req, res) => {
     //console.log("checking if word is solved");
@@ -243,45 +231,47 @@ app.post('/process', function(req, res){
   if(req.isAuthenticated()){
     console.log("[USER] " + req.user._json.first_name + " " + req.user._json.last_name + " is trying ...")
     
-    users.isLimited(req.user._json.email).then(user =>{
-      if(user.length == 0){
-        wordd.word.getCurrent().then(word => {
-        if(word.length == 0) return;
+    users.isLimited(req.user._json.email).then(uuser =>{
+      wordd.word.getCurrent().then(word => {
+      if(word.length == 0) return;
 
-        //console.log(word[0].name)
-        let wordy = word[0].name;
-        let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
+      //console.log(word[0].name)
+      let wordy = word[0].name;
+      let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
 
-        const clientWord = req.body.pass.toLowerCase();
-        if(clientWord.length != wordy.length){
-          res.send('not ' +wordy.length+ ' caracters! go back <-')
-        }
-        if(wordy == clientWord){
-          //great job
-          console.log("good job");
-          fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
-          users.updateScore(req.user._json.email, wordy.length).then(user =>{
-            console.log("updated successfully")
-            wordd.word.newWord();
-            req.flash("yourword", clientWord);
-            req.flash("won", "true")
-            req.flash("length", clientWord.length)
-            req.flash("logUser", req.user._json);
-            res.redirect('/winner');
-          }).catch(err => {
-            console.log(err);
-          })
-        
-        }else{
-          fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
-          colors = utils.checkWord(clientWord, wordy);
-          //console.log(colors);
-        }
-        req.flash("yourword", clientWord);
-        req.flash("colors", colors)
-        res.redirect('/');
-        })
+      const clientWord = req.body.pass.toLowerCase();
+      if(clientWord.length != wordy.length){
+        res.send('not ' +wordy.length+ ' caracters! go back <-')
       }
+      if(wordy == clientWord){
+        //great job
+        console.log("good job");
+        fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
+        users.updateScore(req.user._json.email, wordy.length).then(user =>{
+          console.log("updated successfully")
+          wordd.word.newWord();
+          req.flash("yourword", clientWord);
+          req.flash("won", "true")
+          if(uuser.length == 0){
+            req.flash("length", 100)
+          }else{
+            req.flash("length", clientWord.length)
+          }
+          req.flash("logUser", req.user._json);
+          res.redirect('/winner');
+        }).catch(err => {
+          console.log(err);
+        })
+      
+      }else{
+        fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
+        colors = utils.checkWord(clientWord, wordy);
+        //console.log(colors);
+      }
+      req.flash("yourword", clientWord);
+      req.flash("colors", colors)
+      res.redirect('/');
+      })
     })
   }
 
