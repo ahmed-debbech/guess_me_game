@@ -256,12 +256,12 @@ app.post('/process', function(req, res){
         users.updateScore(req.user._json.email, score).then(user =>{
           console.log("updated successfully")
           wordd.word.newWord();
-          req.flash("yourword", clientWord);
+          req.flash("yourword", score);
           req.flash("won", "true")
           if(uuser.length == 0){
             req.flash("length", 100)
           }else{
-            req.flash("length", clientWord.length)
+            req.flash("length", score)
           }
           req.flash("logUser", req.user._json);
           res.redirect('/winner');
