@@ -166,9 +166,9 @@
             <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% } %>
           <input type="submit" style="font-size: 30px;"  value="👍">
-          <br><a style=" color: #cadad5;" ><span id="charsNum"><%= length %></span></a>
+          <br><a style=" color: #cadad5;" ><span id="charsNum"><%= document.getElementById("pass").value.length %></span>/<%= length %></a>
         </form>
-        <!--<span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>-->
+        <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with you facebook account</p>
           <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: #0078ff; font-size: 25px; border-radius: 5%; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
@@ -205,34 +205,31 @@
 
         <script>
             function gett(word){
-                //if(word.length != 10){
-                    //document.getElementById("err").style.display = "block";
-                //}else{
+                if(word.length != length){
+                    document.getElementById("err").style.display = "block";
+                }else{
                     document.getElementById("form").submit();
-                //}
+                }
             }
-              document.getElementById("pass").addEventListener('input', (e) =>{
-                //if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
-                  document.getElementById("charsNum").innerHTML= e.target.value.length;
-              } );
-              
-
+            document.getElementById("pass").addEventListener('input', (e) =>{
+                if(e.target.value.length > 10) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                document.getElementById("charsNum").innerHTML= e.target.value.length;
+            } );
         </script>
+
         <script>
           function load(){
             function check(){
-                //location.href="/done/"+document.getElementById("word_id").value;
-                //window.history.pushState({ additionalInformation: 'Updated the URL with JS' }, "", "/done/"+document.getElementById("word_id").value);
-                $.ajax({
-                  url: "/done/"+document.getElementById("word_id").value,
-                  context: document.body
-                }).done(function(data) {
-                  if(data == "1"){
-                    location.href="/solved"
-                  }
-                });
-              }
-              window.setInterval(check, 2000);
+              $.ajax({
+                url: "/done/"+document.getElementById("word_id").value,
+                context: document.body
+              }).done(function(data) {
+                if(data == "1"){
+                  location.href="/solved"
+                }
+              });
+            }
+            window.setInterval(check, 2000);
           }
         </script>
     </body>
