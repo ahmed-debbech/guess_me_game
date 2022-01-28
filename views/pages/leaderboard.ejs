@@ -26,6 +26,16 @@
                 border-spacing: 10px;
                 *border-collapse: expression('separate', cellSpacing='50px');
             }
+            .badge {
+                display: inline-block;
+                min-width: 1em; /* em unit */
+                padding: 4px; /* em unit */
+                border-radius: 10%;
+                font-size: 10px;
+                text-align: center;
+                font-weight: bold;
+                color: #fefefe;
+            }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Guess me! | Leaderboard</title>    
@@ -55,6 +65,7 @@
                 <td style="color: #FFE800">Name</td>
                 <td style="color: #FFE800 ">Points</td>
                 <td style="color: #FFE800">Words solved</td>
+                <td style="color: #FFE800">Badges</td>
             </th>
             <% if(people != null) { %>
             <% for (var i=0; i<=people.length-1; i++) { %>
@@ -65,6 +76,11 @@
                 <td class="glow"><%= people[i].name %></td>
                 <td><%= people[i].points %></td>
                 <td><%= people[i].solvedWords %></td>
+                <td>
+                    <% if(people[i].limited == 1) %>
+                    <span style="background: red;" class="badge">LIMITED</span>
+                    <% } %>
+                </td>
                 <% }else{ %>
                     <td><img width="52px" height="52px" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255634-stock-illustration-avatar-icon-male-profile-gray.jpg" /></td>
                     <td class="glow">Hidden</td>

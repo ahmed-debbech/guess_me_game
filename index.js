@@ -37,7 +37,6 @@ passport.use(
     },
     function(accessToken, refreshToken, profile, done) {
       const { email, first_name, last_name, picture } = profile._json;
-      console.log("dddddd")
       console.log(profile._json)
       const userData = {
         email : email,
@@ -184,16 +183,6 @@ app.get('/xds/:pass', function(req, res){
     res.send("Failed")
   }
 });
-app.post('/user', (req,res)=> {
-  console.log(req.body);
-  users.addUser(req.body)
-  .then(user => {
-    res.status(201).json(user);
-  })
-  .catch(error =>{
-    res.status(500).json({message : "could not add new user"})
-  })
-})
 app.get('/user', (req,res)=> {
   users.findAllUsers()
   .then(user => {
@@ -219,15 +208,17 @@ app.get('/winner', (req, res) => {
 })
 app.get('/done/:id', (req, res) => {
     //console.log("checking if word is solved");
-    wordd.word.getById(req.params['id']).then(word => {
-      //console.log( word[0]);
-      if(word[0].solvedOn != '-'){
-        console.log("the word with id is solved");
-        res.send("1");
-      }else{
-        console.log("the word IS NOT solved yet");
-      }
-    })
+    if(req.isAuthenticated()){
+      wordd.word.getById(req.params['id']).then(word => {
+        //console.log( word[0]);
+        if(word[0].solvedOn != '-'){
+          console.log("the word with id is solved");
+          res.send("1");
+        }else{
+          console.log("the word IS NOT solved yet");
+        }
+      })
+    }
 })
 app.get("/solved", (req, res) => {
   res.render('solved');
@@ -238,60 +229,68 @@ app.post('/process', function(req, res){
 
   if(req.isAuthenticated()){
     console.log("[USER] " + req.user._json.first_name + " " + req.user._json.last_name + " is trying ...")
-  wordd.word.getCurrent().then(word => {
-    if(word.length == 0) return;
+    
+    users.isLimited(req.user._json.email).then(user =>{
+      if(user.length == 0){
+        wordd.word.getCurrent().then(word => {
+        if(word.length == 0) return;
 
-  //console.log(word[0].name)
-  let wordy = word[0].name;
-  let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
+        //console.log(word[0].name)
+        let wordy = word[0].name;
+        let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
 
-  const clientWord = req.body.pass.toLowerCase();
-  if(clientWord.length != wordy.length){
-    res.send('not ' +wordy.length+ ' caracters! go back <-')
-  }
-  if(wordy == clientWord){
-    //great job
-    console.log("good job");
-    fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
-    users.updateScore(req.user._json.email, wordy.length).then(user =>{
-      console.log("updated successfully")
-      wordd.word.newWord();
-      req.flash("yourword", clientWord);
-      req.flash("won", "true")
-      req.flash("length", clientWord.length)
-      req.flash("logUser", req.user._json);
-      res.redirect('/winner');
-    }).catch(err => {
-      console.log(err);
-    })
-  
-  }else{
-    fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
-    for(var i =0; i<=clientWord.length-1; i++){
-      if(clientWord[i] ==wordy[i]){
-        colors[i] = 3;
-      }
-    }
-    for(var i=0; i<=wordy.length-1; i++){
-      if(colors[i] != 3){
-        for(var j=0; j<=clientWord.length-1; j++){
-          if(j != i && colors[j] != 3 && clientWord[j] == wordy[i]){
-            colors[j] = 2;
-          }
+        const clientWord = req.body.pass.toLowerCase();
+        if(clientWord.length != wordy.length){
+          res.send('not ' +wordy.length+ ' caracters! go back <-')
         }
+        if(wordy == clientWord){
+          //great job
+          console.log("good job");
+          fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
+          users.updateScore(req.user._json.email, wordy.length).then(user =>{
+            console.log("updated successfully")
+            wordd.word.newWord();
+            req.flash("yourword", clientWord);
+            req.flash("won", "true")
+            req.flash("length", clientWord.length)
+            req.flash("logUser", req.user._json);
+            res.redirect('/winner');
+          }).catch(err => {
+            console.log(err);
+          })
+        
+        }else{
+          fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
+          for(var i =0; i<=clientWord.length-1; i++){
+            if(clientWord[i] ==wordy[i]){
+              colors[i] = 3;
+            }
+          }
+          for(var i=0; i<=wordy.length-1; i++){
+            if(colors[i] != 3){
+              for(var j=0; j<=clientWord.length-1; j++){
+                if(j != i && colors[j] != 3 && clientWord[j] == wordy[i]){
+                  colors[j] = 2;
+                }
+              }
+            }
+          }
+          for(var i=0; i<=colors.length-1; i++){
+            if(colors[i] != 3 && colors[i] != 2){
+              colors[i] = 1;
+            }
+          }
+          //console.log(colors);
+        }
+        req.flash("yourword", clientWord);
+        req.flash("colors", colors)
+        res.redirect('/');
+        })
+      }else{
+        console.log("[WARNING] a limited user tried to access")
+        res.send("Sorry your account is limited :(")
       }
-    }
-    for(var i=0; i<=colors.length-1; i++){
-      if(colors[i] != 3 && colors[i] != 2){
-        colors[i] = 1;
-      }
-    }
-    //console.log(colors);
-  }
-  req.flash("yourword", clientWord);
-  req.flash("colors", colors)
-  res.redirect('/');
-  })
+    })
   }
 
 });
