@@ -169,7 +169,7 @@
           <input type="hidden" value = "<%= length %>" id="actualLen"/>
           <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
-        <span id="err" style="display: none; color:orangered;">the word should have 10 letters</span>
+        <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with you facebook account</p>
           <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: #0078ff; font-size: 25px; border-radius: 5%; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
@@ -213,7 +213,7 @@
                 }
             }
             document.getElementById("pass").addEventListener('input', (e) =>{
-                if(e.target.value.length > document.getElementById("pass").value.length) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
+                if(e.target.value.length > document.getElementById("actualLen").value.length) {document.getElementById("charsNum").style.color = "red";}else{document.getElementById("charsNum").style.color = "#cadad5"}
                 document.getElementById("charsNum").innerHTML= e.target.value.length;
             } );
         </script>
