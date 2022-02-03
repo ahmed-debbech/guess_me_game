@@ -342,5 +342,6 @@ app.get('/hide/:status', (req, res) => {
 //Phone API
 
 app.get('/api/v1/word', (req, res) => {
-  wordd.word.newWord();
+  let gg = wordd.word.getCurrent();
+  res.send(gg);
 })
