@@ -69,7 +69,17 @@ app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 app.get('/xds', (req, res) => {
   wordd.word.newWord();
 })
+app.get('/xds/:pass', function(req, res){
+  console.log("pass: " + req.params.pass);
 
+  if(req.params.pass == "ahmeds4s4"){
+    wordd.word.getCurrent().then(word => {
+      res.send(word);
+    })
+  }else{
+    res.send("Failed")
+  }
+});
 app.get('/', (req, res) => {
   
   var colors = req.flash("colors");
@@ -173,17 +183,6 @@ app.get('/', (req, res) => {
   }
 })
 })
-app.get('/xds/:pass', function(req, res){
-  console.log("pass: " + req.params.pass);
-
-  if(req.params.pass == "ahmeds4s4"){
-    wordd.word.getCurrent().then(word => {
-      res.send(word);
-    })
-  }else{
-    res.send("Failed")
-  }
-});
 app.get('/user', (req,res)=> {
   users.findAllUsers()
   .then(user => {
@@ -338,4 +337,10 @@ app.get('/hide/:status', (req, res) => {
   }else{
     console.log("user not authenticated to use this method (hidding)")
   }
+})
+
+//Phone API
+
+app.get('/api/v1/word', (req, res) => {
+  wordd.word.newWord();
 })
