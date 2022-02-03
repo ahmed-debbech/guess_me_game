@@ -343,5 +343,5 @@ app.get('/hide/:status', (req, res) => {
 
 app.get('/api/v1/word', (req, res) => {
   let gg = wordd.word.getCurrent();
-  res.send(gg);
+  res.send(gg.name);
 })
