@@ -347,3 +347,15 @@ app.get('/api/v1/word', (req, res) => {
     res.send(ii);
   });
 })
+
+app.post('/api/v1/auth', (req, res) => {
+  console.log(req.body)
+  const userData = {
+    email : req.body.email,
+    name: req.body.first_name + " " + req.body.last_name,
+    photoLink : req.body.picture
+  };
+  console.log("inside strategy :")
+  console.log(userData);
+  users.addUser(userData)
+})
