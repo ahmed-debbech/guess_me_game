@@ -359,3 +359,17 @@ app.post('/api/v1/auth', (req, res) => {
   console.log(userData);
   users.addUser(userData)
 })
+app.get('/api/v1/user/:email', (req, res) => {
+  console.log("Asking for user from mobile : " + req.params.email)
+  users.findUserByEmail(req.params.email).then(user => {
+    if(user.length != 0){
+      if(Object.keys(user[0]).length != 0){
+        res.send(user[0]);
+      }
+    }else{
+      res.send({});
+    }
+  }).catch(error => {
+    console.log("error");
+  })
+})
