@@ -357,10 +357,8 @@ app.post('/api/v1/auth', (req, res) => {
   };
   console.log("inside strategy :")
   console.log(userData);
-  users.addUser(userData).then(user => {
-    console.log("User is either added or retreivid");
-    res.send(user);
-  })
+  users.addUser(userData)
+  res.send("done")
 })
 app.get('/api/v1/user/:email', (req, res) => {
   console.log("Asking for user from mobile : " + req.params.email)
