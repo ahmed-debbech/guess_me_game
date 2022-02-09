@@ -28,10 +28,7 @@ function issueJWT(user) {
 
   const signedToken = jsonwebtoken.sign(payload, 'secret', { expiresIn: expiresIn });
 
-  return {
-    token: signedToken,
-    expires: expiresIn
-  }
+  return signedToken
 }
 
 function checkWord(clientWord, wordy){
