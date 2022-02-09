@@ -453,7 +453,11 @@ app.post('/api/v1/process', function(req, res){
               
               }else{
                 colors = utils.checkWord(clientWord, wordy);
-                res.send(colors);
+                const result = {
+                  score : colors,
+                  won : 0
+                }
+                res.send(result);
               }
             })
           })        
