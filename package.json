@@ -11,16 +11,20 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "atob": "^2.1.2",
     "axios": "^0.25.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.5",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "knex": "^0.20.12",
     "node-fetch": "^3.2.0",
     "passport": "^0.5.2",
     "passport-facebook": "^3.0.0",
+    "passport-jwt": "^4.0.0",
     "pg": "^8.7.1",
     "sqlite3": "^4.1.1"
   },
