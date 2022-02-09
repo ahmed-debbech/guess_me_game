@@ -390,7 +390,7 @@ app.get('/api/v1/user/:email', (req, res) => {
       if(Object.keys(user[0]).length != 0){
         const y = {
           user : user[0],
-          token : utils.issueJWT(user[0])
+          token : utils.issueJWT(user[0]).toString()
         }
         res.send(y);
       }
