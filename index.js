@@ -366,7 +366,10 @@ app.get('/hide/:status', (req, res) => {
 
 app.get('/api/v1/word', (req, res) => {
   wordd.word.getCurrent().then(word => {
-    let ii = word[0].name;
+    let ii = {
+      name : word[0].name,
+      id : word[0].id
+    }
     res.send(ii);
   });
 })
@@ -475,3 +478,16 @@ app.post('/api/v1/process', function(req, res){
   tok(utils.parseJwt(token));
 
 });
+
+app.get('/api/v1/done/:id', (req, res) => {
+  //console.log("checking if word is solved");
+    wordd.word.getById(req.params['id']).then(word => {
+      //console.log( word[0]);
+      if(word[0].solvedOn != '-'){
+        console.log("the word with id is solved");
+        res.send("1");
+      }else{
+        console.log("the word IS NOT solved yet");
+      }
+    })
+})
