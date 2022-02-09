@@ -488,6 +488,7 @@ app.get('/api/v1/done/:id', (req, res) => {
         res.send("1");
       }else{
         console.log("the word IS NOT solved yet");
+        res.send("0")
       }
     })
 })
