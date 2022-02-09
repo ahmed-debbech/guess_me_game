@@ -1,6 +1,38 @@
 module.exports = {
-    checkWord
+    checkWord,
+    issueJWT,
+    parseJwt
 };
+var atob = require('atob');
+const jsonwebtoken = require('jsonwebtoken');
+
+function parseJwt (token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+};
+
+function issueJWT(user) {
+  const _id = user.email;
+
+  const expiresIn = '100d';
+
+  const payload = {
+    sub: _id,
+    iat: Date.now()
+  };
+
+  const signedToken = jsonwebtoken.sign(payload, 'secret', { expiresIn: expiresIn });
+
+  return {
+    token: signedToken,
+    expires: expiresIn
+  }
+}
 
 function checkWord(clientWord, wordy){
     let colors = new Array(wordy.length) // 3 green 2 orange 1 grey

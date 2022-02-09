@@ -9,7 +9,30 @@ const sessions = require('express-session');
 const users = require('./models/user');
 const utils = require('./utils')
 const passport = require("passport");
+var JwtStrategy = require('passport-jwt').Strategy;
+var ExtractJwt = require('passport-jwt').ExtractJwt;
+
+var opts = {}
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('Bearer');
+opts.secretOrKey = 'secret';
+opts.issuer = 'guessme2022.herokuapp.com/';
+opts.audience = 'https://guessme2022.herokuapp.com/';
+
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+  console.log("the email from payload: " + jwt_payload);
+  users.findUserByEmail(jwt_payload.sub).then(user => {
+      if (user.length != 0) {
+        console.log("they exist")
+        return done(null, user[0]);
+      } else {
+        console.log("they dont exist")
+        return done(null, false);
+      }
+  });
+}));
+
 const strategy = require("passport-facebook");
+
 const fbStrategy = strategy.Strategy;
 
 const PORT = process.env.PORT || 5000
@@ -365,12 +388,80 @@ app.get('/api/v1/user/:email', (req, res) => {
   users.findUserByEmail(req.params.email).then(user => {
     if(user.length != 0){
       if(Object.keys(user[0]).length != 0){
-        res.send(user[0]);
+        const y = {
+          user : user[0],
+          token : utils.issueJWT(user[0])
+        }
+        res.send(y);
       }
     }else{
       res.send({});
     }
   }).catch(error => {
-    console.log("error");
+    console.log(error);
   })
 })
+app.post('/api/v1/process', function(req, res){
+  console.log("email & word & token: ");
+  console.log(req.body);
+
+  var token = req.body.token
+  function tok (jwt_payload) {
+    console.log("the email from payload: " + jwt_payload);
+    users.findUserByEmail(jwt_payload.sub).then(user => {
+        if (user.length != 0) {
+          console.log("they exist")
+          users.findUserByEmail(req.body.email).then(uuser =>{
+            if(uuser.length == 0){
+              res.send("User does not exist")
+              return;
+            }
+            if(req.body.email != uuser[0].email){
+              res.send("You can not perform this")
+              return;
+            }
+            wordd.word.getCurrent().then(word => {
+              if(word.length == 0) return;
+        
+              let wordy = word[0].name.toLowerCase();
+              let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
+        
+              const clientWord = req.body.pass.toLowerCase();
+              if(clientWord.length != wordy.length){
+                res.send('not ' +wordy.length+ ' caracters! go back <-')
+              }
+              if(wordy == clientWord){
+                //great job
+                console.log("good job");
+                let score = 0;
+                if(uuser[0].limited != 1){ 
+                  score = 100
+                }else{
+                  score = wordy.length;
+                }
+                users.updateScore(req.body.email, score).then(user =>{
+                  console.log("updated successfully")
+                  wordd.word.newWord();
+                  const result = {
+                    score : score,
+                    won : 1
+                  }
+                  res.send(result)
+                }).catch(err => {
+                  console.log(err);
+                })
+              
+              }else{
+                colors = utils.checkWord(clientWord, wordy);
+                res.send(colors);
+              }
+            })
+          })        
+        } else {
+          console.log("they dont exist")
+        }
+    });
+  }
+  tok(utils.parseJwt(token));
+
+});
