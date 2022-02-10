@@ -87,12 +87,33 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title>Guess me!</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
       </head>
     <center>
     <body onload="load();">
         <input id="word_id" type="hidden" value="<%= word_id %>"/>
 
         <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
+      
+
+        <div style="position: absolute; right:0">
+          <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" style="color:white;" id="myModalLabel">New!!</h4>
+                    </div>
+                    <div class="modal-body">
+                      <h1 style="color:greenyellow;" >Try our new Android app <a target="_blank" href="https://www.mediafire.com/file/a51g1jqk7e9zzhg/guessme_v0.1.apk/file">here</a></h1>
+                      <h4 style="color:white;">1. download APK file</h4>
+                      <h4 style="color:white;">2. install it on your phone</h4>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
       
         <br> <br>
         <% if (Object.keys(logUser).length != 0) { %>
@@ -202,7 +223,7 @@
         <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
         <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
     
-
+      
 
         <script>
             function gett(word){
