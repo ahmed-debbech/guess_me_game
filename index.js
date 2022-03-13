@@ -2,6 +2,7 @@ const express = require('express')
 const fs = require('fs');
 const path = require('path')
 let ejs = require('ejs');
+const cors = require('cors');
 const bodyParser = require('body-parser')
 var flash = require('connect-flash');
 var wordd = require('./models/word');
@@ -38,7 +39,7 @@ const fbStrategy = strategy.Strategy;
 const PORT = process.env.PORT || 5000
 
 const app = express()
-
+app.use(cors())
 app.use(flash());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
