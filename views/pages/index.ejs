@@ -92,34 +92,7 @@
     <center>
     <body onload="load();">
         <input id="word_id" type="hidden" value="<%= word_id %>"/>
-
-        <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
-      
-
-        <div style="position: absolute; right:0">
-          <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" style="color:white;" id="myModalLabel">New!!</h4>
-                    </div>
-                    <div class="modal-body">
-                      <h1 style="color:greenyellow;" >Try our new Android app <a target="_blank" href="https://www.mediafire.com/file/a51g1jqk7e9zzhg/guessme_v0.1.apk/file">here</a></h1>
-<<<<<<< HEAD
-                      <h4 style="color:white;">1. download APK file</h4>
-                      <h4 style="color:white;">2. install it on your phone</h4>
-=======
-                      <h4 style="color:white;">1. Download APK file</h4>
-                      <h4 style="color:white;">2. Install it on your phone</h4>
->>>>>>> main
-                    </div>
-                </div>
-            </div>
-          </div>
-        </div>
-
-      
+        <h1><span onclick="location.href='/';" style="font-family: hubballiregular; color:aqua;">Guess me!</span></h1>
         <br> <br>
         <% if (Object.keys(logUser).length != 0) { %>
           <div>
@@ -154,7 +127,7 @@
         </div>
       
         <% } %>
-        <table style="margin-bottom:1%; color: #cadad5; border-color: aqua;" >
+        <table style="margin-bottom:1%; color: #cadad5; border-radius: 10px; border-color: aqua;" >
             <tr>
                 <% 
                   if(colors.length !=0 && yourword.length != 0){
@@ -198,20 +171,17 @@
         <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with you facebook account</p>
-          <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="background-color: #0078ff; font-size: 25px; border-radius: 5%; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
+          <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="color: white; background-color: #0078ff; font-size: 25px; border-radius: 10px; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
         <% } %>
 
 
 
 
         <br><br><br>
-        <p style="border:8px; background-color: #d7dadc; border-style:solid; border-color:#FF0000; padding: 1em; margin-right: 15%; margin-left: 15%;"><span style="font-size:x-large; color: #FF0000;">Disclaimer!</span><br>Due to abusing the game by some players some of them got high points. <br> Because of an issue occured on one of our servers. To make the game FAIR and still FUNNY <br> We introduced a new rules: <br>
-        - The obvious high rank players will be LIMITED <br>
-        - Any word you solve earns you <span style="color:rgb(175, 0, 152)">100 points</span> <br>
-        - At any point of time the game becomes stable and FAIR the rules are back to normal which means : (points = number of characters) <br>
-      <b>We are really sorry for the inconvenience!!</b></p>
+      
+
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" ><strike> You GUESS the RIGHT original word you EARN </strike><span style="color:aqua">points</span><strike> (points = number of characters)</strike></p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT original word you EARN <span style="color:aqua"> points </span>(points = number of characters)</p>
         <p style="color: #cadad5;" >* the word is an english word (not case sensitive)</p>
         <p style="color: #cadad5;" >* the first player to guess the word earns its points and a new word is generated ... and so on</p>
         <p style="color: #cadad5;" >* <b>   PS </b>: If you don't want to appear in the Leaderboard page just <span style="color:aqua">hide</span> your name using the switch above</p>
@@ -219,14 +189,28 @@
         <p style="color: #cadad5;" >* Oh! btw you won't find anything in javascript files so don't bother 😏</p>
         
         <br>
-        <h1 style="color: #cadad5;" id="msg" >~THE RULES~</h1>
+        <h1 style="color: #cadad5;" id="msg" >~ The rules ~</h1>
         <p style="color: #cadad5;" >if a character you set is in its right place like the original word the square becomes <span style="color: #538d4e;">green</span> </p>
         <p style="color: #cadad5;" >if a character you set is NOT in its right place like the original word the square becomes <span style="color: #b59f3b;">orange</span> </p>
         <p style="color: #cadad5;" >if a character you set is NOT in the original word AT ALL the square becomes <span style="color: #818384;">grey</span> </p>
         
         <br><br>
+        <div style="border-radius: 20px; border:4px solid rgb(182, 45, 45); width: 500px;">
+          <div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                      <h1 style="color:greenyellow;" >Try our new Android app <a target="_blank" href="https://www.mediafire.com/file/a51g1jqk7e9zzhg/guessme_v0.1.apk/file">here</a></h1>
+                      <h4 style="color:white;">1. Download APK file</h4>
+                      <h4 style="color:white;">2. Install it on your phone</h4>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <br><br>
         <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
-        <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
+        <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech Ⓒ 2022</h6>
     
       
 
