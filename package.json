@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "A sample Node.js app using Express 4",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.5",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
@@ -26,8 +27,7 @@
     "passport": "^0.5.2",
     "passport-facebook": "^3.0.0",
     "passport-jwt": "^4.0.0",
-    "pg": "^8.7.1",
-    "sqlite3": "^4.1.1"
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "got": "^11.3.0",
