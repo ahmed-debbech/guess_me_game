@@ -49,8 +49,33 @@ app.use(sessions({
   cookie: { "name": "master" },
   resave: false
 }));
-
-
+/*
+app.use(passport.initialize());
+app.use(passport.session());
+console.log(process.env.FACEBOOK_ID);
+passport.use(
+  new fbStrategy(
+    {
+      clientID: process.env.FACEBOOK_ID,
+      clientSecret: process.env.FACEBOOK_SECRET,
+      callbackURL: process.env.FACEBOOK_DOMAIN,
+      profileFields: ["email", "name", "photos"]
+    },
+    function(accessToken, refreshToken, profile, done) {
+      const { email, first_name, last_name, picture } = profile._json;
+      console.log(profile._json)
+      const userData = {
+        email : email,
+        name: first_name + " " + last_name,
+        photoLink : picture.data.url
+      };
+      console.log("inside strategy :")
+      console.log(userData);
+      users.addUser(userData)
+      done(null, profile);
+    }
+  )
+);*/
 app.set('views', __dirname + '/views/pages');
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
@@ -91,16 +116,17 @@ app.get('/', (req, res) => {
     if(word.length == 0) return;
     let wordy = word[0].name;
     //if(req.isAuthenticated()){
-    if(false){
+    if(true){
       auth = true;
-      users.findUserByEmail(req.user._json.email).then(user => {
+      users.findUserByEmail('xx').then(user => {
         if(Object.keys(user[0]).length != 0){
-          loguser = req.user._json;
+          //loguser = req.user._json;
+          loguser.last_name = "ahmed"
           loguser.hidden = user[0].hidden;
           loguser.points = user[0].points;
           
-          //console.log("User is logged in and email is found " );
-          //console.log(loguser);
+          console.log("User is logged in and email is found " );
+          console.log(loguser);
           if(colors.length == 0 && !yourword){
             res.render('index',
             {
@@ -281,6 +307,7 @@ app.post('/process', function(req, res){
 
 });
 app.get("/auth/fb", passport.authenticate("facebook", {scope: ["email"]}));
+//app.get("/auth/fb", () => {console.log("logged in")});
 app.get("/auth/fb/callback",
   passport.authenticate("facebook", {
     successRedirect: "/auth/success",
