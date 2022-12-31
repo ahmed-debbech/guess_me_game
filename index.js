@@ -115,71 +115,6 @@ app.get('/', (req, res) => {
   wordd.word.getCurrent().then(word => {
     if(word.length == 0) return;
     let wordy = word[0].name;
-    //if(req.isAuthenticated()){
-    if(true){
-      auth = true;
-      users.findUserByEmail('xx').then(user => {
-        if(Object.keys(user[0]).length != 0){
-          //loguser = req.user._json;
-          loguser.last_name = "ahmed"
-          loguser.hidden = user[0].hidden;
-          loguser.points = user[0].points;
-          
-          console.log("User is logged in and email is found " );
-          console.log(loguser);
-          if(colors.length == 0 && !yourword){
-            res.render('index',
-            {
-              word_id :word[0].id,
-              length : wordy.length,
-              logUser : loguser,
-              auth,
-              colors: null,
-              yourword : null,
-              won: won
-            })
-          }else{
-            var cc = yourword;
-            res.render('index', 
-            {
-              word_id :word[0].id,
-              length : wordy.length,
-              logUser : loguser,
-              auth,
-              colors: colors,
-              yourword : cc[0],
-              won: won
-            })
-          }
-        }else{
-          //console.log("User is logged in but email is not found")
-          if(colors.length == 0 && !yourword){
-            res.render('index',
-            {
-              word_id :word[0].id,
-              length : wordy.length,
-              logUser : loguser,
-              auth,
-              colors: null,
-              yourword : null,
-              won: won
-            })
-          }else{
-            var cc = yourword;
-            res.render('index', 
-            {
-              word_id :word[0].id,
-              length : wordy.length,
-              logUser : loguser,
-              auth,
-              colors: colors,
-              yourword : cc[0],
-              won: won
-            })
-          }
-        }
-      })
-    }else{
       console.log("user is not logged in")
       if(colors.length == 0 && !yourword){
         res.render('index',
@@ -205,7 +140,7 @@ app.get('/', (req, res) => {
           won: won
         })
       }
-    }
+    
 })
 })
 app.get('/user', (req,res)=> {
