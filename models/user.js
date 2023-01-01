@@ -18,22 +18,28 @@ function isLimited(email){
   return db("uuser").where({email: email, limited: 1});
 }
 function exists(user){
-  return db("uuser").where({email: user.email});
+  return new Promise(resolve => {
+    db("uuser").where({email: user.email}).orWhere({username: user.username})
+    .then((us) => {console.log(us); resolve(us)})
+  });
 }
-function addNewUser(useer) {
-  exists(useer).then(async (user) =>{
-    if(user.length == 0){
-      useer.hidden = 0;
-      useer.points = 0;
-      useer.activated = 1; //to be checked first (but not now!)
-      useer.limited = 0
-      useer.solvedWords = 0
-      const hashedPassword = await bcrypt.hash(useer.password, 10)
-      useer.password = hashedPassword
-      return db("uuser").insert(useer);
-    }
-  })
-  return true;
+async function addNewUser(useer) {
+  let res = true
+  let u = await exists(useer)
+  if(u.length == 0){
+    useer.hidden = 0;
+    useer.points = 0;
+    useer.activated = 1; //to be checked first (but not now!)
+    useer.limited = 0
+    useer.solvedWords = 0
+    const hashedPassword = await bcrypt.hash(useer.password, 10)
+    useer.password = hashedPassword
+    await db("uuser").insert(useer);
+    res = true
+  }else{
+    res = false
+  }
+  return res;
 }
 function addUser(useer) {
   exists(useer).then(async (user) =>{

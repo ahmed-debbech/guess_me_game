@@ -15,8 +15,10 @@ async function signup(req, res, next) {
             return
         }
         let creds = {email : req.body.email, username: req.body.username, password: req.body.password}
-        if(AuthService.signup(creds) == true){
+        if(await AuthService.signup(creds) == true){
             res.redirect('/')
+        }else{
+            res.json('could not add new user; maybe username is already taken')
         }
     } catch (err) {
         console.error("[error in loading service]", err.message);
