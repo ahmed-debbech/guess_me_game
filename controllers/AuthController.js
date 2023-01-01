@@ -24,7 +24,29 @@ async function signup(req, res, next) {
         console.error("[error in loading service]", err.message);
     }
 }
-  
+ 
+
+async function login(req, res, next) {
+    try {
+        //here the input 'req.body.email' can ALSO be a username
+        console.log("email : " + req.body.email + " password : " + req.body.password)
+        
+        if(req.body.email == '' || req.body.password == ''){
+            res.json('please make sure that you fill all fields')
+            return
+        }
+
+        let creds = {email : req.body.email, username: req.body.email, password: req.body.password}
+        if(await AuthService.login(creds) == true){
+            res.redirect('/')
+        }else{
+            res.json('Wrong credentials!')
+        }
+    } catch (err) {
+        console.error("[error in loading service]", err.message);
+    }
+}
 module.exports = {
-    signup
+    signup,
+    login
 }

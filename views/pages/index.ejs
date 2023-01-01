@@ -193,11 +193,11 @@
           </center>
           <center>
           <div  style=" width:20%;  border-style : dotted; border-color: #538d4e;"  id="div-form-login" hidden="hidden" >
-            <form id="formlogin" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/log" method="post">
+            <form id="formlogin"  action ="/ath/log" method="post">
               <p style="color: #cadad5;">Username or Email: </p>
-              <input type="text" value=""/>
+              <input name="email" type="text" value=""/>
               <p style="color: #cadad5;">Password: </p>
-              <input type="password" value=""/>
+              <input name="password" type="password" value=""/>
               <p ></p>
               <button type="submit">Log in</button>
               <a onclick="document.getElementById('div-form-signup').removeAttribute('hidden'); document.getElementById('div-form-login').setAttribute('hidden', 'hidden')"><p style="color: #cadad5;">Create a new account?</p></a>

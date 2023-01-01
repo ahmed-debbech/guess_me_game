@@ -11,7 +11,8 @@ module.exports = {
   findUserByEmail,
   updateScore,
   isLimited,
-  addNewUser
+  addNewUser,
+  login
 };
 
 function isLimited(email){
@@ -20,8 +21,17 @@ function isLimited(email){
 function exists(user){
   return new Promise(resolve => {
     db("uuser").where({email: user.email}).orWhere({username: user.username})
-    .then((us) => {console.log(us); resolve(us)})
+    .then((us) => {resolve(us)})
   });
+}
+async function login(user){
+  let u = await exists(user)
+  console.log(u);
+  if(u.length == 0) return false;
+  console.log(u[0].password)
+  let res = await bcrypt.compare(user.password, u[0].password)
+  console.log(res)
+  return res;
 }
 async function addNewUser(useer) {
   let res = true
