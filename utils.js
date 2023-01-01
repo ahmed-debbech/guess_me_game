@@ -1,5 +1,6 @@
 var atob = require('atob');
 const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 function parseJwt (token) {
   var base64Url = token.split('.')[1];

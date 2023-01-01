@@ -1,5 +1,7 @@
 const { use } = require("passport");
 const db = require("../knex/knex.js");
+const utils = require('../utils')
+const bcrypt = require('bcrypt')
 
 module.exports = {
   addUser,
@@ -26,7 +28,9 @@ function addNewUser(useer) {
       useer.activated = 1; //to be checked first (but not now!)
       useer.limited = 0
       useer.solvedWords = 0
-      return await db("uuser").insert(useer);
+      const hashedPassword = await bcrypt.hash(useer.password, 10)
+      useer.password = hashedPassword
+      return db("uuser").insert(useer);
     }
   })
   return true;
