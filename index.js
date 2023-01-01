@@ -12,6 +12,7 @@ const utils = require('./utils')
 const passport = require("passport");
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
+const AuthRouter = require('./routes/AuthRoutes');
 
 var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('Bearer');
@@ -87,7 +88,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
+app.use('/ath', AuthRouter);
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 app.get('/xds', (req, res) => {

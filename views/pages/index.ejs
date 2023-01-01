@@ -178,13 +178,13 @@
           <br> <br>
           <center>
           <div  style=" width:20%;  border-style : dotted; border-color: #538d4e;"  id="div-form-signup" hidden="hidden" >
-            <form id="formsignup" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/signup" method="post">
+            <form id="formsignup"  action ="/ath/signup" method="post">
               <p style="color: #cadad5;">Username: </p>
-              <input type="text" value=""/>
+              <input name="username" type="text" value=""/>
               <p style="color: #cadad5;">Email: </p>
-              <input type="text" value=""/>
+              <input type="text" name="email" value=""/>
               <p style="color: #cadad5;">Password: </p>
-              <input type="password" value=""/>
+              <input type="password" name="password" value=""/>
               <p ></p>
               <button type="submit">Create account</button>
               <a onclick="document.getElementById('div-form-login').removeAttribute('hidden'); document.getElementById('div-form-signup').setAttribute('hidden', 'hidden')"><p style="color: #cadad5;">Already have an account?</p></a>
@@ -213,10 +213,9 @@
       
 
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" >You GUESS the RIGHT word you EARN <span style="color:aqua"> points </span>(points = number of characters)</p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT word you EARN <span style="color:aqua"> points </span></p>
         <p style="color: #cadad5;" >* the word is an english word (not case sensitive)</p>
-        <p style="color: #cadad5;" >* the first player to guess the word earns its points and a new word is generated... and so on</p>
-        <p style="color: #cadad5;" >* <b>  PS </b>: If you don't want to appear in the Leaderboard page just <span style="color:aqua">hide</span> your name using the switch above</p>
+        <p style="color: #cadad5;" >* the first player to guess the word earns  <span style="color:aqua"> points </span> (see bellow) and a new word is generated... and so on</p>
         <p style="color: #cadad5;" >* that's it! enjoy</p>
         <p style="color: #cadad5;" >* Oh! btw you won't find any hints in the source code so don't bother 😏</p>
         
@@ -228,7 +227,10 @@
         
         <br><br>
         <br><br>
-        <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
+        <tr>
+        <td> <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>        </td>
+        <td> <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Privacy & Policy]</a>        </td>
+        </tr>
         <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech Ⓒ 2022-2023</h6>
     
       
