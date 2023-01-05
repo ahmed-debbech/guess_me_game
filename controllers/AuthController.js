@@ -37,7 +37,9 @@ async function login(req, res, next) {
         }
 
         let creds = {email : req.body.email, username: req.body.email, password: req.body.password}
-        if(await AuthService.login(creds) == true){
+        let token = await AuthService.login(creds)
+        if(token != false){
+            res.cookie('token', token)
             res.redirect('/')
         }else{
             res.json('Wrong credentials!')

@@ -2,6 +2,8 @@ const { use } = require("passport");
 const db = require("../knex/knex.js");
 const utils = require('../utils')
 const bcrypt = require('bcrypt')
+const dotenv = require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
 module.exports = {
   addUser,
@@ -12,9 +14,16 @@ module.exports = {
   updateScore,
   isLimited,
   addNewUser,
-  login
+  login,
+  getUserById
 };
 
+function getUserById(id){
+  return new Promise(resolve => {
+    db("uuser").where({id: id})
+    .then((us) => {resolve(us[0])})
+  });
+}
 function isLimited(email){
   return db("uuser").where({email: email, limited: 1});
 }
@@ -26,12 +35,10 @@ function exists(user){
 }
 async function login(user){
   let u = await exists(user)
-  console.log(u);
   if(u.length == 0) return false;
-  console.log(u[0].password)
   let res = await bcrypt.compare(user.password, u[0].password)
-  console.log(res)
-  return res;
+  if(res) return u[0]
+  return null
 }
 async function addNewUser(useer) {
   let res = true

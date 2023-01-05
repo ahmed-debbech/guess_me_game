@@ -13,6 +13,8 @@ const passport = require("passport");
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 const AuthRouter = require('./routes/AuthRoutes');
+const checkLogin = require('./middlewares/login')
+const cookieParser = require("cookie-parser");
 
 var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('Bearer');
@@ -43,6 +45,7 @@ const app = express()
 app.use(cors())
 app.use(flash());
 app.use(express.json());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessions({
   secret: "thisismysecrctekey",
@@ -105,17 +108,48 @@ app.get('/xds/:pass', function(req, res){
     res.send("Failed")
   }
 });
-app.get('/', (req, res) => {
-  
+app.get('/', checkLogin.isLoggedin, async (req, res) => {
+
+  console.log(req.user_data);
   var colors = req.flash("colors");
   var yourword = req.flash("yourword");
   var won = req.flash("won");
-  //console.log("params: " + colors + " | " + yourword);
   let auth = false;
   let loguser = {};
-  wordd.word.getCurrent().then(word => {
+  wordd.word.getCurrent().then(async (word) => {
     if(word.length == 0) return;
     let wordy = word[0].name;
+    if(req.user_data != null){
+      console.log("he is logged");
+      auth = true;
+      loguser = await users.getUserById(req.user_data.userId)
+      console.log(loguser);
+      
+      if(colors.length == 0 && !yourword){
+        res.render('index',
+        {
+          word_id :word[0].id,
+          length : wordy.length,
+          logUser : loguser,
+          auth : true,
+          colors: null,
+          yourword : null,
+          won: won
+        })
+      }else{
+        var cc = yourword;
+        res.render('index', 
+        {
+          word_id :word[0].id,
+          length : wordy.length,
+          logUser : loguser,
+          auth : true,
+          colors: colors,
+          yourword : cc[0],
+          won: won
+        })
+      }
+    }else{
       console.log("user is not logged in")
       if(colors.length == 0 && !yourword){
         res.render('index',
@@ -141,8 +175,8 @@ app.get('/', (req, res) => {
           won: won
         })
       }
-    
-})
+    }
+  })
 })
 app.get('/user', (req,res)=> {
   users.findAllUsers()
@@ -167,9 +201,9 @@ app.get('/winner', (req, res) => {
     won
   });
 })
-app.get('/done/:id', (req, res) => {
-    //console.log("checking if word is solved");
-    if(req.isAuthenticated()){
+app.get('/done/:id', checkLogin.isLoggedin , (req, res) => {
+    console.log("checking if word is solved");
+    if(req.user_data != null){
       wordd.word.getById(req.params['id']).then(word => {
         //console.log( word[0]);
         if(word[0].solvedOn != '-'){
@@ -179,6 +213,8 @@ app.get('/done/:id', (req, res) => {
           console.log("the word IS NOT solved yet");
         }
       })
+    }else{
+      console.log("user is not logged in");
     }
 })
 app.get("/solved", (req, res) => {
@@ -256,8 +292,8 @@ app.get("/auth/fail", (req, res) => {
 app.get("/auth/success", (req, res) => {
   res.redirect("/");
 });
-app.get('/logout', function(req, res){
-  req.logout();
+app.get('/logout', checkLogin.isLoggedin ,function(req, res){
+  res.clearCookie("token");
   res.redirect('/');
 });
 app.get('/leaderboard', (req, res) => {
