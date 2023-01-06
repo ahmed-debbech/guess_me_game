@@ -16,22 +16,6 @@ function isLoggedin(req,res,next){
     }
     next()
 }
-function isLoggedinSimple(req){
-    console.log(req);
-    var token = ''
-
-    if(token){
-        jwt.verify(token, process.env.JWT_SECRET_KEY, function(err, token_data) {
-            if (err) {
-                return false
-            } else {
-                return true
-            }
-        });
-    }
-    return false
-}
 module.exports = {
-    isLoggedin,
-    isLoggedinSimple
+    isLoggedin
 }

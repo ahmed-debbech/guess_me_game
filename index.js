@@ -13,6 +13,7 @@ const passport = require("passport");
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 const AuthRouter = require('./routes/AuthRoutes');
+const MainRoutes = require('./routes/MainRoutes')
 const checkLogin = require('./middlewares/login')
 const cookieParser = require("cookie-parser");
 
@@ -92,6 +93,8 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 app.use('/ath', AuthRouter);
+app.use('/', MainRoutes);
+
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 app.get('/xds', (req, res) => {
@@ -108,76 +111,7 @@ app.get('/xds/:pass', function(req, res){
     res.send("Failed")
   }
 });
-app.get('/', checkLogin.isLoggedin, async (req, res) => {
 
-  console.log(req.user_data);
-  var colors = req.flash("colors");
-  var yourword = req.flash("yourword");
-  var won = req.flash("won");
-  let auth = false;
-  let loguser = {};
-  wordd.word.getCurrent().then(async (word) => {
-    if(word.length == 0) return;
-    let wordy = word[0].name;
-    if(req.user_data != null){
-      console.log("he is logged");
-      auth = true;
-      loguser = await users.getUserById(req.user_data.userId)
-      console.log(loguser);
-      
-      if(colors.length == 0 && !yourword){
-        res.render('index',
-        {
-          word_id :word[0].id,
-          length : wordy.length,
-          logUser : loguser,
-          auth : true,
-          colors: null,
-          yourword : null,
-          won: won
-        })
-      }else{
-        var cc = yourword;
-        res.render('index', 
-        {
-          word_id :word[0].id,
-          length : wordy.length,
-          logUser : loguser,
-          auth : true,
-          colors: colors,
-          yourword : cc[0],
-          won: won
-        })
-      }
-    }else{
-      console.log("user is not logged in")
-      if(colors.length == 0 && !yourword){
-        res.render('index',
-        {
-          word_id :word[0].id,
-          length : wordy.length,
-          logUser : loguser,
-          auth,
-          colors: null,
-          yourword : null,
-          won: won
-        })
-      }else{
-        var cc = yourword;
-        res.render('index', 
-        {
-          word_id :word[0].id,
-          length : wordy.length,
-          logUser : loguser,
-          auth,
-          colors: colors,
-          yourword : cc[0],
-          won: won
-        })
-      }
-    }
-  })
-})
 app.get('/user', (req,res)=> {
   users.findAllUsers()
   .then(user => {

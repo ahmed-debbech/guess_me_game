@@ -1,6 +1,12 @@
 <html>
     <head>
         <style>
+            .rectangle {
+              height: 10%;
+              width: 100%;
+              display : flex;
+              background-color: aqua;
+            }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
@@ -91,38 +97,19 @@
       </head>
     <center>
     <body onload="load();">
+      <div class="rectangle">
+        <h1><span onclick="location.href='/';" style="font-size: xxx-large; font-family: hubballiregular; color:#181818;">Wordrace</span></h1>
+      </div>
+
         <input id="word_id" type="hidden" value="<%= word_id %>"/>
-        <h1><span onclick="location.href='/';" style="font-family: hubballiregular; color:aqua;">Wordrace</span></h1>
         <br> <br>
         <% if (Object.keys(logUser).length != 0) { %>
-          <div>
-            <h4 style="color:white;">Your hidden status</h4>
-            <label class="switch">
-              <% if (logUser.hidden == 1) {%>
-                <input onchange='
-                  if(document.getElementById("hides").checked){
-                    location.href="/hide/1";
-                  }else{
-                    location.href="/hide/0";
-                  }
-                ' id="hides" type="checkbox" checked>
-              <%}else{%>
-                <input onchange='
-                  if(document.getElementById("hides").checked){
-                    location.href="/hide/1";
-                  }else{
-                    location.href="/hide/0";
-                  }
-                  ' id="hides" type="checkbox" >
-              <% } %>
-              <span class="slider round"></span>
-            </label>
-          </div>
+        
         <div style="overflow-x: auto;">
-          <img style="display : inline-block;" width="24px" height="24px" src="">
-          <h5 style="display: inline-block; color:white;"><%= logUser.username %> |</h5>
-          <h5 style="display: inline-block; color:white;">(<%= logUser.points %>) |</h5>
-          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+          <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2> 
+            <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a>
+            <br>
+          <h3 style=" display: inline-block; color:white;">(<%= logUser.points %>) pts </h3><br>
         
         </div>
       
