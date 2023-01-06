@@ -1,4 +1,9 @@
+const { use } = require("passport");
 const db = require("../knex/knex.js");
+const utils = require('../utils')
+const bcrypt = require('bcrypt')
+const dotenv = require('dotenv').config()
+const jwt = require('jsonwebtoken')
 
 module.exports = {
   addUser,
@@ -7,16 +12,52 @@ module.exports = {
   makeHidden,
   findUserByEmail,
   updateScore,
-  isLimited
+  isLimited,
+  addNewUser,
+  login,
+  getUserById
 };
 
+function getUserById(id){
+  return new Promise(resolve => {
+    db("uuser").where({id: id})
+    .then((us) => {resolve(us[0])})
+  });
+}
 function isLimited(email){
   return db("uuser").where({email: email, limited: 1});
 }
 function exists(user){
-  return db("uuser").where({email: user.email});
+  return new Promise(resolve => {
+    db("uuser").where({email: user.email}).orWhere({username: user.username})
+    .then((us) => {resolve(us)})
+  });
 }
-
+async function login(user){
+  let u = await exists(user)
+  if(u.length == 0) return false;
+  let res = await bcrypt.compare(user.password, u[0].password)
+  if(res) return u[0]
+  return null
+}
+async function addNewUser(useer) {
+  let res = true
+  let u = await exists(useer)
+  if(u.length == 0){
+    useer.hidden = 0;
+    useer.points = 0;
+    useer.activated = 1; //to be checked first (but not now!)
+    useer.limited = 0
+    useer.solvedWords = 0
+    const hashedPassword = await bcrypt.hash(useer.password, 10)
+    useer.password = hashedPassword
+    await db("uuser").insert(useer);
+    res = true
+  }else{
+    res = false
+  }
+  return res;
+}
 function addUser(useer) {
   exists(useer).then(async (user) =>{
     if(user.length == 0){

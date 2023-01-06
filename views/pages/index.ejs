@@ -1,6 +1,12 @@
 <html>
     <head>
         <style>
+            .rectangle {
+              height: 10%;
+              width: 100%;
+              display : flex;
+              background-color: aqua;
+            }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
@@ -91,38 +97,19 @@
       </head>
     <center>
     <body onload="load();">
-        <<input id="word_id" type="hidden" value="<%= word_id %>"/>
-        <h1><span onclick="location.href='/';" style="font-family: hubballiregular; color:aqua;">Wordrace</span></h1>
+      <div class="rectangle">
+        <h1><span onclick="location.href='/';" style="font-size: xxx-large; font-family: hubballiregular; color:#181818;">Wordrace</span></h1>
+      </div>
+
+        <input id="word_id" type="hidden" value="<%= word_id %>"/>
         <br> <br>
         <% if (Object.keys(logUser).length != 0) { %>
-          <div>
-            <h4 style="color:white;">Your hidden status</h4>
-            <label class="switch">
-              <% if (logUser.hidden == 1) {%>
-                <input onchange='
-                  if(document.getElementById("hides").checked){
-                    location.href="/hide/1";
-                  }else{
-                    location.href="/hide/0";
-                  }
-                ' id="hides" type="checkbox" checked>
-              <%}else{%>
-                <input onchange='
-                  if(document.getElementById("hides").checked){
-                    location.href="/hide/1";
-                  }else{
-                    location.href="/hide/0";
-                  }
-                  ' id="hides" type="checkbox" >
-              <% } %>
-              <span class="slider round"></span>
-            </label>
-          </div>
+        
         <div style="overflow-x: auto;">
-          <img style="display : inline-block;" width="24px" height="24px" src="">
-          <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
-          <h5 style="display: inline-block; color:white;">(<%= logUser.points %>) |</h5>
-          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+          <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2> 
+            <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a>
+            <br>
+          <h3 style=" display: inline-block; color:white;">(<%= logUser.points %>) pts </h3><br>
         
         </div>
       
@@ -170,8 +157,40 @@
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
         <% }else{ %>
-          <p style=" color: #cadad5;" >To start playing login with you facebook account</p>
-          <button class="btn" target="_blank" id="login" onclick="location.href='/auth/fb'" style="color: white; background-color: #0078ff; font-size: 25px; border-radius: 10px; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook</button>
+          <p style=" color: #cadad5;" >To start playing login with you facebook account or by your email</p>
+          <tr>
+            <td><button disabled="true" class="btn" target="_blank" id="login" onclick="" style="color: white; background-color: #656565; font-size: 25px; border-radius: 10px; border-color: transparent;"><i class="fa fa-facebook"></i> Facebook ~ soon</button></td>
+            <td><button class="btn" target="_blank" id="signup" onclick="document.getElementById('div-form-login').removeAttribute('hidden')" style="color: white; background-color: #66836a; font-size: 25px; border-radius: 10px; border-color: transparent;"> By email</button></td>
+          </tr>
+          <br> <br>
+          <center>
+          <div  style=" width:20%;  border-style : dotted; border-color: #538d4e;"  id="div-form-signup" hidden="hidden" >
+            <form id="formsignup"  action ="/ath/signup" method="post">
+              <p style="color: #cadad5;">Username: </p>
+              <input name="username" type="text" value=""/>
+              <p style="color: #cadad5;">Email: </p>
+              <input type="text" name="email" value=""/>
+              <p style="color: #cadad5;">Password: </p>
+              <input type="password" name="password" value=""/>
+              <p ></p>
+              <button type="submit">Create account</button>
+              <a onclick="document.getElementById('div-form-login').removeAttribute('hidden'); document.getElementById('div-form-signup').setAttribute('hidden', 'hidden')"><p style="color: #cadad5;">Already have an account?</p></a>
+            </form>
+          </div>
+          </center>
+          <center>
+          <div  style=" width:20%;  border-style : dotted; border-color: #538d4e;"  id="div-form-login" hidden="hidden" >
+            <form id="formlogin"  action ="/ath/log" method="post">
+              <p style="color: #cadad5;">Username or Email: </p>
+              <input name="email" type="text" value=""/>
+              <p style="color: #cadad5;">Password: </p>
+              <input name="password" type="password" value=""/>
+              <p ></p>
+              <button type="submit">Log in</button>
+              <a onclick="document.getElementById('div-form-signup').removeAttribute('hidden'); document.getElementById('div-form-login').setAttribute('hidden', 'hidden')"><p style="color: #cadad5;">Create a new account?</p></a>
+            </form>
+          </div>
+          </center>
         <% } %>
 
 
@@ -181,10 +200,9 @@
       
 
         <h1 style="color: #cadad5;" id="msg" >it's simple!</h1>
-        <p style="color: #cadad5;" >You GUESS the RIGHT word you EARN <span style="color:aqua"> points </span>(points = number of characters)</p>
+        <p style="color: #cadad5;" >You GUESS the RIGHT word you EARN <span style="color:aqua"> points </span></p>
         <p style="color: #cadad5;" >* the word is an english word (not case sensitive)</p>
-        <p style="color: #cadad5;" >* the first player to guess the word earns its points and a new word is generated... and so on</p>
-        <p style="color: #cadad5;" >* <b>  PS </b>: If you don't want to appear in the Leaderboard page just <span style="color:aqua">hide</span> your name using the switch above</p>
+        <p style="color: #cadad5;" >* the first player to guess the word earns  <span style="color:aqua"> points </span> (see bellow) and a new word is generated... and so on</p>
         <p style="color: #cadad5;" >* that's it! enjoy</p>
         <p style="color: #cadad5;" >* Oh! btw you won't find any hints in the source code so don't bother 😏</p>
         
@@ -196,7 +214,10 @@
         
         <br><br>
         <br><br>
-        <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>
+        <tr>
+        <td> <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Leaderboard]</a>        </td>
+        <td> <a style="font-size: 20px; color: aqua;" href="/leaderboard">[Privacy & Policy]</a>        </td>
+        </tr>
         <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech Ⓒ 2022-2023</h6>
     
       

@@ -12,8 +12,8 @@ async function add(word){
     return await db("word").insert(ww);
 }
 
-function getCurrent(){
-    return db("word").where({solvedOn: "-"}).select();
+async function getCurrent(){
+    return await db("word").where({solvedOn: "-"}).select();
 }
 function getById(id){
     return db("word").where({id: id}).select();
