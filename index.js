@@ -154,64 +154,7 @@ app.get('/done/:id', checkLogin.isLoggedin , (req, res) => {
 app.get("/solved", (req, res) => {
   res.render('solved');
 })
-app.post('/process', function(req, res){
-  console.log("word came from user: ");
-  console.log(req.body);
 
-  if(req.isAuthenticated()){
-    console.log("[USER] " + req.user._json.first_name + " " + req.user._json.last_name + " is trying ...")
-    
-    users.isLimited(req.user._json.email).then(uuser =>{
-      wordd.word.getCurrent().then(word => {
-      if(word.length == 0) return;
-
-      //console.log(word[0].name)
-      let wordy = word[0].name.toLowerCase();
-      let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
-
-      const clientWord = req.body.pass.toLowerCase();
-      if(clientWord.length != wordy.length){
-        res.send('not ' +wordy.length+ ' caracters! go back <-')
-      }
-      if(wordy == clientWord){
-        //great job
-        console.log("good job");
-        fs.appendFileSync('logs', 'SOMEONE GUESSED THE RIGHT WORD\n');
-        let score = 0;
-        if(uuser.length == 0){
-          score = 100
-        }else{
-          score = wordy.length;
-        }
-        users.updateScore(req.user._json.email, score).then(user =>{
-          console.log("updated successfully")
-          wordd.word.newWord();
-          req.flash("yourword", score);
-          req.flash("won", "true")
-          if(uuser.length == 0){
-            req.flash("length", 100)
-          }else{
-            req.flash("length", score)
-          }
-          req.flash("logUser", req.user._json);
-          res.redirect('/winner');
-        }).catch(err => {
-          console.log(err);
-        })
-      
-      }else{
-        fs.appendFileSync('logs', 'Someone guessed : ' + clientWord + "\n");
-        colors = utils.checkWord(clientWord, wordy);
-        //console.log(colors);
-      }
-      req.flash("yourword", clientWord);
-      req.flash("colors", colors)
-      res.redirect('/');
-      })
-    })
-  }
-
-});
 app.get("/auth/fb", passport.authenticate("facebook", {scope: ["email"]}));
 //app.get("/auth/fb", () => {console.log("logged in")});
 app.get("/auth/fb/callback",

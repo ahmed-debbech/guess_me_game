@@ -2,10 +2,12 @@
     <head>
         <style>
             .rectangle {
-              height: 10%;
+              height: 50px;
               width: 100%;
-              display : flex;
               background-color: aqua;
+              padding: 10px;
+              margin :auto;
+              text-align : center;
             }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -95,12 +97,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         
       </head>
-    <center>
     <body onload="load();">
-      <div class="rectangle">
-        <h1><span onclick="location.href='/';" style="font-size: xxx-large; font-family: hubballiregular; color:#181818;">Wordrace</span></h1>
-      </div>
 
+      <div class="rectangle">
+        <h1><span onclick="location.href='/';" style="font-size: xx-large;   font-family: 'Lucida Console', 'Courier New', monospace;          color:#181818;">Wordrace</span></h1>
+      </div>
+      <center>
         <input id="word_id" type="hidden" value="<%= word_id %>"/>
         <br> <br>
         <% if (Object.keys(logUser).length != 0) { %>
@@ -145,7 +147,7 @@
         <% } %>
         <% if(auth == true ) { %>
         
-        <form id="form" onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
+        <form id="form" action ="/process" method="post">
           <% if(yourword != null){ %>
           <input value="<%= yourword %>" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
@@ -251,7 +253,7 @@
             }
             window.setInterval(check, 2000);
           }
-        </script>>
+        </script>
+      </center>
     </body>
-    </center>
 </html>

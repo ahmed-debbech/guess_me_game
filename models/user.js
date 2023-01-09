@@ -66,8 +66,8 @@ function addUser(useer) {
     }
   })
 }
-async function updateScore(emailString, points){
-  return await db("uuser").where({email: emailString}).increment({'points': points ,'solvedWords': 1});
+async function updateScore(id, points){
+  return await db("uuser").where({id: id}).increment({'points': points ,'solvedWords': 1});
 }
 function findUserByEmail(email){
   return db("uuser").where({email : email}).select();
