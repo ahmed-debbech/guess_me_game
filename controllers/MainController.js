@@ -99,7 +99,7 @@ async function process(req, res, next){
                 req.flash("yourword", score);
                 req.flash("won", "true")
                 req.flash("length", score)
-                req.flash("logUser", req.user._json);
+                req.flash("logUser", req.user_data);
                 res.redirect('/winner');
             }).catch(err => {
                 console.log(err);

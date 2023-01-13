@@ -123,19 +123,19 @@
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
-                        <td style="font-size: 40px; padding: 20px; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 2){%>
-                        <td style="font-size: 40px; padding: 20px; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td style="font-size: 40px; padding: 20px;  border-radius: 20%; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 1){%>
-                        <td style="font-size: 40px; padding: 20px; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       k++;
                     }
                   }else{%>
                     <% for(var i=0; i<=length-1; i++){ %>
-                    <td style="font-size: 40px; padding: 20px; background-color: #818384;"></td>
+                    <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"></td>
                     <% } %>
                   <%}
                 %>
@@ -149,12 +149,12 @@
         
         <form id="form" action ="/process" method="post">
           <% if(yourword != null){ %>
-          <input value="<%= yourword %>" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
+          <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
             <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% } %>
-          <input type="submit" style="font-size: 30px;"  value="👍">
-          <input type="hidden" value = "<%= length %>" id="actualLen"/>
+          <input type="submit" style="border-radius: 20%; font-size: 30px;"  value="👍">
+          <input type="hidden"  value = "<%= length %>" id="actualLen"/>
           <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>

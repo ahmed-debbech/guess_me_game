@@ -123,20 +123,19 @@ app.get('/user', (req,res)=> {
 })
 app.get('/winner', (req, res) => {
   var length = req.flash("length");
-  var yourword = req.flash("yourword");
+  let clientWord = req.flash("yourword")
   var won = req.flash("won")
   var logUser = req.flash("logUser");
-
   res.render('won',
   {
     length,
     logUser,
-    yourword,
+    yourword  : clientWord[0],
     won
   });
 })
 app.get('/done/:id', checkLogin.isLoggedin , (req, res) => {
-    console.log("checking if word is solved");
+    //console.log("checking if word is solved");
     if(req.user_data != null){
       wordd.word.getById(req.params['id']).then(word => {
         //console.log( word[0]);

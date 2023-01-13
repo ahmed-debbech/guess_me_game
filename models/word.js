@@ -20,8 +20,7 @@ function getById(id){
 }
 var name = "0000000000";
 function newWord(){
-    console.log("enters");
-    const options = {
+    /*const options = {
     method: 'GET',
     url: process.env.WORDS_GENERATOR
     };
@@ -33,7 +32,8 @@ function newWord(){
         })
     }).catch(function (error) {
         console.error(error);
-    });
+    });*/
+    return null;
 }  
 // export it
 exports.word = {name, newWord, getCurrent, getById}
