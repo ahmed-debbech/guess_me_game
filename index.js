@@ -14,6 +14,7 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 const AuthRouter = require('./routes/AuthRoutes');
 const MainRoutes = require('./routes/MainRoutes')
+const LeaderboardRoutes = require('./routes/LeaderboardRoutes')
 const checkLogin = require('./middlewares/login')
 const cookieParser = require("cookie-parser");
 
@@ -54,33 +55,6 @@ app.use(sessions({
   cookie: { "name": "master" },
   resave: false
 }));
-/*
-app.use(passport.initialize());
-app.use(passport.session());
-console.log(process.env.FACEBOOK_ID);
-passport.use(
-  new fbStrategy(
-    {
-      clientID: process.env.FACEBOOK_ID,
-      clientSecret: process.env.FACEBOOK_SECRET,
-      callbackURL: process.env.FACEBOOK_DOMAIN,
-      profileFields: ["email", "name", "photos"]
-    },
-    function(accessToken, refreshToken, profile, done) {
-      const { email, first_name, last_name, picture } = profile._json;
-      console.log(profile._json)
-      const userData = {
-        email : email,
-        name: first_name + " " + last_name,
-        photoLink : picture.data.url
-      };
-      console.log("inside strategy :")
-      console.log(userData);
-      users.addUser(userData)
-      done(null, profile);
-    }
-  )
-);*/
 app.set('views', __dirname + '/views/pages');
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
@@ -94,6 +68,7 @@ passport.deserializeUser(function(obj, done) {
 });
 app.use('/ath', AuthRouter);
 app.use('/', MainRoutes);
+app.use('/', LeaderboardRoutes);
 
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
@@ -172,30 +147,6 @@ app.get('/logout', checkLogin.isLoggedin ,function(req, res){
   res.clearCookie("token");
   res.redirect('/');
 });
-app.get('/leaderboard', (req, res) => {
-  let auth = false;
-  let logUser = null;
-  if(req.isAuthenticated()){
-    auth = true;
-    logUser = req.user._json;
-  }
-
-  let people = null;
-  users.findAllSortByPoints()
-  .then(user => {
-    people = user;
-    //console.log(people);
-    res.render('leaderboard',{
-      people,
-      auth,
-      logUser
-    })
-  })
-  .catch(error =>{
-    console.log("couldnt retrieve users to leaderboard page")
-    people = null;
-  })
-})
 app.get('/hide/:status', (req, res) => {
   if(req.isAuthenticated()){
     let email = req.user._json.email;
