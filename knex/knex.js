@@ -1,11 +1,6 @@
-const environment = process.env.ENV || 'prod'
+require('dotenv').config()
+
+const environment = process.env.ENV
 const config = require('../knexfile.js');
 console.log(environment)
-if(environment == 'prod'){
-    console.log(config.prod);
-    module.exports = require('knex')(config.prod);
-}
-if(environment == 'dev'){
-    console.log(config.dev);
-    module.exports = require('knex')(config.dev);
-}
+module.exports = require('knex')(config);
