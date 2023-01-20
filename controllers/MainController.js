@@ -112,7 +112,7 @@ async function process(req, res, next){
         res.redirect('/');
     } catch (err) {
         console.error("[error in loading service]", err.message);
-        res.send('error occured');
+        //res.send('error occured');
     }
 }
 module.exports = {
