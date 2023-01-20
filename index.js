@@ -80,6 +80,7 @@ app.get('/done/:id', checkLogin.isLoggedin , (req, res) => {
           res.send("1");
         }else{
           console.log("the word IS NOT solved yet");
+          res.send("0")
         }
       })
     }else{

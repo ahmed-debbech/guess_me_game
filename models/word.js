@@ -19,7 +19,7 @@ function getById(id){
     return db("word").where({id: id}).select();
 }
 var name = "0000000000";
-function newWord(){
+async function newWord(){
     /*const options = {
     method: 'GET',
     url: process.env.WORDS_GENERATOR
@@ -33,6 +33,7 @@ function newWord(){
     }).catch(function (error) {
         console.error(error);
     });*/
+    await update();
     return null;
 }  
 // export it

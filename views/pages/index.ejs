@@ -148,14 +148,14 @@
         <% } %>
         <% if(auth == true ) { %>
         
-        <form id="form" action ="/process" method="post">
+        <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <% if(yourword != null){ %>
           <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
             <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
           <% } %>
           <input type="submit" style="border-radius: 20%; font-size: 30px;"  value="👍">
-          <input type="hidden"  value = "<%= length %>" id="actualLen"/>
+          <input type="hidden"  value="<%= length %>" id="actualLen"/>
           <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
@@ -254,7 +254,7 @@
                 }
               });
             }
-            window.setInterval(check, 2000);
+            window.setInterval(check, 1500);
           }
         </script>
       </center>
