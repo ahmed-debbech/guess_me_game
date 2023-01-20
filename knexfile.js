@@ -1,7 +1,8 @@
 // Update with your config settings.
 require('dotenv').config()
 
-if(process.env.ENV == 'prod'){
+if(process.env.ENV == 'dev'){
+    console.log(process.env.ENV + "dd")
     module.exports = {
         client: 'pg',
         connection: {
@@ -18,7 +19,7 @@ if(process.env.ENV == 'prod'){
         }
     };
 }
-if(process.env.ENV == 'dev'){
+if(process.env.ENV == 'prod'){
     module.exports = {
         client: 'pg',
         connection: {

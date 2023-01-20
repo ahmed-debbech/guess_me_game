@@ -25,10 +25,19 @@ async function leaderboard(req, res, next){
                   logUser
               })
           })
-      .catch(error =>{
-          console.log("couldnt retrieve users to leaderboard page")
-          people = null;
-      })
+          .catch(error =>{
+              people = null;
+              users.findAllSortByPoints()
+              .then(async user => {
+                  people = user;
+                  //console.log(people);
+                  res.render('leaderboard',{
+                      people,
+                      auth : false,
+                      logUser : null
+                  })
+              })
+          })
     } catch (err) {
         console.error("[error in loading service]", err.message);
     }
