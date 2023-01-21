@@ -1,11 +1,19 @@
 <html>
     <head>
         <style>
+        .rectangle {
+              height: 50px;
+              width: 100%;
+              background-color: aqua;
+              padding: 10px;
+              margin :auto;
+              text-align : center;
+            }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
             body{
-                background-color: #121213;
+                background-color: #181818;
             }
             .glow {
             font-size: 20px;
@@ -26,101 +34,41 @@
                 border-spacing: 10px;
                 *border-collapse: expression('separate', cellSpacing='50px');
             }
-            .badge {
-                display: inline-block;
-                min-width: 1em; /* em unit */
-                padding: 4px; /* em unit */
-                width: 40px;
-                border-radius: 10%;
-                font-size: 10px;
-                text-align: center;
-                font-weight: bold;
-                color: #fefefe;
-            }
-            #ident {
-                position:absolute;                 
-                left:0;                         
-            }
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Guess me! | Leaderboard</title>    
+        <title>Wordrace | Leaderboard</title>    
     </head>
     <center>
     <body onload="load();">
     
 
-        <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
-        <h2 style="color: aqua;">- Leaderboard -</h2>
+      <div class="rectangle">
+        <h1><span onclick="location.href='/';" style="font-size: xx-large;   font-family: 'Lucida Console', 'Courier New', monospace;          color:#181818;">Wordrace</span></h1>
+      </div>
+
+    <h2 style="color: aqua;">- Leaderboard -</h2>
         <% if (logUser != null) { %>
         <div style="overflow-x: auto;">
-          <img style="display : inline-block;" width="24px" height="24px" src="<%= logUser.picture.data.url %>">
-          <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
-          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
+          <h2 style="display: inline-block; color:white;"><span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2>
+            <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a>
+            <br>
+          <h3 style=" display: inline-block; color:white;">(<%= logUser.points %>) pts </h3><br>
+
         </div>
+
         <% } %>
 
         <br><br><br>
-        <p style="color: #cadad5;">These are all the players on the website ranked by <span style="color:aqua">points</span></p>
-
-        <div id="ident">
-        <p style="color: #cadad5;">These are all the <span style="color:aqua">badges</span></p>
-        <table border="0">
-            <tr>
-                <td><span style="background: linear-gradient(rgb(215, 49, 49), rgb(24, 14, 78))" class="badge">Chngr</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Challenger</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">7500pts+</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(187, 176, 19), rgb(83, 54, 246));;" class="badge">GM</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Grand Master</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">5000 ~ 7500pts</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(187, 19, 173), rgb(83, 54, 246));;" class="badge">Master</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Master</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">4000 ~ 5000pts</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(230, 215, 215), rgb(83, 54, 246));;" class="badge">Diamond</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Diamond</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">3000 ~ 4000pts</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(13, 119, 31), rgb(54, 246, 172));;" class="badge">Plat</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Platinium</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">2000 ~ 3000pts</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(187, 176, 19), rgb(255, 220, 19));;" class="badge">Gold</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Gold</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">1500 ~ 2000pts</b></td></tr>
-            <tr>
-                <td><span style="background: linear-gradient(rgb(102, 102, 102), rgb(166, 158, 211));;" class="badge">Silver</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Silver</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">1000 ~ 1500pts</b></td></tr>
-            <tr>
-                <td><span style="background: #694e06;" class="badge">Bronze</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Bronze</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">500 ~ 1000pts</b></td></tr>
-            <tr>
-                <td><span style="background: #4d4d4d;" class="badge">Iron</span></td>
-                <td><p style="padding: 10px; color: #cadad5">Iron</p></td>
-            </tr>
-            <tr><td></td><td><b style="color: #868686">250 ~ 500pts</b></td></tr>
-        </table>
-        </div>
+        <p style="color: #cadad5;">These are all the players on the site ranked by <span style="color:aqua">points</span></p>
 
         <br>
         <!-- here -->
-        <table style="color: #cadad5;">
+        <table style=" color: #cadad5;">
             <th>
                 <td></td>
-                <td style="color: #FFE800">Name</td>
-                <td style="color: #FFE800 ">Points</td>
-                <td style="color: #FFE800">Badges</td>
+                <td style="color: #b59f3b">Username</td>
+                <td style="color: #b59f3b ">Points</td>
+                <td style="color: #b59f3b">Words Solved</td>
             </th>
             <% if(people != null) { %>
             <% for (var i=0; i<=people.length-1; i++) { %>
@@ -128,41 +76,10 @@
                 <td><%= i+1 %>)</td>
                 <% if(people[i].hidden == 0){ %>
                 <td><img src="<%= people[i].photoLink %>" /></td>
-                <td class="glow"><%= people[i].name %></td>
+                <td class="glow"><%= people[i].username %></td>
                 <td><%= people[i].points %></td>
                 <td><%= people[i].solvedWords %></td>
-                <td>
-                    <% if(people[i].limited == 1){ %>
-                    <span style="background: red;" class="badge">LMTD</span>
-                    <% } %>
-                    <% if(people[i].points >= 7500){ %>
-                    <span style="background: linear-gradient(rgb(216, 49, 49), rgb(24, 14, 78));" class="badge">Chngr</span>
-                    <% } %>
-                    <% if((5000 <= people[i].points) && (people[i].points < 7500)){ %>
-                        <span style="background: linear-gradient(rgb(187, 176, 19), rgb(83, 54, 246));;" class="badge">GM</span>
-                    <% } %>
-                    <% if((4000 <= people[i].points) && (people[i].points < 5000)){ %>
-                        <span style="background: linear-gradient(rgb(187, 19, 173), rgb(83, 54, 246));;" class="badge">Master</span>
-                    <% } %>
-                    <% if((3000 <= people[i].points) && (people[i].points < 4000)){ %>
-                        <span style="background: linear-gradient(rgb(230, 215, 215), rgb(83, 54, 246));;" class="badge">Diamond</span>
-                    <% } %>
-                    <% if((2000 <= people[i].points) && (people[i].points < 3000)){ %>
-                        <span style="background: linear-gradient(rgb(13, 119, 31), rgb(54, 246, 172));;" class="badge">Plat</span>
-                    <% } %>
-                    <% if((1500 <= people[i].points) && (people[i].points < 2000)){ %>
-                        <span style="background: linear-gradient(rgb(187, 176, 19), rgb(255, 220, 19));;" class="badge">Gold</span>
-                    <% } %>
-                    <% if((1000 <= people[i].points) && (people[i].points < 1500)){ %>
-                        <span style="background: linear-gradient(rgb(102, 102, 102), rgb(166, 158, 211));;" class="badge">Silver</span>
-                    <% } %>
-                    <% if((500 <= people[i].points) && (people[i].points < 1000)){ %>
-                        <span style="background: #694e06;" class="badge">Bronze</span>
-                    <% } %>
-                    <% if((250 <= people[i].points) && (people[i].points < 500)){ %>
-                        <span style="background: #4d4d4d;" class="badge">Iron</span>
-                    <% } %>
-                </td>
+
                 <% }else{ %>
                     <td><img width="52px" height="52px" src="https://st3.depositphotos.com/4111759/13425/v/600/depositphotos_134255634-stock-illustration-avatar-icon-male-profile-gray.jpg" /></td>
                     <td class="glow">Hidden</td>
@@ -175,10 +92,9 @@
         <br>
         
         <a style="font-size: 20px; color: aqua;" href="/">[Home]</a>
-        <h6 style="margin-top: 10%; font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech</h6>
+        <h6 style="font-size: 20px; color: #cadad5;" >Made with ❤️ by Ahmed Debbech Ⓒ 2022-2023</h6>
     
 
     </body>
     </center>
 </html>
-<!-- HAHAHA!! what a looser, you won't find anything here baby <3 -->

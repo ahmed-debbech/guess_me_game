@@ -1,10 +1,6 @@
-module.exports = {
-    checkWord,
-    issueJWT,
-    parseJwt
-};
 var atob = require('atob');
 const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 function parseJwt (token) {
   var base64Url = token.split('.')[1];
@@ -55,3 +51,17 @@ function checkWord(clientWord, wordy){
       }
       return colors;
 }
+function validateEmail(email){
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
+module.exports = {
+  checkWord,
+  issueJWT,
+  parseJwt,
+  validateEmail
+};
