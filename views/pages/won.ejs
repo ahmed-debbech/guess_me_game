@@ -1,35 +1,36 @@
 <html>
     <head>
         <style>
+            .rectangle {
+              height: 50px;
+              width: 100%;
+              background-color: aqua;
+              padding: 10px;
+              margin :auto;
+              text-align : center;
+            }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
             body{
-                background-color: #121213;
+                background-color: #181818;
             }
             
         </style>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <title>Guess me!</title>
+        <title>Wordrace</title>
     </head>
     <center>
     <body>
-    
+    <div class="rectangle">
+        <h1><span onclick="location.href='/';" style="font-size: xx-large;   font-family: 'Lucida Console', 'Courier New', monospace;          color:#181818;">Wordrace</span></h1>
+      </div>
 
-        <h1><span onclick="location.href='/';" style="color:aqua;">Guess me!</span></h1>
-      
         <br> <br>
-        <% if (Object.keys(logUser).length != 0) { %>
-        <div style="overflow-x: auto;">
-          <h5 style="display: inline-block; color:white;"><%= logUser.first_name %> <%= logUser.last_name%> | </h5>
-          <a href="/logout" style="color: whitesmoke; display: inline-block;">Logout</a>
         
-        </div>
-      
-        <% } %>
-        
+
         <% if(won == "true"){ %>
-        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word: <%= yourword %></h1>
+        <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word:  <%= yourword %></h1>
         <h2 style="color:aqua">You earned <span id="numPoints"><%= length %></span> points!!! 🥳</h2>
         <% } %>
 
@@ -45,4 +46,3 @@
     </body>
     </center>
 </html>
-<!-- HAHAHA!! what a looser, you won't find anything here baby <3 -->
