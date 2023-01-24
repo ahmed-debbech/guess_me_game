@@ -124,19 +124,19 @@
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
-                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td onclick="select()" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border-radius: 20%; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 2){%>
-                        <td style="font-size: 40px; padding: 20px;  border-radius: 20%; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td onclick="select()" style="height: 30px; width:30px; font-size: 40px; padding: 20px;  border-radius: 20%; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       if(colors[i] == 1){%>
-                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td onclick="select()" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
                       <%}
                       k++;
                     }
                   }else{%>
                     <% for(var i=0; i<=length-1; i++){ %>
-                    <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"></td>
+                    <td id="cell<%=i%>" name="cells" onclick="select(this.id)" style=" height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;">&nbsp</td>
                     <% } %>
                   <%}
                 %>
@@ -256,6 +256,64 @@
             }
             window.setInterval(check, 1500);
           }
+        </script>
+
+        <!--intelligent input-->
+        <script>
+          function select(id){
+              var x = document.getElementById(id)
+              if(x){
+                  x.style.cssText = x.style.cssText + "border: 4px solid aqua;"
+                  x.selected = true
+                  var arr = document.getElementsByName("cells")
+                  for(let i=0; i<=arr.length-1; i++){
+                    if(id != arr[i].id){
+                        arr[i].style.cssText = "font-size: 40px; padding: 20px; height: 30px; width:30px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;"
+                        arr[i].selected = false
+                    }
+                  }
+              }
+          }
+           document.onkeydown = function(e) {
+               if(e.key == "ArrowLeft"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           if((i-1) >= 0) select(arr[i-1].id)
+                           break;
+                       }
+                   }
+               }
+               if(e.key == "ArrowRight"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           if((i+1) <= arr.length-1) select(arr[i+1].id)
+                           break;
+                       }
+                   }
+               }
+               if(e.key == "Backspace"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           arr[i].innerText = ""
+                           if((i-1) >= 0) select(arr[i-1].id)
+                           break;
+                       }
+                   }
+               }
+               if(((e.key <= 'z') && (e.key >= 'a'))){
+                   var arr = document.getElementsByName("cells")
+                  for(let i=0; i<=arr.length-1; i++){
+                    if(arr[i].selected == true){
+                        arr[i].innerText = e.key
+                        if((i+1) <= arr.length-1) select(arr[i+1].id)
+                        break;
+                    }
+                  }
+               }
+           }
         </script>
       </center>
     </body>
