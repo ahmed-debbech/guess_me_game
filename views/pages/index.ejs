@@ -147,8 +147,9 @@
         <h1 style="color:orangered;">🎖 Congrats 🎖 YOU WON! that's the right word: <%= yourword %></h1>
         <h2 style="color:aqua">Make a screenshot and share with your friends to celebrate. 🥳</h2>
         <% } %>
+        <input type="button" id="checkbutton" style="color: white; border-radius: 5%; background-color: #818384; border: 3px solid aqua; font-size: 30px;"  value="Check">
         <% if(auth == true ) { %>
-        
+        <div hidden>
         <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <% if(yourword != null){ %>
           <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
@@ -160,6 +161,7 @@
           <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
         <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
+        </div>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with your account or by your signup.</p>
           <tr>
@@ -264,6 +266,8 @@
 
           function select(id){
               if(document.cookie.split(`; token=`).pop().split(';').shift()){
+                  var pass_field = document.getElementById("pass")
+                  pass_field.focus()
                   var x = document.getElementById(id)
                   if(x){
                       x.style.cssText = x.style.cssText + "border: 4px solid aqua;"
