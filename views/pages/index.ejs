@@ -1,14 +1,13 @@
 <html>
     <head>
-        <link rel="icon" href="../../favicon.ico">
+        <meta charset="UTF-8">
+        <link rel="icon" href="logo.png">
         <style>
             .rectangle {
-              height: 50px;
+              height: 75px;
               width: 100%;
               background-color: aqua;
               padding: 10px;
-              margin :auto;
-              text-align : center;
             }
             button{
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -101,8 +100,11 @@
     <body onload="load();">
 
       <div class="rectangle">
-        <h1><span onclick="location.href='/';" style="font-size: xx-large;   font-family: 'Lucida Console', 'Courier New', monospace;          color:#181818;">Wordrace</span></h1>
-      </div>
+        <table style="border: 0px solid transparent;"><tr><td>
+            <img style="" width="100px" heigth="100px" src="logo.png"> </td>
+            <td><h1><span onclick="location.href='/';" style="font-size: xxx-large;   font-family: 'Lucida Console', 'Courier New', monospace;          color:#181818;">Wordrace</span></h1> </td></tr>
+        </table>
+    </div>
       <center>
         <input id="word_id" type="hidden" value="<%= word_id %>"/>
         <br> <br>
@@ -110,33 +112,32 @@
         
         <div style="overflow-x: auto;">
           <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2> 
-            <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a>
             <br>
-          <h3 style=" display: inline-block; color:white;">(<%= logUser.points %>) pts </h3><br>
-        
+            <h3 style=" display: inline-block; color:white;"><span style="font-size: 12px;">You have</span> <span style="font-size: 22px; color:aqua"><%= logUser.points %></span> pts </h3>
+                    <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a> <br> <br> <br>
         </div>
-      
+
         <% } %>
-        <table style="margin-bottom:1%; color: #cadad5; border-radius: 10px; border-color: aqua;" >
+        <table style="margin-bottom:1%; color: #cadad5; border: 5px solid;  border-radius: 10px; border-color: aqua;" >
             <tr>
                 <% 
                   if(colors.length !=0 && yourword.length != 0){
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
-                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #538d4e;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #538d4e;"><%= yourword[k] %></td>
                       <%}
                       if(colors[i] == 2){%>
-                        <td style="font-size: 40px; padding: 20px;  border-radius: 20%; background-color: #b59f3b;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #b59f3b;"><%= yourword[k] %></td>
                       <%}
                       if(colors[i] == 1){%>
-                        <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"><span style="color : #d7dadc;"><%= yourword[k] %></span></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;"><%= yourword[k] %></td>
                       <%}
                       k++;
                     }
                   }else{%>
                     <% for(var i=0; i<=length-1; i++){ %>
-                    <td style="font-size: 40px; padding: 20px; border-radius: 20%; background-color: #818384;"></td>
+                    <td id="cell<%=i%>" name="cells" onclick="select(this.id)" style=" height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;">&nbsp</td>
                     <% } %>
                   <%}
                 %>
@@ -147,18 +148,20 @@
         <h2 style="color:aqua">Make a screenshot and share with your friends to celebrate. 🥳</h2>
         <% } %>
         <% if(auth == true ) { %>
-        
+        <input type="button" onclick="sub()" id="checkbutton" style="margin-top: 2%; color: white; border-radius: 5%; background-color: #818384; border: 3px solid aqua; font-size: 30px;"  value="Check">
         <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
-          <% if(yourword != null){ %>
-          <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
+          <div style="background-color: #181818;">
+            <% if(yourword != null){ %>
+          <input value="<%= yourword %>"  name="pass" style="width: 0px; height: 0px;  color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
-            <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
+            <input name="pass"  style="width: 0px; height: 0px; color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% } %>
-          <input type="submit" style="border-radius: 20%; font-size: 30px;"  value="👍">
-          <input type="hidden"  value="<%= length %>" id="actualLen"/>
-          <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
+          </div>
+          <input hidden type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
+          <input hidden  type="hidden"  value="<%= length %>" id="actualLen"/>
+          <br><a hidden  style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
-        <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
+        <span hidden id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with your account or by your signup.</p>
           <tr>
@@ -256,6 +259,98 @@
             }
             window.setInterval(check, 1500);
           }
+        </script>
+
+        <!--intelligent input-->
+        <script>
+            function rgbToHex(col)
+            {
+                if(col.charAt(0)=='r')
+                {
+                    col=col.replace('rgb(','').replace(')','').split(',');
+                    var r=parseInt(col[0], 10).toString(16);
+                    var g=parseInt(col[1], 10).toString(16);
+                    var b=parseInt(col[2], 10).toString(16);
+                    r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
+                    var colHex='#'+r+g+b;
+                    return colHex;
+                }
+            }
+          function select(id){
+              if(document.cookie.split(`; token=`).pop().split(';').shift()){
+                  var pass_field = document.getElementById("pass")
+                  pass_field.focus()
+                  var x = document.getElementById(id)
+                  if(x){
+                      //alert(x.style.backgroundColor.toString())
+                      if(rgbToHex(x.style.backgroundColor) != '#538d4e'){
+                          x.style.cssText = x.style.cssText + "border: 4px solid aqua;"
+                          x.selected = true
+                          var arr = document.getElementsByName("cells")
+                          for(let i=0; i<=arr.length-1; i++){
+                              if(id != arr[i].id){
+                                  let color = arr[i].style.backgroundColor;
+                                  arr[i].style.cssText = "font-size: 40px; padding: 20px; height: 30px; width:30px; border: 4px solid #181818; border-radius: 20%; background-color: "+color.toString()+";"
+                                  arr[i].selected = false
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+           function sub(){
+               var arr = document.getElementsByName("cells")
+               let str = ""
+               for(let i=0; i<=arr.length-1; i++){
+                   if((arr[i].innerText >= 'a') && (arr[i].innerText <= 'z'))
+                   str += arr[i].innerText
+               }
+               document.getElementById("pass").value = str
+               document.getElementById("thumb").click()
+           }
+           document.onkeydown = function(e) {
+               if(e.key == "Enter"){
+                    sub()
+               }
+               if(e.key == "ArrowLeft"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           if((i-1) >= 0) select(arr[i-1].id)
+                           break;
+                       }
+                   }
+               }
+               if(e.key == "ArrowRight"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           if((i+1) <= arr.length-1) select(arr[i+1].id)
+                           break;
+                       }
+                   }
+               }
+               if(e.key == "Backspace"){
+                   var arr = document.getElementsByName("cells")
+                   for(let i=0; i<=arr.length-1; i++){
+                       if(arr[i].selected == true){
+                           arr[i].innerText = "\u00A0"
+                           if((i-1) >= 0) select(arr[i-1].id)
+                           break;
+                       }
+                   }
+               }
+               if(((e.key <= 'z') && (e.key >= 'a'))){
+                   var arr = document.getElementsByName("cells")
+                  for(let i=0; i<=arr.length-1; i++){
+                    if(arr[i].selected == true){
+                        arr[i].innerText = e.key
+                        if((i+1) <= arr.length-1) select(arr[i+1].id)
+                        break;
+                    }
+                  }
+               }
+           }
         </script>
       </center>
     </body>
