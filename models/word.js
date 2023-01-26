@@ -25,7 +25,7 @@ async function newWord(){
     method: 'GET',
     url: process.env.WORDS_GENERATOR
     };
-    options.url = options.url + Math.round(Math.random() * (12 - 3) + 3);
+    options.url = options.url + Math.round(Math.random() * (10 - 3) + 3);
     axios.request(options).then(function (response) {
         console.log(response.data);
         add(response.data).then(word => {
