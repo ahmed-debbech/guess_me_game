@@ -263,21 +263,36 @@
 
         <!--intelligent input-->
         <script>
-
+            function rgbToHex(col)
+            {
+                if(col.charAt(0)=='r')
+                {
+                    col=col.replace('rgb(','').replace(')','').split(',');
+                    var r=parseInt(col[0], 10).toString(16);
+                    var g=parseInt(col[1], 10).toString(16);
+                    var b=parseInt(col[2], 10).toString(16);
+                    r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
+                    var colHex='#'+r+g+b;
+                    return colHex;
+                }
+            }
           function select(id){
               if(document.cookie.split(`; token=`).pop().split(';').shift()){
                   var pass_field = document.getElementById("pass")
                   pass_field.focus()
                   var x = document.getElementById(id)
                   if(x){
-                      x.style.cssText = x.style.cssText + "border: 4px solid aqua;"
-                      x.selected = true
-                      var arr = document.getElementsByName("cells")
-                      for(let i=0; i<=arr.length-1; i++){
-                          if(id != arr[i].id){
-                              let color = arr[i].style.backgroundColor;
-                              arr[i].style.cssText = "font-size: 40px; padding: 20px; height: 30px; width:30px; border: 4px solid #181818; border-radius: 20%; background-color: "+color.toString()+";"
-                              arr[i].selected = false
+                      //alert(x.style.backgroundColor.toString())
+                      if(rgbToHex(x.style.backgroundColor) != '#538d4e'){
+                          x.style.cssText = x.style.cssText + "border: 4px solid aqua;"
+                          x.selected = true
+                          var arr = document.getElementsByName("cells")
+                          for(let i=0; i<=arr.length-1; i++){
+                              if(id != arr[i].id){
+                                  let color = arr[i].style.backgroundColor;
+                                  arr[i].style.cssText = "font-size: 40px; padding: 20px; height: 30px; width:30px; border: 4px solid #181818; border-radius: 20%; background-color: "+color.toString()+";"
+                                  arr[i].selected = false
+                              }
                           }
                       }
                   }
