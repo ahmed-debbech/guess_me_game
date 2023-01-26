@@ -150,11 +150,13 @@
         <% if(auth == true ) { %>
         <input type="button" onclick="sub()" id="checkbutton" style="color: white; border-radius: 5%; background-color: #818384; border: 3px solid aqua; font-size: 30px;"  value="Check">
         <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
-          <% if(yourword != null){ %>
-          <input value="<%= yourword %>"  name="pass" style="background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
+          <div style="background-color: #181818;">
+            <% if(yourword != null){ %>
+          <input value="<%= yourword %>"  name="pass" style=" color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
-            <input name="pass"  style="background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
+            <input name="pass"  style="width: 0px; height: 0px; color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% } %>
+          </div>
           <input hidden type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
           <input hidden  type="hidden"  value="<%= length %>" id="actualLen"/>
           <br><a hidden  style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
