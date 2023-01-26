@@ -149,19 +149,17 @@
         <% } %>
         <% if(auth == true ) { %>
         <input type="button" onclick="sub()" id="checkbutton" style="color: white; border-radius: 5%; background-color: #818384; border: 3px solid aqua; font-size: 30px;"  value="Check">
-        <div >
         <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <% if(yourword != null){ %>
-          <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="text"/>
+          <input value="<%= yourword %>" style="" name="pass" style="font-size: 30px;" id="pass" type ="hidden"/>
           <% }else{ %>
-            <input name="pass" style="font-size: 30px;" id="pass" type ="text"/>
+            <input name="pass" style="font-size: 30px;" id="pass" type ="hidden"/>
           <% } %>
-          <input type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
-          <input type="hidden"  value="<%= length %>" id="actualLen"/>
-          <br><a style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
+          <input hidden type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
+          <input hidden  type="hidden"  value="<%= length %>" id="actualLen"/>
+          <br><a hidden  style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>
         </form>
-        <span id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
-        </div>
+        <span hidden id="err" style="display: none; color:orangered;">the word should have <%= length %> letters</span>
         <% }else{ %>
           <p style=" color: #cadad5;" >To start playing login with your account or by your signup.</p>
           <tr>
@@ -287,6 +285,7 @@
                var arr = document.getElementsByName("cells")
                let str = ""
                for(let i=0; i<=arr.length-1; i++){
+                   if((arr[i].innerText >= 'a') && (arr[i].innerText <= 'z'))
                    str += arr[i].innerText
                }
                document.getElementById("pass").value = str
