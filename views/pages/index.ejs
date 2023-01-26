@@ -152,9 +152,9 @@
         <form id="form"  onsubmit="event.preventDefault(); gett(document.getElementById('pass').value);" action ="/process" method="post">
           <div style="background-color: #181818;">
             <% if(yourword != null){ %>
-          <input value="<%= yourword %>"  name="pass" style="width: 150px; height: 50px;  color: #FFFFFF; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
+          <input value="<%= yourword %>"  name="pass" style="width: 0px; height: 0px;  color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% }else{ %>
-            <input name="pass"  style="width: 150px; height: 50px; color: #FFFFFF; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
+            <input name="pass"  style="width: 0px; height: 0px; color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% } %>
           </div>
           <input hidden type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
@@ -309,10 +309,15 @@
                document.getElementById("thumb").click()
            }
            document.onkeydown = function(e) {
-               if(e.key == "Enter"){
+               const currentCode = e.which || e.code;
+               let currentKey = e.key;
+               if (!currentKey) {
+                   currentKey = String.fromCharCode(currentCode);
+               }
+               if(currentKey == "Enter"){
                     sub()
                }
-               if(e.key == "ArrowLeft"){
+               if(currentKey == "ArrowLeft"){
                    var arr = document.getElementsByName("cells")
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
@@ -321,7 +326,7 @@
                        }
                    }
                }
-               if(e.key == "ArrowRight"){
+               if(currentKey == "ArrowRight"){
                    var arr = document.getElementsByName("cells")
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
@@ -330,7 +335,7 @@
                        }
                    }
                }
-               if(e.key == "Backspace"){
+               if(currentKey == "Backspace"){
                    var arr = document.getElementsByName("cells")
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
@@ -340,9 +345,7 @@
                        }
                    }
                }
-               alert(e.key)
-               if(((e.key <= 'z') && (e.key >= 'a'))){
-                   alert(e.key)
+               if(((currentKey <= 'z') && (currentKey >= 'a'))){
                    var arr = document.getElementsByName("cells")
                   for(let i=0; i<=arr.length-1; i++){
                     if(arr[i].selected == true){
