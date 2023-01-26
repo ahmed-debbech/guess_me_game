@@ -349,7 +349,7 @@
                    var arr = document.getElementsByName("cells")
                   for(let i=0; i<=arr.length-1; i++){
                     if(arr[i].selected == true){
-                        arr[i].innerText = e.key
+                        arr[i].innerText = currentKey
                         if((i+1) <= arr.length-1) select(arr[i+1].id)
                         break;
                     }
