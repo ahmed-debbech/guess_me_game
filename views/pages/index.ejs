@@ -342,7 +342,7 @@
 
            }
         function preventBackspace(){
-            if ((event.key == "Backspace") || (event.key == "ArrowLeft") || (event.key == "ArrowRight")) event.preventDefault();
+            if ((event.keyCode == 8) || (event.key == "ArrowLeft") || (event.key == "ArrowRight")) event.preventDefault();
         }
         document.getElementById("pass").setSelectionRange(document.getElementById("pass").value.length, document.getElementById("pass").value.length)
         document.getElementById("pass").addEventListener('input', (e) =>{
@@ -351,7 +351,7 @@
             for(let i=0; i<=arr.length-1; i++){
                 if(arr[i].selected == true){
                     let s = pass_obj.value[pass_obj.value.length-1]
-                    if((s <= 'z') && (s >= 'a')){
+                    if(((s <= 'z') && (s >= 'a')) || ((s <= 'Z') && (s >= 'A'))){
                         arr[i].innerText = s
                     }
                     if((i+1) <= arr.length-1) select(arr[i+1].id)
