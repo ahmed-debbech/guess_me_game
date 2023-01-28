@@ -125,19 +125,19 @@
                     let k = 0;
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
-                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #538d4e;"><%= yourword[k] %></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id, 0)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #538d4e;"><%= yourword[k] %></td>
                       <%}
                       if(colors[i] == 2){%>
-                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #b59f3b;"><%= yourword[k] %></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id, 0)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #b59f3b;"><%= yourword[k] %></td>
                       <%}
                       if(colors[i] == 1){%>
-                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;"><%= yourword[k] %></td>
+                        <td id="cell<%=k%>"  name="cells" onclick="select(this.id, 0)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;"><%= yourword[k] %></td>
                       <%}
                       k++;
                     }
                   }else{%>
                     <% for(var i=0; i<=length-1; i++){ %>
-                    <td id="cell<%=i%>" name="cells" onclick="select(this.id)" style=" height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;">&nbsp</td>
+                    <td id="cell<%=i%>" name="cells" onclick="select(this.id, 0)" style=" height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #818384;">&nbsp</td>
                     <% } %>
                   <%}
                 %>
@@ -275,7 +275,7 @@
                     return colHex;
                 }
             }
-          function select(id){
+          function select(id, dir){ //direction 0 none , 1 left ,2 right
               if(document.cookie.split(`; token=`).pop().split(';').shift()){
                   var pass_field = document.getElementById("pass")
                   pass_field.focus()
@@ -291,6 +291,24 @@
                                   let color = arr[i].style.backgroundColor;
                                   arr[i].style.cssText = "font-size: 40px; padding: 20px; height: 30px; width:30px; border: 4px solid #181818; border-radius: 20%; background-color: "+color.toString()+";"
                                   arr[i].selected = false
+                              }
+                          }
+                      }else{
+                          if(dir == 1){
+                              var arr = document.getElementsByName("cells")
+                              for(let i=0; i<=arr.length-1; i++){
+                                  if(id == arr[i].id){
+                                      select(arr[i-1].id, 1)
+                                      return
+                                  }
+                              }
+                          }
+                          if(dir == 2){
+                              var arr = document.getElementsByName("cells")
+                              for(let i=0; i<=arr.length-1; i++){
+                                  if(id == arr[i].id){
+                                      select(arr[i+1].id, 2)
+                                  }
                               }
                           }
                       }
@@ -316,7 +334,7 @@
                    var arr = document.getElementsByName("cells")
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
-                           if((i-1) >= 0) select(arr[i-1].id)
+                           if((i-1) >= 0) select(arr[i-1].id, 1)
                            break;
                        }
                    }
@@ -325,7 +343,7 @@
                    var arr = document.getElementsByName("cells")
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
-                           if((i+1) <= arr.length-1) select(arr[i+1].id)
+                           if((i+1) <= arr.length-1) select(arr[i+1].id, 2)
                            break;
                        }
                    }
@@ -335,7 +353,7 @@
                    for(let i=0; i<=arr.length-1; i++){
                        if(arr[i].selected == true){
                            arr[i].innerText = "\u00A0"
-                           if((i-1) >= 0) select(arr[i-1].id)
+                           if((i-1) >= 0) select(arr[i-1].id, 1)
                            document.getElementById("pass").value = ''
                            break;
                        }
@@ -348,7 +366,7 @@
                 if(arr[i].selected == true){
                     arr[i].innerText = document.getElementById("pass").value[document.getElementById("pass").value.length-1].toLowerCase()
                     if((i+1) <= arr.length-1) {
-                        select(arr[i+1].id)
+                        select(arr[i+1].id, 2)
                     }
                     document.getElementById("pass").value=""
                     break;
