@@ -158,6 +158,7 @@
             <input name="pass" onkeydown="preventBackspace(event)" style="width: 0px; heigth: 0px; color: #181818; background-color: #181818; border: 4px solid #181818; font-size: 30px;" id="pass" type ="text"/>
           <% } %>
           </div>
+          <input name="wordid" type="hidden" value="<%= word_id %>"/>
           <input hidden type="submit" id="thumb" style="border-radius: 20%; font-size: 30px;"  value="👍">
           <input hidden  type="hidden"  value="<%= length %>" id="actualLen"/>
           <br><a hidden  style=" color: #cadad5;" ><span id="charsNum"></span>/<%= length %></a>

@@ -76,11 +76,11 @@ async function root(req, res, next){
 }
 async function process(req, res, next){
     try {
-        console.log("[USER] " + req.user_data.userId + " is trying with the word '" + req.body + "' ...")
+        console.log("[USER] " + req.user_data.userId + " is trying with the word '" + req.body.wordid + "' ...")
         
         let word = await wordd.word.getCurrent()
-        if(word.length == 0) return; // no word found in the database
-    
+        if(word[0].length == 0) return; // no word found in the database
+        if(word[0].id != req.body.wordid) res.redirect('/solved')
         //console.log(word[0].name)
         let wordy = word[0].name.toLowerCase();
         let colors = new Array(wordy.length) // 3 green 2 orange 1 grey
