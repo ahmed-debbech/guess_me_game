@@ -123,6 +123,7 @@
                 <% 
                   if(colors.length !=0 && yourword.length != 0){
                     let k = 0;
+                    if(colors.length != yourword.length){ colors.length = yourword.length }
                     for(var i=0; i<=colors.length-1; i++){
                       if(colors[i] == 3){ %>
                         <td id="cell<%=k%>"  name="cells" onclick="select(this.id, 0)" style="height: 30px; width:30px; font-size: 40px; padding: 20px; border: 4px solid #181818; border-radius: 20%; background-color: #538d4e;"><%= yourword[k] %></td>
