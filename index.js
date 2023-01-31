@@ -89,8 +89,10 @@ app.get('/refresh/:id', checkLogin.isLoggedin , async (req, res) => {
             console.log("the word IS NOT solved yet");
         }
         //check for online people number
+        let num = await users.numberOfOnlineUsers();
         res.send({
-            solved : word_solved
+            solved : word_solved,
+            numOnline : num
         })
     }else{
       console.log("user is not logged in");

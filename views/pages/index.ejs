@@ -111,8 +111,10 @@
         <% if (Object.keys(logUser).length != 0) { %>
         
         <div style="overflow-x: auto;">
-            <table style="heigth:1px; border: 0px solid transparent;"><tr><td><img width="12px" height="12px" src="/offline.png"></td><td><p style="font-size: x-small;color: #cadad5;">0 - Online</p></td></tr></table>
-          <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2> 
+            <table id="offline_table" style="heigth:1px; border: 0px solid transparent;"><tr><td><img width="12px" height="12px" src="/offline.png"></td><td><p style="font-size: x-small;color: #cadad5;">0 - Online</p></td></tr></table>
+            <table hidden id="online_table" style="heigth:1px; border: 0px solid transparent;"><tr><td><img width="12px" height="12px" src="/online.png"></td><td><p style="font-size: x-small;color: #cadad5;"><span id="online_count"></span> - Online</p></td></tr></table>
+
+        <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2>
             <br>
             <h3 style=" display: inline-block; color:white;"><span style="font-size: 12px;">You have</span> <span style="font-size: 22px; color:aqua"><%= logUser.points %></span> pts </h3>
                     <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a> <br> <br> <br>
@@ -260,6 +262,15 @@
                     console.log("still unsolved")
                 }
                   //handle number of online users
+                  if(data.numOnline[0].count == '1'){
+                      //only you
+                      document.getElementById("online_table").hidden = true
+                      document.getElementById("offline_table").hidden = false
+                  }else{
+                      document.getElementById("online_table").hidden = false
+                      document.getElementById("online_count").innerText = Number(data.numOnline[0].count)-1
+                      document.getElementById("offline_table").hidden = true
+                  }
               });
             }
             window.setInterval(refresh, 1500);

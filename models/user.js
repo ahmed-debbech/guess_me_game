@@ -16,9 +16,13 @@ module.exports = {
   addNewUser,
   login,
   getUserById,
-    updateStatus
+    updateStatus,
+    numberOfOnlineUsers
 };
 
+function numberOfOnlineUsers(){
+    return db("uuser").where({online : 1}).select().count();
+}
 async function updateStatus(id, isOnline){
     return await db("uuser").where({id: id}).update({'online': isOnline});
 }
