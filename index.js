@@ -71,21 +71,30 @@ app.get('/winner', (req, res) => {
     won
   });
 })
-app.get('/done/:id', checkLogin.isLoggedin , (req, res) => {
-    //console.log("checking if word is solved");
+/* this end point will be used to refresh the user every second like updating the online
+* status and checking if the word has been solved and more ...
+*/
+app.get('/refresh/:id', checkLogin.isLoggedin , async (req, res) => {
     if(req.user_data != null){
-      wordd.word.getById(req.params['id']).then(word => {
-        //console.log( word[0]);
+        //refresh the online status to YES
+        await users.updateStatus(req.user_data.userId, 1);
+        
+        //check the word if it is solved
+        let word_solved = false;
+        let word = await wordd.word.getById(req.params['id'])
         if(word[0].solvedOn != '-'){
-          console.log("the word with id is solved");
-          res.send("1");
+            console.log("the word with id is solved");
+            word_solved = true;
         }else{
-          console.log("the word IS NOT solved yet");
-          res.send("0")
+            console.log("the word IS NOT solved yet");
         }
-      })
+        //check for online people number
+        res.send({
+            solved : word_solved
+        })
     }else{
       console.log("user is not logged in");
+      res.send("you should be logged in")
     }
 })
 app.get("/solved", (req, res) => {

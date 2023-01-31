@@ -15,9 +15,13 @@ module.exports = {
   isLimited,
   addNewUser,
   login,
-  getUserById
+  getUserById,
+    updateStatus
 };
 
+async function updateStatus(id, isOnline){
+    return await db("uuser").where({id: id}).update({'online': isOnline});
+}
 function getUserById(id){
   return new Promise(resolve => {
     db("uuser").where({id: id})
