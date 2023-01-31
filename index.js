@@ -13,6 +13,7 @@ const MainRoutes = require('./routes/MainRoutes')
 const LeaderboardRoutes = require('./routes/LeaderboardRoutes')
 const checkLogin = require('./middlewares/login')
 const cookieParser = require("cookie-parser");
+var cron = require('node-cron');
 
 
 
@@ -46,6 +47,15 @@ app.use('/ath', AuthRouter);
 app.use('/', MainRoutes);
 app.use('/', LeaderboardRoutes);
 
+/*
+*this cron job is to update online users and check if they are still there
+*/
+cron.schedule('*/10 * * * * *', () => {
+    console.log('CRON JOB STARTED! ');
+    users.setToOffline()
+    console.log('CRON JOB ENDED! ');
+});
+
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 
@@ -71,6 +81,7 @@ app.get('/winner', (req, res) => {
     won
   });
 })
+
 /* this end point will be used to refresh the user every second like updating the online
 * status and checking if the word has been solved and more ...
 */

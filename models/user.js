@@ -17,9 +17,13 @@ module.exports = {
   login,
   getUserById,
     updateStatus,
-    numberOfOnlineUsers
+    numberOfOnlineUsers,
+    setToOffline
 };
 
+async function setToOffline(){
+    return await db("uuser").where({online : 1}).update({'online': 0});
+}
 function numberOfOnlineUsers(){
     return db("uuser").where({online : 1}).select().count();
 }
