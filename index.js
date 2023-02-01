@@ -50,15 +50,26 @@ app.use('/', LeaderboardRoutes);
 /*
 *this cron job is to update online users and check if they are still there
 */
-cron.schedule('*/10 * * * * *', () => {
+const task = cron.schedule('*/10 * * * * *', () => {
     console.log('CRON JOB STARTED! ');
     users.setToOffline()
     console.log('CRON JOB ENDED! ');
 });
 
+
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 
+app.get('/online_players', (req,res)=> {
+    users.findOnline()
+
+  .then(user => {
+      res.status(200).json(user);
+  })
+  .catch(error =>{
+      res.status(500).json({message : "no user could be retrieved"})
+  })
+})
 app.get('/user', (req,res)=> {
   users.findAllUsers()
   .then(user => {
