@@ -32,6 +32,9 @@ function numberOfOnlineUsers(){
     return db("uuser").where({online : 1}).select().count();
 }
 async function updateStatus(id, isOnline){
+    if(isOnline == 1){
+        await db("uuser").where({id: id}).update({'last_online': Date.now().toString()});
+    }
     return await db("uuser").where({id: id}).update({'online': isOnline});
 }
 function getUserById(id){
