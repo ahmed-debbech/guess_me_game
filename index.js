@@ -49,16 +49,57 @@ app.use('/', LeaderboardRoutes);
 
 /*
 *this cron job is to update online users and check if they are still there
+* we see if the last timestamp of being online is less then 5sec ago then we declare the player
+* as being offline
+* PS: to not consume the whole quote on prod server we should stop the cron job
+* when no player is online anymore
 */
-cron.schedule('*/10 * * * * *', () => {
+const job = cron.schedule('*/10 * * * * *', () => {
     console.log('CRON JOB STARTED! ');
-    users.setToOffline()
+    checkWhosOnline()
     console.log('CRON JOB ENDED! ');
 });
+
+function checkWhosOnline(){
+    users.findOnline()
+  .then(user_on => {
+      let least_one = false
+      for(let i=0; i<=user_on.length-1; i++){
+          console.log(new Date(parseInt(user_on[i].last_online)))
+          console.log(new Date())
+          let diff = (new Date()) - (new Date(parseInt(user_on[i].last_online)))
+          if((diff/1000) > 5){
+            console.log("more then 5 secs")
+              //we make the play offline
+              users.updateStatus(user_on[i].id, 0)
+          }else{
+              console.log("less then 5 secs")
+              least_one = true
+          }
+     }
+      if(least_one == false){
+          //no body left online stop the cron job
+          job.stop()
+      }
+  })
+  .catch(error =>{
+      //error
+  })
+}
 
 app.listen(PORT, () => console.log(`Server is UP and running on ${ PORT }`))
 
 
+app.get('/online_players', (req,res)=> {
+    users.findOnline()
+
+  .then(user => {
+      res.status(200).json(user);
+  })
+  .catch(error =>{
+      res.status(500).json({message : "no user could be retrieved"})
+  })
+})
 app.get('/user', (req,res)=> {
   users.findAllUsers()
   .then(user => {
@@ -89,7 +130,8 @@ app.get('/refresh/:id', checkLogin.isLoggedin , async (req, res) => {
     if(req.user_data != null){
         //refresh the online status to YES
         await users.updateStatus(req.user_data.userId, 1);
-        
+        job.stop()
+        job.start()
         //check the word if it is solved
         let word_solved = false;
         let word = await wordd.word.getById(req.params['id'])
