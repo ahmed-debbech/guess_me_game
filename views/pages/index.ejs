@@ -111,7 +111,13 @@
         <% if (Object.keys(logUser).length != 0) { %>
         
         <div style="overflow-x: auto;">
-          <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2> 
+        <table onclick="getOnlinePlayers()" id="online_table" style="heigth:1px; border: 0px solid transparent;"><tr><td><img width="12px" height="12px" src="/online.png"></td><td><p style="font-size: x-small;color: #cadad5;"><span syle="color: " id="online_count"></span> - Online Players</p></td></tr></table>
+        <div  style=" width:20%;  border-style : dotted; border-color: #538d4e;"  id="div-online" hidden="hidden" >
+            <ul id="players_on">
+                <li style=" color: #b59f3b;">Online Players: </li>
+            </ul>
+          </div>
+        <h2 style="display: inline-block; color:white;">Hello, <span style="font-size: xx-large; color: #b59f3b;"><%= logUser.username %> </span></h2>
             <br>
             <h3 style=" display: inline-block; color:white;"><span style="font-size: 12px;">You have</span> <span style="font-size: 22px; color:aqua"><%= logUser.points %></span> pts </h3>
                     <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a> <br> <br> <br>
@@ -247,20 +253,42 @@
         <script>
           function load(){
             document.getElementById("charsNum").value = document.getElementById("pass").value.length;
-            function check(){
+              let two_offlines = 1
+            function refresh(){
               $.ajax({
-                url: "/done/"+document.getElementById("word_id").value,
+                url: "/refresh/"+document.getElementById("word_id").value,
                 context: document.body
               }).done(function(data) {
-                if(data == "1"){
+                if(data.solved == true){
                   location.href="/solved"
-                }else{
-                    console.log("eee")
                 }
+                if(data.solved == false){
+                    console.log("still unsolved")
+                }
+                  //handle number of online users
+                  document.getElementById("online_count").innerText = Number(data.numOnline[0].count)
               });
             }
-            window.setInterval(check, 1500);
+            window.setInterval(refresh, 1000);
           }
+            function getOnlinePlayers(){
+                if(document.getElementById("div-online").hidden == true){
+                    document.getElementById("div-online").hidden = false
+                    $.ajax({
+                        url: "/online_players/",
+                        context: document.body
+                    }).done(function(data) {
+                        console.log(data)
+                        var ul = document.getElementById("players_on")
+                        ul.innerHTML = ""
+                        for(let i =0; i<= data.length-1; i++){
+                            ul.innerHTML += "<li style='color: white;'> "+data[i].username+ "</li>";
+                        }
+                    });
+                }else{
+                    document.getElementById("div-online").hidden = true
+                }
+            }
         </script>
 
         <!--intelligent input-->

@@ -15,9 +15,28 @@ module.exports = {
   isLimited,
   addNewUser,
   login,
-  getUserById
+  getUserById,
+    updateStatus,
+    numberOfOnlineUsers,
+    setToOffline,
+    findOnline
 };
 
+function findOnline(){
+    return db("uuser").where({online : 1}).select();
+}
+async function setToOffline(){
+    return await db("uuser").where({online : 1}).update({'online': 0});
+}
+function numberOfOnlineUsers(){
+    return db("uuser").where({online : 1}).select().count();
+}
+async function updateStatus(id, isOnline){
+    if(isOnline == 1){
+        await db("uuser").where({id: id}).update({'last_online': Date.now().toString()});
+    }
+    return await db("uuser").where({id: id}).update({'online': isOnline});
+}
 function getUserById(id){
   return new Promise(resolve => {
     db("uuser").where({id: id})
