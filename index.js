@@ -130,7 +130,8 @@ app.get('/refresh/:id', checkLogin.isLoggedin , async (req, res) => {
     if(req.user_data != null){
         //refresh the online status to YES
         await users.updateStatus(req.user_data.userId, 1);
-        //job.start()
+        job.stop()
+        job.start()
         //check the word if it is solved
         let word_solved = false;
         let word = await wordd.word.getById(req.params['id'])
