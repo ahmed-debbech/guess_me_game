@@ -59,9 +59,16 @@ function validateEmail(email){
     );
 };
 
+function getTheTwoBestDefs(defs, word){
+    defs.sort(function(a,b) {return a.thumbs_down - b.thumbs_down} )
+    console.log("highest def")
+    console.log(defs[0])
+    return defs[0].definition
+}
 module.exports = {
   checkWord,
   issueJWT,
   parseJwt,
-  validateEmail
+  validateEmail,
+    getTheTwoBestDefs
 };

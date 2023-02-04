@@ -122,7 +122,11 @@
             <h3 style=" display: inline-block; color:white;"><span style="font-size: 12px;">You have</span> <span style="font-size: 22px; color:aqua"><%= logUser.points %></span> pts </h3>
                     <br><a href="/logout" style="font-size: xx-small; color:whitesmoke; display: inline-block;">[Log out]</a> <br> <br> <br>
         </div>
-
+        <% if(hint1 != 'null'){ %>
+        <div>
+            <p id="hint" style="color: #cadad5; opacity: 0.5">Hint: <%= hint1 %> </p>
+        </div>
+        <% } %>
         <% } %>
         <table style="margin-bottom:1%; color: #cadad5; border: 5px solid;  border-radius: 10px; border-color: aqua;" >
             <tr>

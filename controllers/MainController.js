@@ -25,6 +25,7 @@ async function root(req, res, next){
                 {
                 word_id :word[0].id,
                 length : wordy.length,
+                hint1 : word[0].def1,
                 logUser : loguser,
                 auth : true,
                 colors: null,
@@ -36,6 +37,7 @@ async function root(req, res, next){
                 {
                 word_id :word[0].id,
                 length : wordy.length,
+                hint1 : word[0].def1,
                 logUser : loguser,
                 auth : true,
                 colors: colors,
