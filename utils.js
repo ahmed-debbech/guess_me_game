@@ -59,9 +59,16 @@ function validateEmail(email){
     );
 };
 
+function prepareSyns(syns){
+    if(syns == 'null'){ return 'null'}
+    let c = syns.split("/[,\[\]]/")
+    console.log(c[0].split(','))
+    return c[0].split(',')
+}
 module.exports = {
   checkWord,
   issueJWT,
   parseJwt,
-  validateEmail
+  validateEmail,
+    prepareSyns
 };
