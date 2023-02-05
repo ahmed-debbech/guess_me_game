@@ -99,6 +99,7 @@ async function process(req, res, next){
                 console.log("updated score successfully")
                 wordd.word.newWord();
                 req.flash("yourword", score);
+                req.flash("synonyms" , utils.prepareSyns(word[0].synonyms))
                 req.flash("won", "true")
                 req.flash("length", score)
                 req.flash("logUser", req.user_data);

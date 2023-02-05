@@ -2,7 +2,6 @@
 //const axios = (...args) => import('axios').then(({default: axios}) => fetch(...args));
 const axios = require("axios");
 const db = require("../knex/knex.js");
-const {getTheTwoBestDefs} = require("../utils");
 require('dotenv').config()
 
 async function update(){
@@ -10,7 +9,7 @@ async function update(){
 }
 async function add(word){
     await update()
-    let ww = {name: word[0], def1: word.def1, def2: word.def2, solvedOn : "-"}
+    let ww = {name: word.word, def1: word.def1, def2: word.def2, solvedOn : "-", synonyms: word.synonyms}
     return await db("word").insert(ww);
 }
 
@@ -24,30 +23,27 @@ var name = "0000000000";
 async function newWord(){
     const options = {
     method: 'GET',
-    url: process.env.WORDS_GENERATOR
+    url: process.env.WORDS_GENERATOR,
+    headers: {
+    'X-Api-Key': process.env.WORDS_GENERATOR_KEY
+    },
     };
-    options.url = options.url + Math.round(Math.random() * (12 - 3) + 3);
     axios.request(options).then(function (response) {
         console.log(response.data);
-        let wo = response.data
-        const options = {
+        let wo = {"word" : response.data.word}
+        const options1 = {
             method: 'GET',
-            url: process.env.WORD_MEANING_URL,
-            params: {term: wo[0]},
-            headers: {
-                'X-RapidAPI-Key': process.env.WORDS_MEANING_KEY,
-                'X-RapidAPI-Host': process.env.WORDS_MEANING_HOST
-            }
+            url: process.env.WORD_MEANING_URL+wo.word+"?key="+process.env.WORDS_MEANING_KEY,
         };
 
-        axios.request(options).then(function (response) {
-            console.log(response.data); //the meanings
-            let def1 = ''
-            if(response.data.list.length != 0){
-                let def1 = getTheTwoBestDefs(response.data.list, wo[0])
-                wo.def1 = def1
+        axios.request(options1).then(function (response1) {
+            console.log(response1.data); //the meanings
+            if(response1.data[0].hasOwnProperty('meta')){
+                wo.def1 = response1.data[0].shortdef[0]
+                wo.synonyms = response1.data[0].meta.syns.toString()
             }else{
                 wo.def1 = 'null'
+                wo.synonyms = 'null'
             }
             add(wo).then(word => {
                 console.log("new word has been generated!!");

@@ -59,16 +59,16 @@ function validateEmail(email){
     );
 };
 
-function getTheTwoBestDefs(defs, word){
-    defs.sort(function(a,b) {return a.thumbs_down - b.thumbs_down} )
-    console.log("highest def")
-    console.log(defs[0])
-    return defs[0].definition
+function prepareSyns(syns){
+    if(syns == 'null'){ return 'null'}
+    let c = syns.split("/[,\[\]]/")
+    console.log(c[0].split(','))
+    return c[0].split(',')
 }
 module.exports = {
   checkWord,
   issueJWT,
   parseJwt,
   validateEmail,
-    getTheTwoBestDefs
+    prepareSyns
 };
