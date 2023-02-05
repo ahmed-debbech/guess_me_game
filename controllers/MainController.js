@@ -25,6 +25,7 @@ async function root(req, res, next){
                 {
                 word_id :word[0].id,
                 length : wordy.length,
+                hint1 : word[0].def1,
                 logUser : loguser,
                 auth : true,
                 colors: null,
@@ -36,6 +37,7 @@ async function root(req, res, next){
                 {
                 word_id :word[0].id,
                 length : wordy.length,
+                hint1 : word[0].def1,
                 logUser : loguser,
                 auth : true,
                 colors: colors,
@@ -97,6 +99,7 @@ async function process(req, res, next){
                 console.log("updated score successfully")
                 wordd.word.newWord();
                 req.flash("yourword", score);
+                req.flash("synonyms" , utils.prepareSyns(word[0].synonyms))
                 req.flash("won", "true")
                 req.flash("length", score)
                 req.flash("logUser", req.user_data);

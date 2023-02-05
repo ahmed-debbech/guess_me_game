@@ -114,8 +114,10 @@ app.get('/winner', (req, res) => {
   let clientWord = req.flash("yourword")
   var won = req.flash("won")
   var logUser = req.flash("logUser");
+  var syns = req.flash("synonyms")
   res.render('won',
   {
+      synonyms : syns,
     length,
     logUser,
     yourword  : clientWord[0],
